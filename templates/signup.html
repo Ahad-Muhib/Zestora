@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zestora - Sign up</title>
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+
+
+
+</head>
+<body>
+    <a href="{% url 'login' %}">
+  <div class="logo">Zestora</div>
+</a>
+
+    <a href="{% url 'login' %}" class="account-link">
+Have an Account?<br>Sign in</a>
+    
+    <div class="signup-container">
+        <div class="welcome-text">Welcome to Zestora</div>
+        <h1 class="signup-title">Sign up</h1>
+        
+        <form method = "post">
+             {% csrf_token %}
+            <div class="form-group">
+                <label class="form-label">Enter your username/email</label>
+                <input type="text" class="form-input" placeholder="username or email address">
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">User name</label>
+                    <input type="text" class="form-input" placeholder="User name">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Contact Number</label>
+                    <input type="tel" class="form-input" placeholder="Contact number">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Enter your Password</label>
+                <input type="password" class="form-input" placeholder="Password">
+            </div>
+            
+            <button type="submit" class="signup-btn">Sign up</button>
+        </form>
+        
+        <div class="divider">
+            <span>OR</span>
+        </div>
+        
+        <button class="google-btn" onclick="signInWithGoogle()">
+            <div class="google-icon"></div>
+            Sign in with Google
+        </button>
+    </div>
+
+      <script>
+        function signInWithGoogle() {
+            // Redirect to Google OAuth sign-in page
+            // Replace 'YOUR_CLIENT_ID' with your actual Google OAuth client ID
+            const clientId = '636363384340-qk2dq5bkvrto7l1iaqptfm9febsmosqh.apps.googleusercontent.com';
+            const redirectUri = encodeURIComponent(window.location.origin + '/auth/google/callback');
+            const scope = encodeURIComponent('openid email profile');
+            const responseType = 'code';
+            
+            const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&response_type=${responseType}&access_type=offline&prompt=consent`;
+            
+            window.location.href = googleAuthUrl;
+        }
+    </script>
+</body>
+</html>
