@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zestora - Log in</title>
-    <style>
-        * {
+ * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -22,28 +15,31 @@
         }
 
         .logo {
-            position: absolute;
+            position: fixed;
             top: 30px;
             left: 30px;
             font-size: 24px;
             font-weight: bold;
             color: #333;
+            z-index: 10;
         }
 
         .account-link {
-            position: absolute;
+            position: fixed;
             top: 30px;
             right: 30px;
             color: #666;
             text-decoration: none;
             font-size: 14px;
+            text-align: right;
+            z-index: 10;
         }
 
         .account-link:hover {
             color: #333;
         }
 
-        .login-container {
+        .signup-container {
             background: white;
             border-radius: 12px;
             padding: 40px;
@@ -58,7 +54,7 @@
             margin-bottom: 8px;
         }
 
-        .login-title {
+        .signup-title {
             font-size: 32px;
             font-weight: 600;
             color: #333;
@@ -67,6 +63,15 @@
 
         .form-group {
             margin-bottom: 20px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
         }
 
         .form-label {
@@ -97,19 +102,7 @@
             color: #999;
         }
 
-        .forgot-password {
-            color: #007bff;
-            text-decoration: none;
-            font-size: 12px;
-            float: right;
-            margin-top: 5px;
-        }
-
-        .forgot-password:hover {
-            text-decoration: underline;
-        }
-
-        .login-btn {
+        .signup-btn {
             width: 100%;
             background: #ff6b5a;
             color: white;
@@ -123,7 +116,7 @@
             transition: background-color 0.3s ease;
         }
 
-        .login-btn:hover {
+        .signup-btn:hover {
             background: #ff5a47;
         }
 
@@ -181,7 +174,7 @@
         }
 
         @media (max-width: 480px) {
-            .login-container {
+            .signup-container {
                 padding: 30px 20px;
             }
             
@@ -198,59 +191,9 @@
                 right: 20px;
                 font-size: 12px;
             }
-        }
-    </style>
-</head>
-<body>
-  <a href="login.html">
-  <div class="logo">Zestora</div>
-</a>
-    <a href="signup.html" class="account-link">No Account?<br>Sign up</a>
-    
-    <div class="login-container">
-        <div class="welcome-text">Welcome to Zestora</div>
-        <h1 class="login-title">Log in</h1>
-        
-        <form>
-            <div class="form-group">
-                <label class="form-label">Enter your username/email</label>
-                <input type="text" class="form-input" placeholder="username or email address">
-            </div>
-            
-            <div class="form-group">
-                <label class="form-label">Enter your Password</label>
-                <input type="password" class="form-input" placeholder="Password">
-                <a href="#" class="forgot-password">Forgot Password?</a>
-                <div style="clear: both;"></div>
-            </div>
-            
-            <button type="submit" class="login-btn">LOGIN</button>
-        </form>
-        
-        <div class="divider">
-            <span>OR</span>
-        </div>
-        
-        <button class="google-btn" onclick="signInWithGoogle()">
-            <div class="google-icon"></div>
-            Sign in with Google
-        </button>
-    </div>
 
-      <script>
-        function signInWithGoogle() {
-            // Redirect to Google OAuth sign-in page
-            // Replace 'YOUR_CLIENT_ID' with your actual Google OAuth client ID
-            const clientId = '636363384340-qk2dq5bkvrto7l1iaqptfm9febsmosqh.apps.googleusercontent.com';
-            const redirectUri = encodeURIComponent(window.location.origin + '/auth/google/callback');
-            const scope = encodeURIComponent('openid email profile');
-            const responseType = 'code';
-            
-            const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&response_type=${responseType}&access_type=offline&prompt=consent`;
-
-            
-            window.location.href = googleAuthUrl;
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
         }
-    </script>
-</body>
-</html>
