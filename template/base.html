@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Zestora{% endblock %}</title>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:700,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    body {
+      background: #f5f3ea;
+      font-family: 'Montserrat', sans-serif;
+      margin: 0;
+    }
+
+    .navbar {
+      width: 98%;
+      margin: 8px auto;
+      display: flex;
+      align-items: center;
+      background: #edeada;
+      border-radius: 32px;
+      padding: 10px 32px;
+      box-sizing: border-box;
+      box-shadow: 0 1px 8px rgba(0,0,0,0.04);
+    }
+
+    .navbar-logo {
+      font-weight: 700;
+      font-size: 1.7em;
+      margin-right: 38px;
+      letter-spacing: 2px;
+    }
+
+    .navbar-links {
+      list-style: none;
+      display: flex;
+      flex: 1;
+      align-items: center;
+      margin: 0;
+      padding: 0;
+      gap: 26px;
+    }
+
+    .navbar-links li {
+      font-size: 1em;
+      font-family: inherit;
+      color: #686760;
+      font-weight: 500;
+    }
+
+    .navbar-links li.active a {
+      font-weight: bold;
+      color: #222;
+    }
+
+    .navbar-links a {
+      text-decoration: none;
+      color: inherit;
+      padding: 8px 0;
+      transition: color 0.17s;
+    }
+
+    .navbar-links a:hover {
+      color: #111;
+    }
+
+    .navbar-search {
+      margin-left: auto;
+      margin-right: 18px;
+      display: flex;
+      align-items: center;
+    }
+
+    .search-input {
+      padding: 7px 13px;
+      border-radius: 12px;
+      border: none;
+      outline: none;
+      background: #fff;
+      font-size: 1em;
+      color: #333;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.07);
+      width: 125px;
+      transition: width 0.2s;
+    }
+    .search-input:focus {
+      width: 180px;
+    }
+
+    .navbar-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .login-btn {
+      background: #fff;
+      color: #222;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 8px;
+      font-size: 1em;
+      font-weight: 500;
+      cursor: pointer;
+      box-shadow: 0 1px 5px rgba(0,0,0,0.04);
+      transition: background 0.14s;
+    }
+    .login-btn:hover {
+      background: #f2eedf;
+    }
+
+    .signup-btn {
+      background: #000;
+      color: #fff;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 8px;
+      font-size: 1em;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.14s;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.09);
+    }
+    .signup-btn:hover {
+      background: #222;
+    }
+
+    .footer-section-bg {
+      background: #edeada;
+      padding: 40px 0 0 0;
+    }
+
+    .newsletter-box {
+      max-width: 900px;
+      margin: 0 auto 40px auto;
+      background: #22201c;
+      color: #fff;
+      border-radius: 28px;
+      padding: 48px 32px 42px 32px;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    .newsletter-box .newsletter-badge {
+      letter-spacing: 2px;
+      font-size: 1.04em;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #e1ded4;
+      opacity: .85;
+    }
+
+    .newsletter-box .newsletter-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 3.3rem;
+      font-weight: 800;
+      margin: 0 0 18px 0;
+      letter-spacing: 1px;
+      line-height: 1.07;
+    }
+
+    .newsletter-box .newsletter-desc {
+      font-size: 1.1em;
+      margin-bottom: 36px;
+      opacity: 0.94;
+      color: #fff;
+    }
+
+    .newsletter-form {
+      display: flex;
+      max-width: 400px;
+      margin: 0 auto;
+      gap: 0;
+      background: none;
+      border-radius: 22px;
+      background: none;
+    }
+
+    .newsletter-input {
+      flex: 1;
+      padding: 15px 22px;
+      border: none;
+      border-radius: 22px 0 0 22px;
+      font-size: 1.1rem;
+      outline: none;
+      background: #f7f5f0;
+      color: #333;
+    }
+
+    .subscribe-btn {
+      background: #22201c;
+      color: #fff;
+      border: 2px solid #fff;
+      border-left: none;
+      padding: 0 28px;
+      border-radius: 0 22px 22px 0;
+      font-size: 1.05rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.18s, color 0.18s;
+    }
+    .subscribe-btn:hover {
+      background: #fff;
+      color: #22201c;
+    }
+
+    /* Footer Actual */
+    .footer-container {
+      max-width: 950px;
+      margin: 0 auto;
+      background: #22201c;
+      color: #fff;
+      border-radius: 22px;
+      padding: 30px 32px 14px 32px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-main-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+      border-bottom: 1px solid #36332e;
+      padding-bottom: 18px;
+      margin-bottom: 10px;
+    }
+
+    .footer-logo {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.7rem;
+      font-weight: bold;
+      margin-bottom: 10px;
+      letter-spacing: 2px;
+    }
+
+    .footer-nav {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+    .footer-nav a {
+      color: #fff;
+      font-size: 1em;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 4px 0;
+      text-decoration: none;
+      font-weight: 500;
+      opacity: .92;
+      transition: color 0.17s;
+    }
+    .footer-nav a:hover {
+      color: #ff6447;
+    }
+
+    .footer-socials {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .footer-socials a {
+      width: 32px;
+      height: 32px;
+      background: #151410;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 1.16em;
+      text-decoration: none;
+      transition: background 0.16s, color 0.16s;
+    }
+    .footer-socials a:hover {
+      background: #ff6447;
+      color: #fff;
+    }
+
+    .footer-bottom {
+      color: #cac5bd;
+      text-align: left;
+      font-size: 1em;
+      margin-top: 2px;
+      letter-spacing: 1px;
+    }
+    @media (max-width: 800px) {
+      .newsletter-box, .footer-container {
+        padding: 28px 8vw;
+      }
+      .newsletter-box .newsletter-title {
+        font-size: 2.3rem;
+      }
+      .footer-main-row {
+        flex-direction: column;
+        gap: 18px;
+        align-items: flex-start;
+      }
+      .footer-nav {
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      .footer-socials {
+        margin-top: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-logo">Zestora</div>
+    <ul class="navbar-links">
+      <li class="active"><a href="#">HOME</a></li>
+      <li><a href="#">RECIPES</a></li>
+      <li><a href="#">CATEGORIES</a></li>
+      <li><a href="#">GUIDEBOOKS</a></li>
+      <li><a href="#">COOKING TIPS</a></li>
+      <li><a href="#">COMMUNITY</a></li>
+      <li><a href="#">ABOUT US</a></li>
+    </ul>
+    <div class="navbar-search">
+      <input type="text" class="search-input" placeholder="Search">
+    </div>
+    <div class="navbar-actions">
+      <button class="login-btn">Login</button>
+      <button class="signup-btn">Sign Up</button>
+    </div>
+  </nav>
+
+
+
+  <!-- Footer Section as provided -->
+  <div class="footer-section-bg">
+    <div class="newsletter-box">
+      <div class="newsletter-badge">SUBSCRIBE</div>
+      <div class="newsletter-title">JOIN THE FUN<br />SUBSCRIBE NOW!</div>
+      <div class="newsletter-desc">
+        Subscribe to our newsletter for a weekly serving of recipes, cooking tips, and exclusive insights straight to your inbox.
+      </div>
+      <form class="newsletter-form" autocomplete="off">
+        <input type="email" class="newsletter-input" placeholder="Email Address" required>
+        <button class="subscribe-btn" type="submit">SUBSCRIBE</button>
+      </form>
+    </div>
+    <footer class="footer-container">
+      <div class="footer-main-row">
+        <div class="footer-logo">Zestora</div>
+        <nav class="footer-nav">
+          <a href="#">HOME</a>
+          <a href="#">RECIPES</a>
+          <a href="#">COOKING TIPS</a>
+          <a href="#">ABOUT US</a>
+        </nav>
+        <div class="footer-socials">
+          <a href="#"><i class="fab fa-tiktok"></i></a>
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        COPYRIGHT © 2025 ZESTORA.
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
