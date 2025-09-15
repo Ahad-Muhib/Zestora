@@ -1,0 +1,1041 @@
+.zestora-recipes-1 {
+  	width: 100%;
+  	position: relative;
+  	background-color: #f0ebe1;
+  	height: 6847px;
+  	overflow: hidden;
+  	text-align: center;
+  	font-size: 14px;
+  	color: #fffbf2;
+  	font-family: Roboto;
+}
+.blog {
+  	position: absolute;
+  	top: 105px;
+  	left: 64px;
+  	border-radius: 32px;
+  	border: 1px solid rgba(38, 37, 34, 0.24);
+  	box-sizing: border-box;
+  	height: 5415px;
+  	display: flex;
+  	flex-direction: column;
+  	align-items: flex-end;
+  	padding: 64px 40px;
+  	gap: 40px;
+  	font-size: 18px;
+}
+.hero-wrapper {
+  	display: flex;
+  	flex-direction: column;
+  	align-items: center;
+  	gap: 40px;
+}
+.text {
+  	width: 870px;
+  	display: flex;
+  	flex-direction: column;
+  	align-items: center;
+  	justify-content: center;
+  	gap: 12px;
+}
+.tag-wrapper {
+  	border-radius: 16px;
+  	background-color: #ee6352;
+  	display: flex;
+  	align-items: center;
+  	justify-content: center;
+  	padding: 8px 16px;
+  	text-align: left;
+}
+.zestora-recipes-1-text {
+  	position: relative;
+  	line-height: 100%;
+  	text-transform: uppercase;
+  	font-weight: 500;
+}
+.headline-1 {
+  	align-self: stretch;
+  	position: relative;
+  	font-size: 80px;
+  	letter-spacing: -0.01em;
+  	line-height: 100%;
+  	text-transform: uppercase;
+  	font-weight: 800;
+  	font-family: Montserrat;
+  	color: #262522;
+}
+.paragraph-1 {
+  	width: 648px;
+  	position: relative;
+  	font-size: 21px;
+  	letter-spacing: 0.01em;
+  	line-height: 140%;
+  	color: rgba(38, 37, 34, 0.6);
+  	display: inline-block;
+}
+.item-wrapper {
+  	display: flex;
+  	align-items: center;
+  	justify-content: center;
+  	gap: 24px;
+  	text-align: left;
+  	color: #262522;
+  	font-family: Montserrat;
+}
+.item {
+  	display: flex;
+  	align-items: center;
+  	justify-content: center;
+  	gap: 8px;
+}
+.mditimer-icon {
+  	width: 24px;
+  	position: relative;
+  	height: 24px;
+}
+.text2 {
+  	position: relative;
+  	letter-spacing: 0.02em;
+  	line-height: 100%;
+  	text-transform: uppercase;
+  	font-weight: 600;
+}
+.item-wrapper-child {
+  	width: 4px;
+  	position: relative;
+  	border-radius: 50%;
+  	background-color: #262522;
+  	height: 4px;
+}
+.hero-image-icon {
+  	width: 1232px;
+  	position: relative;
+  	border-radius: 24px;
+  	height: 640px;
+  	object-fit: cover;
+}
+.blog-wrapper {
+  	width: 1161px;
+  	display: flex;
+  	align-items: flex-start;
+  	gap: 56px;
+  	text-align: left;
+  	font-size: 16px;
+  	color: #ee6352;
+}
+.blog-text-wrapper {
+  	width: 645px;
+  	display: flex;
+  	flex-direction: column;
+  	align-items: flex-start;
+  	gap: 40px;
+}
+.text-wrapper {
+  	display: flex;
+  	flex-direction: column;
+  	align-items: flex-start;
+  	color: rgba(51, 51, 51, 0.8);
+}
+.paragraph-2 {
+  	width: 560px;
+  	position: relative;
+  	letter-spacing: 0.01em;
+  	line-height: 140%;
+  	font-weight: 300;
+  	display: inline-block;
+}
+.imagine-tender-chicken {
+  	margin: 0;
+}
+.zestora-recipes-1-text-wrapper {
+  	display: flex;
+  	flex-direction: column;
+  	align-items: flex-start;
+  	gap: 16px;
+  	color: #262522;
+}
+.subtitle {
+  	align-self: stretch;
+  	position: relative;
+  	font-size: 24px;
+  	letter-spacing: -0.01em;
+  	line-height: 120%;
+  	font-family: Montserrat;
+}
+.zestora-recipes-1-subtitle {
+  	align-self: stretch;
+  	position: relative;
+  	font-size: 18px;
+  	letter-spacing: 0.02em;
+  	line-height: 100%;
+  	text-transform: uppercase;
+  	font-weight: 600;
+  	font-family: Montserrat;
+  	color: #ee6352;
+}
+.zestora-recipes-1-paragraph-2 {
+  	width: 560px;
+  	position: relative;
+  	letter-spacing: 0.01em;
+  	display: inline-block;
+}
+.maintain-cleanliness {
+  	margin: 0;
+  	line-height: 120%;
+  	font-weight: 500;
+}
+.always-wash-hands {
+  	margin: 0;
+  	line-height: 140%;
+  	font-weight: 300;
+  	color: rgba(51, 51, 51, 0.8);
+}
+.keep-separate-cutting {
+  	margin: 0;
+  	line-height: 140%;
+  	font-weight: 300;
+}
+.text-wrapper2 {
+  	display: flex;
+  	flex-direction: column;
+  	align-items: flex-start;
+  	gap: 16px;
+  	font-size: 40px;
+  	color: #333;
+  	font-family: Montserrat;
+}
+.headline-2 {
+  	position: relative;
+  	letter-spacing: 0.01em;
+  	line-height: 100%;
+  	text-transform: uppercase;
+}
+.paragraph-26 {
+  	width: 560px;
+  	position: relative;
+  	font-size: 16px;
+  	letter-spacing: 0.01em;
+  	line-height: 140%;
+  	font-weight: 300;
+  	font-family: Roboto;
+  	color: rgba(51, 51, 51, 0.8);
+  	display: inline-block;
+}
+.text-wrapper3 {
+  	display: flex;
+  	flex-direction: column;
+  	align-items: flex-start;
+  	gap: 16px;
+  	font-size: 18px;
+  	font-family: Montserrat;
+}
+.preheat-your-oven {
+  	margin-bottom: 0px;
+}
+.gently-separate-the-chicken-sk {
+  	margin: 0;
+  	font-family: inherit;
+  	font-size: inherit;
+  	padding-left: 21px;
+}
+.image-icon {
+  	align-self: stretch;
+  	position: relative;
+  	border-radius: 24px;
+  	max-width: 100%;
+  	overflow: hidden;
+  	height: 480px;
+  	flex-shrink: 0;
+  	object-fit: cover;
+}
+.video-icon {
+  	width: 645px;
+  	position: relative;
+  	border-radius: 24px;
+  	height: 480px;
+  	object-fit: cover;
+}
+.text-wrapper7 {
+  	display: flex;
+  	flex-direction: column;
+  	align-items: flex-start;
+  	gap: 16px;
+  	color: rgba(51, 51, 51, 0.8);
+}
+.subtitle7 {
+  	position: relative;
+  	font-size: 18px;
+  	letter-spacing: 0.02em;
+  	line-height: 100%;
+  	text-transform: uppercase;
+  	font-weight: 600;
+  	font-family: Montserrat;
+  	color: #ee6352;
+}
+.white-wine {
+  	color: rgba(38, 37, 34, 0.8);
+}
+.or-a {
+  	color: rgba(51, 51, 51, 0.8);
+}
+.button {
+  	border-radius: 24px;
+  	border: 1px solid #262522;
+  	display: flex;
+  	align-items: center;
+  	padding: 12px 24px;
+  	gap: 48px;
+  	font-size: 12px;
+  	color: #262522;
+}
+.text5 {
+  	position: relative;
+  	letter-spacing: 0.01em;
+  	line-height: 120%;
+  	text-transform: uppercase;
+  	font-weight: 500;
+}
+.icon-wrapper {
+  	display: flex;
+  	align-items: flex-start;
+  	gap: 12px;
+}
+.separation-line {
+  	width: 749px;
+  	position: relative;
+  	border-top: 1px solid rgba(38, 37, 34, 0.08);
+  	box-sizing: border-box;
+  	height: 1px;
+}
+.author-wrapper {
+  	align-self: stretch;
+  	display: flex;
+  	align-items: flex-start;
+  	gap: 16px;
+  	color: rgba(51, 51, 51, 0.6);
+}
+.author-image-icon {
+  	width: 120px;
+  	position: relative;
+  	border-radius: 12px;
+  	height: 120px;
+  	object-fit: cover;
+}
+.text-wrapper8 {
+  	flex: 1;
+  	display: flex;
+  	flex-direction: column;
+  	align-items: flex-start;
+  	gap: 24px;
+}
+.small-text {
+  	align-self: stretch;
+  	position: relative;
+  	letter-spacing: 0.01em;
+  	line-height: 120%;
+  	font-weight: 500;
+}
+.zestora-recipes-1-small-text {
+  	align-self: stretch;
+  	position: relative;
+  	letter-spacing: 0.01em;
+  	line-height: 140%;
+  	font-weight: 300;
+}
+.zestora-recipes-1-button {
+  	border-radius: 24px;
+  	border: 1px solid #262522;
+  	display: flex;
+  	align-items: center;
+  	justify-content: center;
+  	padding: 12px 24px;
+  	font-size: 14px;
+  	color: #262522;
+}
+.featured-section-wrapper {
+  	flex: 1;
+  	border-radius: 24px;
+  	background-color: #f0ebe1;
+  	display: flex;
+  	flex-direction: column;
+  	align-items: flex-end;
+  	padding: 40px 16px 16px;
+  	gap: 16px;
+  	font-size: 18px;
+  	font-family: Montserrat;
+}
+.text-wrapper10 {
+  	align-self: stretch;
+  	border-radius: 24px;
+  	background-color: #fffbf2;
+  	border: 1px solid rgba(38, 37, 34, 0.24);
+  	display: flex;
+  	flex-direction: column;
+  	align-items: flex-start;
+  	padding: 24px 16px;
+  	gap: 16px;
+}
+.zestora-recipes-1-paragraph-1 {
+  	align-self: stretch;
+  	position: relative;
+  	font-size: 21px;
+  	letter-spacing: 0.01em;
+  	line-height: 140%;
+  	font-family: Roboto;
+  	color: #262522;
+}
+.whole-chicken-about-3-4-pound {
+  	margin: 0;
+  	font-family: inherit;
+  	font-size: inherit;
+  	padding-left: 28px;
+}
+.item3 {
+  	align-self: stretch;
+  	border-radius: 24px;
+  	background-color: #fffbf2;
+  	border: 1px solid rgba(38, 37, 34, 0.24);
+  	display: flex;
+  	flex-direction: column;
+  	align-items: flex-start;
+  	justify-content: center;
+  	padding: 24px 16px;
+  	gap: 16px;
+}
+.subtitle8 {
+  	align-self: stretch;
+  	position: relative;
+  	letter-spacing: 0.02em;
+  	line-height: 100%;
+  	text-transform: uppercase;
+  	font-weight: 600;
+}
+.paragraph-213 {
+  	align-self: stretch;
+  	position: relative;
+  	font-size: 16px;
+  	letter-spacing: 0.01em;
+  	line-height: 120%;
+  	font-weight: 500;
+  	font-family: Roboto;
+  	color: #262522;
+}
+.item4 {
+  	align-self: stretch;
+  	border-radius: 24px;
+  	background-color: #fffbf2;
+  	border: 1px solid rgba(38, 37, 34, 0.24);
+  	display: flex;
+  	flex-direction: column;
+  	align-items: flex-start;
+  	justify-content: center;
+  	padding: 24px 16px;
+  	gap: 16px;
+  	font-size: 16px;
+  	color: #262522;
+  	font-family: Roboto;
+}
+.mixed-text {
+  	align-self: stretch;
+  	position: relative;
+  	letter-spacing: 0.01em;
+}
+.calories {
+  	line-height: 120%;
+  	font-weight: 500;
+}
+.span {
+  	line-height: 140%;
+  	font-family: Roboto;
+}
+.small-text2 {
+  	align-self: stretch;
+  	position: relative;
+  	font-size: 12px;
+  	letter-spacing: 0.01em;
+  	line-height: 120%;
+  	text-transform: uppercase;
+  	font-weight: 500;
+  	font-family: Roboto;
+  	color: rgba(51, 51, 51, 0.6);
+}
+.featured-section {
+  	position: absolute;
+  	top: 5561px;
+  	left: calc(50% - 656px);
+  	border-radius: 32px;
+  	background-color: #f0ebe1;
+  	border: 1px solid rgba(38, 37, 34, 0.24);
+  	display: flex;
+  	flex-direction: column;
+  	align-items: flex-end;
+  	padding: 40px 16px 16px;
+  	gap: 40px;
+  	text-align: left;
+  	font-size: 40px;
+  	color: #262522;
+  	font-family: Montserrat;
+}
+.header-wrapper {
+  	display: flex;
+  	align-items: flex-start;
+  	gap: 748px;
+}
+.headline-22 {
+  	width: 426px;
+  	position: relative;
+  	letter-spacing: 0.01em;
+  	line-height: 100%;
+  	text-transform: uppercase;
+  	display: inline-block;
+  	flex-shrink: 0;
+}
+.arrow-wrapper {
+  	display: flex;
+  	align-items: flex-start;
+  	gap: 2px;
+}
+.arrow-left-icon {
+  	width: 40px;
+  	position: relative;
+  	height: 40px;
+  	object-fit: contain;
+}
+.arrow-right-icon {
+  	width: 40px;
+  	position: relative;
+  	height: 40px;
+}
+.card-wrapper {
+  	display: flex;
+  	align-items: flex-start;
+  	gap: 16px;
+  	font-size: 24px;
+}
+.recipe-card {
+  	display: flex;
+  	flex-direction: column;
+  	align-items: flex-start;
+}
+.recipe-image-icon {
+  	width: 632px;
+  	position: relative;
+  	border-radius: 24px 24px 0px 0px;
+  	height: 234px;
+  	object-fit: cover;
+}
+.text-wrapper11 {
+  	width: 632px;
+  	border-radius: 0px 0px 24px 24px;
+  	background-color: #fffbf2;
+  	border: 1px solid rgba(38, 37, 34, 0.16);
+  	box-sizing: border-box;
+  	display: flex;
+  	flex-direction: column;
+  	align-items: flex-start;
+  	padding: 24px 24px 16px;
+  	gap: 40px;
+}
+.copy {
+  	align-self: stretch;
+  	display: flex;
+  	flex-direction: column;
+  	align-items: flex-start;
+  	gap: 12px;
+}
+.headline-3 {
+  	width: 379px;
+  	position: relative;
+  	letter-spacing: -0.01em;
+  	line-height: 120%;
+  	display: inline-block;
+}
+.paragraph-215 {
+  	align-self: stretch;
+  	position: relative;
+  	font-size: 16px;
+  	letter-spacing: 0.01em;
+  	line-height: 140%;
+  	font-weight: 300;
+  	font-family: Roboto;
+}
+.info-wrapper {
+  	align-self: stretch;
+  	display: flex;
+  	align-items: center;
+  	justify-content: space-between;
+  	gap: 0px;
+  	font-size: 12px;
+  	font-family: Roboto;
+}
+.button2 {
+  	border-radius: 24px;
+  	border: 1px solid #262522;
+  	display: flex;
+  	align-items: center;
+  	justify-content: center;
+  	padding: 12px 24px;
+  	cursor: pointer;
+  	font-size: 14px;
+}
+.zestora-recipes-1-recipe-card {
+  	width: 632px;
+  	display: flex;
+  	align-items: flex-start;
+  	flex-wrap: wrap;
+  	align-content: flex-start;
+  	position: relative;
+}
+.zestora-recipes-1-recipe-image-icon {
+  	width: 632px;
+  	position: relative;
+  	border-radius: 24px 24px 0px 0px;
+  	height: 234px;
+  	object-fit: cover;
+  	z-index: 0;
+}
+.text-wrapper12 {
+  	width: 632px;
+  	border-radius: 0px 0px 24px 24px;
+  	background-color: #fffbf2;
+  	border: 1px solid rgba(38, 37, 34, 0.16);
+  	box-sizing: border-box;
+  	display: flex;
+  	flex-direction: column;
+  	align-items: flex-start;
+  	padding: 24px 24px 16px;
+  	gap: 40px;
+  	z-index: 1;
+  	margin-left: -32px;
+  	position: relative;
+}
+.button3 {
+  	border-radius: 24px;
+  	border: 1px solid #262522;
+  	display: flex;
+  	align-items: center;
+  	justify-content: center;
+  	padding: 12px 24px;
+  	font-size: 14px;
+}
+.tag {
+  	margin: 0 !important;
+  	position: absolute;
+  	top: 184px;
+  	left: 542px;
+  	border-radius: 34.43px;
+  	background-color: #9fdc26;
+  	display: flex;
+  	align-items: center;
+  	justify-content: center;
+  	padding: 23px;
+  	gap: 14.3px;
+  	z-index: 2;
+}
+.icon3 {
+  	width: 20.1px;
+  	position: relative;
+  	height: 20.1px;
+  	z-index: 0;
+}
+.text-icon {
+  	width: 46.36%;
+  	position: absolute;
+  	margin: 0 !important;
+  	height: 56.82%;
+  	top: 36.36%;
+  	right: 3.64%;
+  	bottom: 6.82%;
+  	left: 50%;
+  	max-width: 100%;
+  	overflow: hidden;
+  	max-height: 100%;
+  	object-fit: contain;
+  	z-index: 1;
+}
+.zestora-recipes-1-text-icon {
+  	width: 44.7%;
+  	position: absolute;
+  	margin: 0 !important;
+  	height: 55.61%;
+  	top: 6.06%;
+  	right: 47.73%;
+  	bottom: 38.33%;
+  	left: 7.58%;
+  	max-width: 100%;
+  	overflow: hidden;
+  	max-height: 100%;
+  	object-fit: contain;
+  	z-index: 2;
+}
+.navigation {
+  	position: absolute;
+  	top: 16px;
+  	left: calc(50% - 656px);
+  	border-radius: 32px;
+  	background-color: #f0ebe1;
+  	border: 1px solid rgba(38, 37, 34, 0.24);
+  	box-sizing: border-box;
+  	width: 1312px;
+  	display: flex;
+  	align-items: center;
+  	justify-content: space-between;
+  	padding: 16px 24px;
+  	gap: 0px;
+  	text-align: left;
+  	font-size: 32px;
+  	color: #000;
+  	font-family: Jaro;
+}
+.logo-nav-bar {
+  	width: 180px;
+  	display: flex;
+  	align-items: center;
+  	cursor: pointer;
+}
+.div {
+  	width: 103.4px;
+  	position: relative;
+  	background-color: rgba(0, 0, 0, 0);
+  	height: 28px;
+}
+.zestora-recipes-1-div {
+  	position: absolute;
+  	top: 0px;
+  	left: 0px;
+  	background-color: rgba(0, 0, 0, 0);
+  	width: 103.4px;
+  	height: 28px;
+}
+.zestora {
+  	position: absolute;
+  	top: 0px;
+  	left: 23px;
+  	display: flex;
+  	align-items: center;
+  	width: 104px;
+  	height: 28px;
+}
+.link-wrapper {
+  	display: flex;
+  	align-items: center;
+  	justify-content: center;
+  	gap: 24px;
+  	font-size: 14px;
+  	color: #262522;
+  	font-family: Roboto;
+}
+.link {
+  	border-radius: 2px;
+  	display: flex;
+  	align-items: center;
+  	justify-content: center;
+  	padding: 8px;
+  	cursor: pointer;
+  	color: #8c8c8c;
+}
+.zestora-recipes-1-link {
+  	width: 56px;
+  	position: relative;
+  	border-radius: 2px;
+  	border-bottom: 4px solid #ee6352;
+  	box-sizing: border-box;
+  	height: 30px;
+}
+.text12 {
+  	position: absolute;
+  	top: 8px;
+  	left: 1px;
+  	line-height: 100%;
+  	text-transform: uppercase;
+  	font-weight: 500;
+  	display: inline-block;
+  	width: 63px;
+}
+.link2 {
+  	display: flex;
+  	align-items: center;
+  	justify-content: center;
+  	padding: 8px;
+  	opacity: 0.4;
+}
+.link4 {
+  	display: flex;
+  	align-items: center;
+  	justify-content: center;
+  	padding: 8px;
+  	opacity: 0.4;
+  	cursor: pointer;
+}
+.text15 {
+  	width: 94px;
+  	position: relative;
+  	line-height: 100%;
+  	text-transform: uppercase;
+  	font-weight: 500;
+  	display: inline-block;
+  	flex-shrink: 0;
+}
+.search-icon {
+  	width: 37px;
+  	position: relative;
+  	border-radius: 16px;
+  	height: 37px;
+}
+.button-wrapper {
+  	width: 122px;
+  	height: 38px;
+}
+.cta-section {
+  	position: absolute;
+  	top: 6193px;
+  	left: 71px;
+  	width: 1312px;
+  	display: flex;
+  	flex-direction: column;
+  	align-items: flex-start;
+  	gap: 10px;
+  	font-size: 18px;
+}
+.cta-bg {
+  	align-self: stretch;
+  	position: relative;
+  	height: 486px;
+  	z-index: 0;
+}
+.bg {
+  	position: absolute;
+  	top: 0px;
+  	left: 0px;
+  	border-radius: 32px;
+  	background-color: #262522;
+  	border: 1px solid #000;
+  	box-sizing: border-box;
+  	width: 1312px;
+  	height: 486px;
+}
+.text-wrapper13 {
+  	width: 1078px;
+  	margin: 0 !important;
+  	position: absolute;
+  	top: 64px;
+  	left: calc(50% - 539px);
+  	display: flex;
+  	flex-direction: column;
+  	align-items: center;
+  	justify-content: center;
+  	gap: 48px;
+  	z-index: 1;
+}
+.text18 {
+  	align-self: stretch;
+  	display: flex;
+  	flex-direction: column;
+  	align-items: center;
+  	justify-content: center;
+  	gap: 12px;
+}
+.text19 {
+  	position: relative;
+  	line-height: 100%;
+  	text-transform: uppercase;
+  	color: rgba(255, 251, 242, 0.8);
+  	text-align: left;
+}
+.header-2 {
+  	width: 876px;
+  	position: relative;
+  	font-size: 80px;
+  	letter-spacing: -0.01em;
+  	line-height: 100%;
+  	text-transform: uppercase;
+  	display: inline-block;
+  	font-family: Montserrat;
+}
+.paragraph-12 {
+  	width: 648px;
+  	position: relative;
+  	font-size: 21px;
+  	letter-spacing: 0.01em;
+  	line-height: 140%;
+  	display: inline-block;
+}
+.input-wrapper {
+  	display: flex;
+  	flex-direction: column;
+  	align-items: flex-start;
+  	position: relative;
+  	gap: 10px;
+  	text-align: left;
+  	font-size: 21px;
+  	color: rgba(38, 37, 34, 0.4);
+}
+.input {
+  	width: 426px;
+  	border-radius: 24px;
+  	background-color: #fffbf2;
+  	height: 50px;
+  	display: flex;
+  	align-items: center;
+  	padding: 12px 24px;
+  	box-sizing: border-box;
+  	z-index: 0;
+}
+.text20 {
+  	position: relative;
+  	letter-spacing: 0.01em;
+  	line-height: 24px;
+}
+.button4 {
+  	margin: 0 !important;
+  	position: absolute;
+  	top: 6px;
+  	left: 296px;
+  	border-radius: 24px;
+  	background-color: #262522;
+  	display: flex;
+  	align-items: center;
+  	justify-content: center;
+  	padding: 12px 24px;
+  	z-index: 1;
+  	font-size: 14px;
+  	color: #f0ebe1;
+}
+.text21 {
+  	position: relative;
+  	line-height: 100%;
+  	text-transform: uppercase;
+}
+.footer {
+  	position: absolute;
+  	top: 6695px;
+  	left: 71px;
+  	border-radius: 32px;
+  	background-color: #262522;
+  	display: flex;
+  	flex-direction: column;
+  	align-items: center;
+  	padding: 0px 40px 24px;
+  	gap: 15px;
+  	text-align: left;
+  	color: #f0ebe1;
+}
+.wrapper {
+  	width: 1233px;
+  	border-bottom: 1px solid rgba(240, 235, 225, 0.08);
+  	box-sizing: border-box;
+  	display: flex;
+  	align-items: center;
+  	justify-content: space-between;
+  	padding: 24px 0px;
+  	gap: 0px;
+}
+.logo-footer {
+  	width: 40px;
+  	height: 35px;
+}
+.zestora-recipes-1-link-wrapper {
+  	display: flex;
+  	align-items: center;
+  	gap: 16px;
+}
+.zestora-recipes-1-separation-line {
+  	width: 1px;
+  	position: relative;
+  	border-right: 1px solid rgba(240, 235, 225, 0.08);
+  	box-sizing: border-box;
+  	height: 17px;
+}
+.zestora-recipes-1-icon-wrapper {
+  	display: flex;
+  	align-items: flex-start;
+  	gap: 16px;
+}
+.small-text3 {
+  	position: relative;
+  	font-size: 12px;
+  	letter-spacing: 0.01em;
+  	line-height: 120%;
+  	text-transform: uppercase;
+  	font-weight: 500;
+  	color: rgba(240, 235, 225, 0.6);
+}
+.button-parent {
+  	position: absolute;
+  	top: 33px;
+  	left: 1183px;
+  	width: 169.2px;
+  	height: 36px;
+  	color: #404040;
+  	font-family: Inter;
+}
+.button5 {
+  	position: absolute;
+  	top: 0px;
+  	left: 0px;
+  	border-radius: 6px;
+  	background-color: #f5f5f5;
+  	width: 68.6px;
+  	height: 36px;
+  	cursor: pointer;
+}
+.login {
+  	position: absolute;
+  	top: 9px;
+  	left: 16px;
+  	display: inline-block;
+  	width: 42px;
+  	height: 20px;
+}
+.button6 {
+  	position: absolute;
+  	top: 0px;
+  	left: 85px;
+  	border-radius: 6px;
+  	background-color: #000;
+  	width: 84.2px;
+  	height: 36px;
+  	cursor: pointer;
+  	color: #fff;
+}
+.sign-up {
+  	position: absolute;
+  	top: 9px;
+  	left: 16px;
+  	display: inline-block;
+  	width: 58px;
+  	height: 20px;
+}
+.button7 {
+  	position: absolute;
+  	top: 33px;
+  	left: 1269px;
+  	border-radius: 6px;
+  	background-color: #000;
+  	width: 84.2px;
+  	height: 36px;
+  	cursor: pointer;
+  	color: #fff;
+  	font-family: Inter;
+}
+.recipes-1-zestora {
+  	position: absolute;
+  	top: 6747px;
+  	left: 99px;
+  	font-size: 32px;
+  	font-family: Jaro;
+  	color: #fff;
+  	text-align: left;
+  	display: flex;
+  	align-items: center;
+  	width: 104px;
+  	height: 28px;
+}
+.image-1 {
+  	position: absolute;
+  	top: 5398px;
+  	left: 282px;
+  	width: 1200px;
+  	height: 800px;
+}
+
