@@ -1,20 +1,37 @@
-<!-- templates/partials/navbar.html -->
 <nav class="navbar">
   <div class="navbar-logo">Zestora</div>
   <ul class="navbar-links">
     <li class="active"><a href="{% url 'home' %}">HOME</a></li>
-    <li><a href="{% url 'recipe1' %}">RECIPES</a></li>
-    <li><a href="#">CATEGORIES</a></li>
-    <li><a href="#">GUIDEBOOKS</a></li>
-    <li><a href="#">COOKING TIPS</a></li>
-    <li><a href="#">COMMUNITY</a></li>
-    <li><a href="#">ABOUT US</a></li>
+    <li><a href="{% url 'recipes:recipe_list' %}" class="nav-link">RECIPES</a></li>
+    <li><a href="{% url 'recipes:category_list' %}" class="nav-link">CATEGORIES</a></li>
+    <li><a href="{% url 'guidebooks' %}" class="nav-link">GUIDEBOOKS</a></li>
+    <li><a href="{% url 'tips:tip_list' %}" class="nav-link">COOKING TIPS</a></li>
+    <li><a href="{% url 'community:community_home' %}" class="nav-link">COMMUNITY</a></li>
+    <li><a href="{% url 'about' %}" class="nav-link">ABOUT US</a></li>
   </ul>
-  <div class="navbar-search">
-    <input type="text" class="search-input" placeholder="Search">
-  </div>
-  <div class="navbar-actions">
-    <a href="{% url 'login' %}" class="login-btn">Login</a>
-    <a href="{% url 'signup' %}" class="signup-btn">Sign Up</a>
+  <div class="nav-actions">
+    <div class="search-container">
+        <form method="GET" action="{% url 'search' %}" class="search-form">
+            <input type="text" name="q" placeholder="Search recipes..." class="search-input">
+            <button type="submit" class="search-btn">🔍</button>
+        </form>
+    </div>
+    
+    <div class="auth-buttons">
+        {% if user.is_authenticated %}
+            <span class="welcome-text">Hello, {{ user.first_name|default:user.username }}!</span>
+            <a href="{% url 'logout' %}" class="btn btn-outline">Logout</a>
+        {% else %}
+            <a href="{% url 'login' %}" class="btn btn-outline">Login</a>
+            <a href="{% url 'signup' %}" class="btn btn-primary">Sign Up</a>
+        {% endif %}
+    </div>
+</div>
+
+<div class="mobile-menu-toggle" id="mobile-menu-toggle">
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
 </div>
 </nav>

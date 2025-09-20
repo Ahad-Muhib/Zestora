@@ -1,0 +1,57 @@
+from django.db import models
+from django.contrib.auth.models import User
+
+class Category(models.Model):
+    name = models.CharField(max_length=100)
+    slug = models.SlugField(unique=True)
+    description = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = "Categories"
+
+class Recipe(models.Model):
+    DIFFICULTY_CHOICES = [
+        ('easy', 'Easy'),
+        ('medium', 'Medium'),
+        ('hard', 'Hard'),
+    ]
+    
+    title = models.CharField(max_length=200)
+    slug = models.SlugField(unique=True)
+    description = models.TextField()
+    ingredients = models.TextField()
+    instructions = models.TextField()
+    prep_time = models.IntegerField(help_text="Preparation time in minutes")
+    cook_time = models.IntegerField(help_text="Cooking time in minutes")
+    servings = models.IntegerField()
+    difficulty = models.CharField(max_length=10, choices=DIFFICULTY_CHOICES)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='recipes/', blank=True, null=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    featured = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.title
+
+    @property
+    def total_time(self):
+        return self.prep_time + self.cook_time
+
+class RecipeStep(models.Model):
+    recipe = models.ForeignKey(Recipe, related_name='steps', on_delete=models.CASCADE)
+    step_number = models.IntegerField()
+    instruction = models.TextField()
+    image = models.ImageField(upload_to='recipe_steps/', blank=True, null=True)
+
+    class Meta:
+        ordering = ['step_number']
+        unique_together = ['recipe', 'step_number']
+
+    def __str__(self):
+        return f"{self.recipe.title} - Step {self.step_number}"
