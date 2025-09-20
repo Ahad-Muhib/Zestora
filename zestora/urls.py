@@ -18,14 +18,23 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
-from zestoras import views
+from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
+    path('community/', include('community.urls')),
+    path('tips/', include('tips.urls')),
+    path('search/', views.search, name='search'),
+    path('guidebooks/', views.guidebooks, name='guidebooks'),
+    path('about/', views.about, name='about'),
+    path('logout/', views.logout_view, name='logout'),
+
+
     path("login/", views.login_view, name="login"),
     path("signup/", views.signup_view, name="signup"),
     path('recipes/', include('recipes.urls')),
+
 
 
 

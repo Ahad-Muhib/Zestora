@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+
+{% block title %}Guidebooks - Zestora{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="page-header">
+        <h1>Culinary Guidebooks</h1>
+        <p class="page-subtitle">Master the fundamentals with our comprehensive cooking guides</p>
+    </div>
+
+    <div class="guidebooks-grid">
+        <div class="guidebook-card">
+            <img src="https://images.unsplash.com/photo-1556909114-4ae4e2e8c900?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Knife Skills Guide">
+            <div class="guidebook-content">
+                <h3>Essential Knife Skills</h3>
+                <p>Master the fundamental knife techniques every home cook should know.</p>
+                <span class="coming-soon">Coming Soon</span>
+            </div>
+        </div>
+
+        <div class="guidebook-card">
+            <img src="https://images.unsplash.com/photo-1571997478779-2adcbbe9ab2f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Sauce Making Guide">
+            <div class="guidebook-content">
+                <h3>Classic Sauces Mastery</h3>
+                <p>Learn to create the five mother sauces and their variations.</p>
+                <span class="coming-soon">Coming Soon</span>
+            </div>
+        </div>
+
+        <div class="guidebook-card">
+            <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Baking Fundamentals">
+            <div class="guidebook-content">
+                <h3>Baking Fundamentals</h3>
+                <p>Understand the science behind perfect baking and pastry.</p>
+                <span class="coming-soon">Coming Soon</span>
+            </div>
+        </div>
+
+        <div class="guidebook-card">
+            <img src="https://images.unsplash.com/photo-1556908114-4be3b1032d4c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Flavor Pairing">
+            <div class="guidebook-content">
+                <h3>Flavor Pairing Guide</h3>
+                <p>Discover which ingredients work together to create amazing dishes.</p>
+                <span class="coming-soon">Coming Soon</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="newsletter-cta">
+        <h2>Stay Updated</h2>
+        <p>Be the first to know when our comprehensive guidebooks are released!</p>
+        <a href="{% url 'home' %}#newsletter" class="btn btn-primary">Subscribe to Newsletter</a>
+    </div>
+</section>
+
+<style>
+.page-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.page-subtitle {
+    font-size: 1.2rem;
+    color: #666;
+    margin-top: 1rem;
+}
+
+.guidebooks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 4rem;
+}
+
+.guidebook-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.guidebook-card:hover {
+    transform: translateY(-5px);
+}
+
+.guidebook-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.guidebook-content {
+    padding: 1.5rem;
+}
+
+.guidebook-content h3 {
+    color: #333;
+    margin-bottom: 0.5rem;
+    font-size: 1.3rem;
+}
+
+.guidebook-content p {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.coming-soon {
+    background: #e85a4f;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.newsletter-cta {
+    text-align: center;
+    background: #f5f5f5;
+    padding: 3rem;
+    border-radius: 15px;
+}
+
+.newsletter-cta h2 {
+    color: #333;
+    margin-bottom: 1rem;
+}
+
+.newsletter-cta p {
+    color: #666;
+    margin-bottom: 2rem;
+}
+</style>
+{% endblock %}
