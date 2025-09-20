@@ -1,0 +1,20 @@
+<!-- templates/partials/navbar.html -->
+<nav class="navbar">
+  <div class="navbar-logo">Zestora</div>
+  <ul class="navbar-links">
+    <li class="active"><a href="{% url 'home' %}">HOME</a></li>
+    <li><a href="{% url 'recipe1' %}">RECIPES</a></li>
+    <li><a href="#">CATEGORIES</a></li>
+    <li><a href="#">GUIDEBOOKS</a></li>
+    <li><a href="#">COOKING TIPS</a></li>
+    <li><a href="#">COMMUNITY</a></li>
+    <li><a href="#">ABOUT US</a></li>
+  </ul>
+  <div class="navbar-search">
+    <input type="text" class="search-input" placeholder="Search">
+  </div>
+  <div class="navbar-actions">
+    <a href="{% url 'login' %}" class="login-btn">Login</a>
+    <a href="{% url 'signup' %}" class="signup-btn">Sign Up</a>
+</div>
+</nav>
