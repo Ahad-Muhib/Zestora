@@ -1,37 +1,36 @@
-<!-- templates/partials/footer.html -->
-<div class="footer-section-bg">
-  <!-- Newsletter Section -->
-  <div class="newsletter-box">
-    <div class="newsletter-badge">SUBSCRIBE</div>
-    <div class="newsletter-title">JOIN THE FUN<br>SUBSCRIBE NOW!</div>
-    <div class="newsletter-desc">
-      Subscribe to our newsletter for a weekly serving of recipes, cooking tips, and exclusive insights straight to your inbox.
-    </div>
-    <form class="newsletter-form" autocomplete="off">
-      <input type="email" class="newsletter-input" placeholder="Email Address" required>
-      <button class="subscribe-btn" type="submit">SUBSCRIBE</button>
-    </form>
-  </div>
-
-  <!-- Footer -->
-  <footer class="footer-container">
-    <div class="footer-main-row">
-      <div class="footer-logo">Zestora</div>
-      <nav class="footer-nav">
-        <a href="#">HOME</a>
-        <a href="#">RECIPES</a>
-        <a href="#">COOKING TIPS</a>
-        <a href="#">ABOUT US</a>
-      </nav>
-      <div class="footer-socials">
-        <a href="#"><i class="fab fa-tiktok"></i></a>
-        <a href="#"><i class="fab fa-facebook-f"></i></a>
-        <a href="#"><i class="fab fa-instagram"></i></a>
-        <a href="#"><i class="fab fa-youtube"></i></a>
+<footer class="footer">
+  <div class="footer-content">
+      <div class="footer-section">
+          <h3>Zestora</h3>
+          <p>Unleashing culinary excellence, one recipe at a time.</p>
+          <div class="social-links">
+              <a href="#" aria-label="Facebook">📘</a>
+              <a href="#" aria-label="Instagram">📷</a>
+              <a href="#" aria-label="Twitter">🐦</a>
+          </div>
       </div>
-    </div>
-    <div class="footer-bottom">
-      COPYRIGHT © 2025 ZESTORA.
-    </div>
-  </footer>
-</div>
+      
+      <div class="footer-section">
+          <h4>Quick Links</h4>
+          <ul>
+              <li><a href="{% url 'home' %}">Home</a></li>
+              <li><a href="{% url 'recipes:recipe_list' %}">Recipes</a></li>
+              <li><a href="{% url 'tips:tip_list' %}">Cooking Tips</a></li>
+              <li><a href="{% url 'community:community_home' %}">Community</a></li>
+          </ul>
+      </div>
+      
+      <div class="footer-section">
+          <h4>Newsletter</h4>
+          <p>Subscribe for weekly recipes and cooking tips!</p>
+          <form class="newsletter-form">
+              <input type="email" placeholder="Enter your email" required>
+              <button type="submit" class="btn btn-primary">Subscribe</button>
+          </form>
+      </div>
+  </div>
+  
+  <div class="footer-bottom">
+      <p>&copy; 2025 Zestora. All rights reserved.</p>
+  </div>
+</footer>

@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}Recipes - Zestora{% endblock %}
+
+{% block content %}
+<section class="section">
+    <div class="section-header">
+        <div class="section-text">
+            <h1>All Recipes</h1>
+            <p>Discover our collection of delicious recipes from around the world</p>
+        </div>
+        <div class="section-actions">
+            <a href="{% url 'recipes:add_recipe' %}" class="btn btn-primary">
+                ➕ Add Recipe
+            </a>
+        </div>
+    </div>
+    
+    {% if recipes %}
+        <div class="recipe-grid">
+            {% for recipe in recipes %}
+            <div class="recipe-card">
+                {% if recipe.image %}
+                    <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
+                {% else %}
+                    <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="{{ recipe.title }}">
+                {% endif %}
+                <div class="recipe-card-content">
+                    <h3>{{ recipe.title }}</h3>
+                    <div class="recipe-meta">
+                        <span>⏱️ {{ recipe.total_time }} mins</span>
+                        <span>👥 {{ recipe.servings }} servings</span>
+                        <span>🔥 {{ recipe.get_difficulty_display }}</span>
+                    </div>
+                    <p class="recipe-description">{{ recipe.description|truncatewords:15 }}</p>
+                    <a href="{% url 'recipes:recipe_detail' recipe.slug %}" class="btn btn-outline">View Recipe</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="no-content">
+            <h2>No recipes yet</h2>
+            <p>Check back soon for delicious recipes!</p>
+            <a href="{% url 'home' %}" class="btn btn-primary">Back to Home</a>
+        </div>
+    {% endif %}
+</section>
+{% endblock %}
