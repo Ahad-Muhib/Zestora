@@ -1,11 +1,12 @@
 from django.urls import path
 from . import views
 
-from django.conf.urls.static import static
-from django.conf import settings
-
 urlpatterns = [
+    path('', views.home, name='home'),  # homepage
+    path('hometest/', views.hometest, name='hometest'),  # test page
+
+
     path("login/", views.login_view, name="login"),
     path("signup/", views.signup_view, name="signup"),
+    path('recipe1/', views.recipe_view, name='recipe1'), 
 ]
-
