@@ -103,10 +103,20 @@
             
             <div class="form-section">
                 <h3>Recipe Image</h3>
-                <div class="form-group">
-                    <label for="{{ form.image.id_for_label }}">Upload Image</label>
-                    {{ form.image }}
-                    <small class="help-text">Upload a high-quality image of your finished dish (optional)</small>
+                <div class="image-upload-section">
+                    <div class="image-upload-area" id="image-upload-area">
+                        <div class="upload-content">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <h4>Upload Recipe Image</h4>
+                            <p>Drag & drop your image here or click to browse</p>
+                            <p class="upload-hint">Recommended: 800x600px or larger, JPG/PNG format</p>
+                        </div>
+                        {{ form.image }}
+                    </div>
+                    <div class="image-preview" id="image-preview" style="display: none;">
+                        <img id="preview-img" src="" alt="Recipe preview">
+                        <button type="button" class="remove-image-btn" id="remove-image">Remove Image</button>
+                    </div>
                     {% if form.image.errors %}
                         <div class="error-messages">{{ form.image.errors }}</div>
                     {% endif %}
@@ -231,6 +241,96 @@
     border-style: dashed;
 }
 
+/* Enhanced Image Upload Styles */
+.image-upload-section {
+    margin-bottom: 25px;
+}
+
+.image-upload-area {
+    border: 3px dashed #ddd;
+    border-radius: 15px;
+    padding: 40px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: #fafafa;
+    position: relative;
+    overflow: hidden;
+}
+
+.image-upload-area:hover {
+    border-color: #ff6b5a;
+    background: #fff5f5;
+}
+
+.image-upload-area.dragover {
+    border-color: #ff6b5a;
+    background: #fff5f5;
+    transform: scale(1.02);
+}
+
+.upload-content i {
+    font-size: 3rem;
+    color: #ff6b5a;
+    margin-bottom: 15px;
+}
+
+.upload-content h4 {
+    font-size: 1.3rem;
+    color: #333;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.upload-content p {
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.upload-hint {
+    font-size: 0.9rem;
+    color: #999;
+    font-style: italic;
+}
+
+.image-upload-area input[type="file"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.image-preview {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.image-preview img {
+    max-width: 100%;
+    max-height: 300px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.remove-image-btn {
+    margin-top: 15px;
+    padding: 8px 20px;
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.3s ease;
+}
+
+.remove-image-btn:hover {
+    background: #c82333;
+}
+
 .help-text {
     display: block;
     margin-top: 5px;
@@ -319,4 +419,69 @@
     }
 }
 </style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const uploadArea = document.getElementById('image-upload-area');
+    const fileInput = uploadArea.querySelector('input[type="file"]');
+    const imagePreview = document.getElementById('image-preview');
+    const previewImg = document.getElementById('preview-img');
+    const removeBtn = document.getElementById('remove-image');
+
+    // Handle drag and drop
+    uploadArea.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        uploadArea.classList.add('dragover');
+    });
+
+    uploadArea.addEventListener('dragleave', function(e) {
+        e.preventDefault();
+        uploadArea.classList.remove('dragover');
+    });
+
+    uploadArea.addEventListener('drop', function(e) {
+        e.preventDefault();
+        uploadArea.classList.remove('dragover');
+        
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+            handleFile(files[0]);
+        }
+    });
+
+    // Handle file input change
+    fileInput.addEventListener('change', function(e) {
+        if (e.target.files.length > 0) {
+            handleFile(e.target.files[0]);
+        }
+    });
+
+    // Handle file selection
+    function handleFile(file) {
+        if (file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                previewImg.src = e.target.result;
+                imagePreview.style.display = 'block';
+                uploadArea.style.display = 'none';
+            };
+            reader.readAsDataURL(file);
+        } else {
+            alert('Please select a valid image file.');
+        }
+    }
+
+    // Handle remove image
+    removeBtn.addEventListener('click', function() {
+        fileInput.value = '';
+        imagePreview.style.display = 'none';
+        uploadArea.style.display = 'block';
+    });
+
+    // Click to upload
+    uploadArea.addEventListener('click', function() {
+        fileInput.click();
+    });
+});
+</script>
 {% endblock %}

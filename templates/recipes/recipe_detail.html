@@ -53,12 +53,10 @@
         <div class="ingredients-section">
             <h2>Ingredients</h2>
             <div class="ingredients-list">
-                {% for ingredient in recipe.ingredients|linebreaksbr|split:"<br>" %}
-                    {% if ingredient.strip %}
-                        <div class="ingredient-item">
-                            <span class="ingredient-text">{{ ingredient.strip }}</span>
-                        </div>
-                    {% endif %}
+                {% for ingredient in recipe.ingredients|linebreaksbr %}
+                    <div class="ingredient-item">
+                        <span class="ingredient-text">{{ ingredient }}</span>
+                    </div>
                 {% endfor %}
             </div>
         </div>
@@ -66,13 +64,11 @@
         <div class="instructions-section">
             <h2>Instructions</h2>
             <div class="instructions-list">
-                {% for instruction in recipe.instructions|linebreaksbr|split:"<br>" %}
-                    {% if instruction.strip %}
-                        <div class="instruction-step">
-                            <div class="step-number">{{ forloop.counter }}</div>
-                            <div class="step-content">{{ instruction.strip }}</div>
-                        </div>
-                    {% endif %}
+                {% for instruction in recipe.instructions|linebreaksbr %}
+                    <div class="instruction-step">
+                        <div class="step-number">{{ forloop.counter }}</div>
+                        <div class="step-content">{{ instruction }}</div>
+                    </div>
                 {% endfor %}
             </div>
         </div>
