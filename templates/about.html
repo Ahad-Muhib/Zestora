@@ -1,0 +1,209 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}About Us - Zestora{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="about-hero">
+        <h1>About Zestora</h1>
+        <p>Your culinary journey starts here</p>
+    </div>
+    
+    <div class="about-content">
+        <div class="about-section">
+            <h2>Our Story</h2>
+            <p>Zestora was born from a passion for bringing people together through food. We believe that cooking is more than just preparing meals – it's an art form, a way to express creativity, and a means to create lasting memories with loved ones.</p>
+            <p>Our platform connects food enthusiasts, home cooks, and culinary experts from around the world, creating a vibrant community where recipes, tips, and stories are shared freely.</p>
+        </div>
+        
+        <div class="about-section">
+            <h2>Our Mission</h2>
+            <p>To democratize culinary knowledge and inspire everyone to explore the wonderful world of cooking. We're committed to providing high-quality recipes, expert cooking tips, and a supportive community that encourages culinary experimentation and growth.</p>
+        </div>
+        
+        <div class="about-section">
+            <h2>What We Offer</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🍳</div>
+                    <h3>Curated Recipes</h3>
+                    <p>Hand-picked recipes from professional chefs and home cooks worldwide</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💡</div>
+                    <h3>Cooking Tips</h3>
+                    <p>Expert advice and techniques to improve your culinary skills</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">👥</div>
+                    <h3>Community</h3>
+                    <p>Connect with fellow food lovers and share your culinary stories</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📚</div>
+                    <h3>Learning Resources</h3>
+                    <p>Comprehensive guides and tutorials for cooks of all skill levels</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="about-section">
+            <h2>Join Our Community</h2>
+            <p>Ready to start your culinary journey? Join thousands of food enthusiasts who are already part of the Zestora community. Share your recipes, learn new techniques, and discover amazing flavors from around the world.</p>
+            <div class="cta-buttons">
+                <a href="{% url 'signup' %}" class="btn btn-primary">Sign Up Now</a>
+                <a href="{% url 'recipes:recipe_list' %}" class="btn btn-secondary">Explore Recipes</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.about-hero {
+    text-align: center;
+    margin-bottom: 60px;
+    padding: 60px 0;
+    background: linear-gradient(135deg, #ff6b5a, #ff8c42);
+    color: white;
+    border-radius: 20px;
+}
+
+.about-hero h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.about-hero p {
+    font-size: 1.3rem;
+    opacity: 0.9;
+}
+
+.about-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.about-section {
+    margin-bottom: 60px;
+}
+
+.about-section h2 {
+    font-size: 2.2rem;
+    color: #333;
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+.about-section p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.feature-card {
+    text-align: center;
+    padding: 30px 20px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+}
+
+.feature-icon {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.feature-card h3 {
+    font-size: 1.3rem;
+    color: #333;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.feature-card p {
+    color: #666;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    display: inline-block;
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: #ff6b5a;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #ff5a47;
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: #ff6b5a;
+    border: 2px solid #ff6b5a;
+}
+
+.btn-secondary:hover {
+    background: #ff6b5a;
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .about-hero h1 {
+        font-size: 2.2rem;
+    }
+    
+    .about-hero p {
+        font-size: 1.1rem;
+    }
+    
+    .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .btn {
+        width: 200px;
+        text-align: center;
+    }
+}
+</style>
+{% endblock %}

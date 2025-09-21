@@ -1,0 +1,188 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Community - Zestora{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h1>Community Stories</h1>
+        <p>Share your culinary adventures and discover amazing food stories</p>
+    </div>
+    
+    <div class="stories-grid">
+        {% for story in featured_stories %}
+        <div class="story-card">
+            <div class="story-image">
+                {% if story.image %}
+                    <img src="{{ story.image.url }}" alt="{{ story.title }}">
+                {% else %}
+                    <div class="placeholder-image">📖</div>
+                {% endif %}
+            </div>
+            <div class="story-content">
+                <div class="story-author">
+                    <span class="author-avatar">👤</span>
+                    <span class="author-name">{{ story.author|default:"Anonymous" }}</span>
+                </div>
+                <h3>{{ story.title }}</h3>
+                <p>{{ story.content|truncatewords:25 }}</p>
+                <div class="story-meta">
+                    <span class="story-date">{{ story.created_at|date:"M d, Y" }}</span>
+                    <span class="story-likes">❤️ {{ story.likes|default:0 }}</span>
+                </div>
+                <a href="#" class="btn btn-primary">Read Full Story</a>
+            </div>
+        </div>
+        {% empty %}
+        <div class="no-stories">
+            <h3>No community stories yet</h3>
+            <p>Be the first to share your culinary story!</p>
+            <a href="#" class="btn btn-primary">Share Your Story</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.page-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.page-header h1 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.page-header p {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+.stories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+}
+
+.story-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.story-card:hover {
+    transform: translateY(-5px);
+}
+
+.story-image {
+    height: 200px;
+    background: linear-gradient(45deg, #9C27B0, #E91E63);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.story-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.placeholder-image {
+    font-size: 3rem;
+    color: white;
+}
+
+.story-content {
+    padding: 25px;
+}
+
+.story-author {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.author-avatar {
+    width: 30px;
+    height: 30px;
+    background: #f0f0f0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+
+.author-name {
+    font-weight: 600;
+    color: #333;
+}
+
+.story-content h3 {
+    font-size: 1.4rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.story-content p {
+    color: #666;
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+.story-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    color: #999;
+}
+
+.story-likes {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #ff6b5a;
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: 600;
+    transition: background 0.3s ease;
+}
+
+.btn:hover {
+    background: #ff5a47;
+}
+
+.no-stories {
+    text-align: center;
+    grid-column: 1 / -1;
+    padding: 60px 20px;
+    color: #666;
+}
+
+.no-stories h3 {
+    margin-bottom: 15px;
+    color: #333;
+}
+</style>
+{% endblock %}

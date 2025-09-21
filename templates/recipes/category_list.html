@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Recipe Categories - Zestora{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h1>Recipe Categories</h1>
+        <p>Explore recipes by category</p>
+    </div>
+    
+    <div class="categories-grid">
+        {% for category in categories %}
+        <div class="category-card">
+            <div class="category-image">
+                {% if category.image %}
+                    <img src="{{ category.image.url }}" alt="{{ category.name }}">
+                {% else %}
+                    <div class="placeholder-image">🍽️</div>
+                {% endif %}
+            </div>
+            <div class="category-content">
+                <h3>{{ category.name }}</h3>
+                <p>{{ category.description|default:"Delicious recipes in this category" }}</p>
+                <a href="{% url 'recipes:category_detail' category.slug %}" class="btn btn-primary">
+                    View Recipes ({{ category.recipe_set.count }})
+                </a>
+            </div>
+        </div>
+        {% empty %}
+        <div class="no-categories">
+            <h3>No categories available yet</h3>
+            <p>Check back later for recipe categories!</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.page-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.page-header h1 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.page-header p {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.category-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+}
+
+.category-image {
+    height: 200px;
+    background: linear-gradient(45deg, #ff6b5a, #ff8c42);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.category-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.placeholder-image {
+    font-size: 3rem;
+    color: white;
+}
+
+.category-content {
+    padding: 25px;
+}
+
+.category-content h3 {
+    font-size: 1.4rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.category-content p {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #ff6b5a;
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: 600;
+    transition: background 0.3s ease;
+}
+
+.btn:hover {
+    background: #ff5a47;
+}
+
+.no-categories {
+    text-align: center;
+    grid-column: 1 / -1;
+    padding: 60px 20px;
+    color: #666;
+}
+</style>
+{% endblock %}

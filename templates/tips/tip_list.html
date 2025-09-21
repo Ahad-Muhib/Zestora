@@ -1,0 +1,172 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Cooking Tips - Zestora{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h1>Cooking Tips & Tricks</h1>
+        <p>Expert advice to elevate your culinary skills</p>
+    </div>
+    
+    <div class="tips-grid">
+        {% for tip in tips %}
+        <div class="tip-card">
+            <div class="tip-image">
+                {% if tip.image %}
+                    <img src="{{ tip.image.url }}" alt="{{ tip.title }}">
+                {% else %}
+                    <div class="placeholder-image">💡</div>
+                {% endif %}
+            </div>
+            <div class="tip-content">
+                <div class="tip-category">{{ tip.category|default:"General" }}</div>
+                <h3>{{ tip.title }}</h3>
+                <p>{{ tip.short_description|default:tip.content|truncatewords:20 }}</p>
+                <div class="tip-meta">
+                    <span class="tip-difficulty">{{ tip.difficulty|default:"Beginner" }}</span>
+                    <span class="tip-time">{{ tip.reading_time|default:"2 min read" }}</span>
+                </div>
+                <a href="#" class="btn btn-primary">Read More</a>
+            </div>
+        </div>
+        {% empty %}
+        <div class="no-tips">
+            <h3>No cooking tips available yet</h3>
+            <p>Check back later for expert cooking advice!</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.page-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.page-header h1 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.page-header p {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+.tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+}
+
+.tip-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.tip-card:hover {
+    transform: translateY(-5px);
+}
+
+.tip-image {
+    height: 200px;
+    background: linear-gradient(45deg, #4CAF50, #8BC34A);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tip-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.placeholder-image {
+    font-size: 3rem;
+    color: white;
+}
+
+.tip-content {
+    padding: 25px;
+}
+
+.tip-category {
+    background: #ff6b5a;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    display: inline-block;
+    margin-bottom: 15px;
+}
+
+.tip-content h3 {
+    font-size: 1.4rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.tip-content p {
+    color: #666;
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+.tip-meta {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    color: #999;
+}
+
+.tip-difficulty {
+    background: #f0f0f0;
+    padding: 4px 8px;
+    border-radius: 10px;
+}
+
+.tip-time {
+    background: #e8f5e8;
+    padding: 4px 8px;
+    border-radius: 10px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #ff6b5a;
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: 600;
+    transition: background 0.3s ease;
+}
+
+.btn:hover {
+    background: #ff5a47;
+}
+
+.no-tips {
+    text-align: center;
+    grid-column: 1 / -1;
+    padding: 60px 20px;
+    color: #666;
+}
+</style>
+{% endblock %}

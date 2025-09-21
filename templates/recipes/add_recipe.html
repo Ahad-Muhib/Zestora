@@ -1,0 +1,322 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Add Recipe - Zestora{% endblock %}
+
+{% block content %}
+<div class="add-recipe-container">
+    <div class="add-recipe-header">
+        <h1>Add New Recipe</h1>
+        <p>Share your culinary creation with the community</p>
+    </div>
+    
+    <div class="add-recipe-form-container">
+        <form method="post" enctype="multipart/form-data" class="recipe-form">
+            {% csrf_token %}
+            
+            <div class="form-section">
+                <h3>Basic Information</h3>
+                <div class="form-group">
+                    <label for="{{ form.title.id_for_label }}">Recipe Title *</label>
+                    {{ form.title }}
+                    {% if form.title.errors %}
+                        <div class="error-messages">{{ form.title.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="{{ form.description.id_for_label }}">Description *</label>
+                    {{ form.description }}
+                    {% if form.description.errors %}
+                        <div class="error-messages">{{ form.description.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="{{ form.category.id_for_label }}">Category *</label>
+                        {{ form.category }}
+                        {% if form.category.errors %}
+                            <div class="error-messages">{{ form.category.errors }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="{{ form.difficulty.id_for_label }}">Difficulty *</label>
+                        {{ form.difficulty }}
+                        {% if form.difficulty.errors %}
+                            <div class="error-messages">{{ form.difficulty.errors }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <h3>Recipe Details</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="{{ form.prep_time.id_for_label }}">Prep Time (minutes) *</label>
+                        {{ form.prep_time }}
+                        {% if form.prep_time.errors %}
+                            <div class="error-messages">{{ form.prep_time.errors }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="{{ form.cook_time.id_for_label }}">Cook Time (minutes) *</label>
+                        {{ form.cook_time }}
+                        {% if form.cook_time.errors %}
+                            <div class="error-messages">{{ form.cook_time.errors }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="{{ form.servings.id_for_label }}">Servings *</label>
+                        {{ form.servings }}
+                        {% if form.servings.errors %}
+                            <div class="error-messages">{{ form.servings.errors }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <h3>Ingredients & Instructions</h3>
+                <div class="form-group">
+                    <label for="{{ form.ingredients.id_for_label }}">Ingredients *</label>
+                    {{ form.ingredients }}
+                    <small class="help-text">{{ form.ingredients.help_text }}</small>
+                    {% if form.ingredients.errors %}
+                        <div class="error-messages">{{ form.ingredients.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="{{ form.instructions.id_for_label }}">Instructions *</label>
+                    {{ form.instructions }}
+                    <small class="help-text">{{ form.instructions.help_text }}</small>
+                    {% if form.instructions.errors %}
+                        <div class="error-messages">{{ form.instructions.errors }}</div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <h3>Recipe Image</h3>
+                <div class="form-group">
+                    <label for="{{ form.image.id_for_label }}">Upload Image</label>
+                    {{ form.image }}
+                    <small class="help-text">Upload a high-quality image of your finished dish (optional)</small>
+                    {% if form.image.errors %}
+                        <div class="error-messages">{{ form.image.errors }}</div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Add Recipe</button>
+                <a href="{% url 'recipes:recipe_list' %}" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+.add-recipe-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.add-recipe-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.add-recipe-header h1 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.add-recipe-header p {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+.add-recipe-form-container {
+    background: white;
+    border-radius: 15px;
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.form-section {
+    margin-bottom: 40px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #eee;
+}
+
+.form-section:last-of-type {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.form-section h3 {
+    font-size: 1.4rem;
+    color: #333;
+    margin-bottom: 25px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+}
+
+.form-section h3::before {
+    content: '';
+    width: 4px;
+    height: 20px;
+    background: #ff6b5a;
+    margin-right: 15px;
+    border-radius: 2px;
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+    font-size: 0.95rem;
+}
+
+.form-input,
+.form-textarea,
+.form-select,
+.form-file {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background: white;
+}
+
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus {
+    outline: none;
+    border-color: #ff6b5a;
+    box-shadow: 0 0 0 3px rgba(255, 107, 90, 0.1);
+}
+
+.form-textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.form-file {
+    padding: 8px 15px;
+    background: #f8f9fa;
+    border-style: dashed;
+}
+
+.help-text {
+    display: block;
+    margin-top: 5px;
+    color: #666;
+    font-size: 0.85rem;
+    font-style: italic;
+}
+
+.error-messages {
+    margin-top: 5px;
+    color: #e74c3c;
+    font-size: 0.85rem;
+}
+
+.error-messages ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.form-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 40px;
+    padding-top: 30px;
+    border-top: 1px solid #eee;
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px 30px;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+}
+
+.btn-primary {
+    background: #ff6b5a;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #ff5a47;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 107, 90, 0.3);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: #666;
+    border: 2px solid #ddd;
+}
+
+.btn-secondary:hover {
+    background: #f8f9fa;
+    border-color: #999;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .add-recipe-container {
+        padding: 20px 10px;
+    }
+    
+    .add-recipe-form-container {
+        padding: 25px 20px;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .btn {
+        width: 200px;
+    }
+}
+</style>
+{% endblock %}

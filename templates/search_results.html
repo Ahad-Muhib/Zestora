@@ -1,0 +1,365 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Search Results - Zestora{% endblock %}
+
+{% block content %}
+<div class="search-results-container">
+    <div class="search-header">
+        <h1>Search Results</h1>
+        {% if query %}
+            <p>Results for "<strong>{{ query }}</strong>"</p>
+        {% else %}
+            <p>Enter a search term to find recipes, tips, and stories</p>
+        {% endif %}
+    </div>
+    
+    <div class="search-form-container">
+        <form method="get" action="{% url 'search' %}" class="search-form">
+            <div class="search-input-group">
+                <input type="text" name="q" value="{{ query }}" placeholder="Search recipes, tips, and stories..." class="search-input">
+                <button type="submit" class="search-btn">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+    
+    {% if query %}
+        <div class="search-results">
+            <!-- Recipes Section -->
+            <div class="results-section">
+                <h2>
+                    <i class="fas fa-utensils"></i>
+                    Recipes ({{ recipes.count }})
+                </h2>
+                {% if recipes %}
+                    <div class="recipes-grid">
+                        {% for recipe in recipes %}
+                        <div class="recipe-card">
+                            <div class="recipe-image">
+                                {% if recipe.image %}
+                                    <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
+                                {% else %}
+                                    <div class="placeholder-image">🍽️</div>
+                                {% endif %}
+                            </div>
+                            <div class="recipe-content">
+                                <div class="recipe-meta">
+                                    <span class="category-badge">{{ recipe.category.name }}</span>
+                                    <span class="difficulty-badge difficulty-{{ recipe.difficulty }}">{{ recipe.get_difficulty_display }}</span>
+                                </div>
+                                <h3><a href="{% url 'recipes:recipe_detail' recipe.slug %}">{{ recipe.title }}</a></h3>
+                                <p>{{ recipe.description|truncatewords:20 }}</p>
+                                <div class="recipe-stats">
+                                    <span><i class="fas fa-clock"></i> {{ recipe.prep_time }} min prep</span>
+                                    <span><i class="fas fa-fire"></i> {{ recipe.cook_time }} min cook</span>
+                                    <span><i class="fas fa-users"></i> {{ recipe.servings }} servings</span>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="no-results">
+                        <p>No recipes found matching "{{ query }}"</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    {% else %}
+        <div class="search-prompt">
+            <div class="search-prompt-content">
+                <i class="fas fa-search"></i>
+                <h3>Start Your Search</h3>
+                <p>Search for recipes, cooking tips, and community stories</p>
+                <div class="search-suggestions">
+                    <span class="suggestion-tag">chicken</span>
+                    <span class="suggestion-tag">dessert</span>
+                    <span class="suggestion-tag">vegetarian</span>
+                    <span class="suggestion-tag">quick meals</span>
+                    <span class="suggestion-tag">baking tips</span>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+<style>
+.search-results-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.search-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.search-header h1 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.search-header p {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+.search-form-container {
+    max-width: 600px;
+    margin: 0 auto 50px;
+}
+
+.search-form {
+    width: 100%;
+}
+
+.search-input-group {
+    display: flex;
+    background: white;
+    border-radius: 25px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.search-input {
+    flex: 1;
+    padding: 15px 20px;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    background: transparent;
+}
+
+.search-input::placeholder {
+    color: #999;
+}
+
+.search-btn {
+    background: #ff6b5a;
+    color: white;
+    border: none;
+    padding: 15px 25px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    font-size: 1.1rem;
+}
+
+.search-btn:hover {
+    background: #ff5a47;
+}
+
+.results-section {
+    margin-bottom: 50px;
+}
+
+.results-section h2 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 25px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.results-section h2 i {
+    color: #ff6b5a;
+}
+
+.recipes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+}
+
+.recipe-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.recipe-card:hover {
+    transform: translateY(-5px);
+}
+
+.recipe-image {
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: linear-gradient(45deg, #ff6b5a, #ff8c42);
+}
+
+.recipe-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.placeholder-image {
+    font-size: 3rem;
+    color: white;
+}
+
+.recipe-content {
+    padding: 20px;
+}
+
+.recipe-meta {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.category-badge {
+    background: #ff6b5a;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.difficulty-badge {
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.difficulty-easy {
+    background: #4CAF50;
+    color: white;
+}
+
+.difficulty-medium {
+    background: #FF9800;
+    color: white;
+}
+
+.difficulty-hard {
+    background: #f44336;
+    color: white;
+}
+
+.recipe-content h3 {
+    font-size: 1.3rem;
+    color: #333;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.recipe-content h3 a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.recipe-content h3 a:hover {
+    color: #ff6b5a;
+}
+
+.recipe-content p {
+    color: #666;
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+.recipe-stats {
+    display: flex;
+    gap: 15px;
+    font-size: 0.9rem;
+    color: #999;
+}
+
+.recipe-stats span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.recipe-stats i {
+    color: #ff6b5a;
+}
+
+.no-results {
+    text-align: center;
+    padding: 40px 20px;
+    color: #666;
+}
+
+.search-prompt {
+    text-align: center;
+    padding: 80px 20px;
+}
+
+.search-prompt-content i {
+    font-size: 4rem;
+    color: #ff6b5a;
+    margin-bottom: 20px;
+}
+
+.search-prompt-content h3 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.search-prompt-content p {
+    color: #666;
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+}
+
+.search-suggestions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.suggestion-tag {
+    background: #f8f9fa;
+    color: #666;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid #e0e0e0;
+}
+
+.suggestion-tag:hover {
+    background: #ff6b5a;
+    color: white;
+    border-color: #ff6b5a;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .search-results-container {
+        padding: 20px 10px;
+    }
+    
+    .search-header h1 {
+        font-size: 2rem;
+    }
+    
+    .recipes-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .search-suggestions {
+        justify-content: flex-start;
+    }
+}
+</style>
+{% endblock %}
