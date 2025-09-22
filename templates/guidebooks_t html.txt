@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html>
+<head>
+  	<meta charset="utf-8">
+  	<meta name="viewport" content="initial-scale=1, width=device-width">
+  	
+  	<link rel="stylesheet"  href="./index.css" />
+  	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=[object Object]&display=swap" />
+  	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=[object Object]&display=swap" />
+  	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=[object Object]&display=swap" />
+  	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=[object Object]&display=swap" />
+  	
+  	
+  	
+</head>
+<body>
+  	
+  	<div class="guidebooks">
+    		<div class="hero-section">
+      			<div class="hero-text-wrapper">
+        				<div class="headline-1">Timeless Recipes from the Thrones of Flavor</div>
+        				<div class="paragraph-1-wrapper">
+          					<div class="paragraph-1">Zestora’s Culinary Guidebook brings you the legendary recipes of the world’s greatest chefs—master them, savor them, and make them your own</div>
+        				</div>
+      			</div>
+    		</div>
+    		<div class="cooking-techniques-section">
+      			<div class="header-wrapper">
+        				<b class="headline-2">legendary culinary Masters</b>
+        				<div class="arrow-wrapper">
+          					<img class="arrow-left-icon" alt="">
+          					
+          					<img class="arrow-right-icon" alt="">
+          					
+        				</div>
+      			</div>
+      			<div class="recipes-sectio0n">
+        				<div class="recipe-cards-wrapper">
+          					<div class="card-wrapper">
+            						<div class="recipe-card">
+              							<img class="video-icon" alt="">
+              							
+              							<div class="text-wrapper">
+                								<div class="copy">
+                  									<b class="header-3">Gordon Ramsay (UK)</b>
+                  									<div class="paragraph-2">Follow in the footsteps of Gordon Ramsay, a culinary titan whose precision, passion, and flair turn every dish into a masterpiece</div>
+                								</div>
+                								<div class="info-wrapper">
+                  									<div class="button">
+                    										<div class="text">read more</div>
+                  									</div>
+                								</div>
+              							</div>
+            						</div>
+            						<div class="recipe-card">
+              							<img class="recipe-image-icon" alt="">
+              							
+              							<div class="text-wrapper">
+                								<div class="copy">
+                  									<b class="guidebooks-header-3">Jamie Oliver (UK)</b>
+                  									<div class="guidebooks-paragraph-2">Learn from Jamie Oliver, the culinary innovator who turns simple ingredients into wholesome, unforgettable dishes with ease and flair</div>
+                								</div>
+                								<div class="info-wrapper">
+                  									<div class="button">
+                    										<div class="text">read more</div>
+                  									</div>
+                								</div>
+              							</div>
+            						</div>
+            						<div class="recipe-card2">
+              							<img class="guidebooks-recipe-image-icon" alt="">
+              							
+              							<div class="text-wrapper2">
+                								<div class="copy">
+                  									<b class="header-32">Thomas Keller (USA)</b>
+                  									<div class="paragraph-22">Embrace the culinary mastery of Thomas Keller, whose meticulous techniques and exquisite flavors set the standard for perfection in every dish</div>
+                								</div>
+                								<div class="info-wrapper">
+                  									<div class="button">
+                    										<div class="text">read more</div>
+                  									</div>
+                								</div>
+              							</div>
+            						</div>
+          					</div>
+          					<div class="recipes-sectio0n-wrapper">
+            						<div class="guidebooks-recipes-sectio0n">
+              							<div class="recipe-card">
+                								<div class="card-wrapper">
+                  									<div class="recipe-card">
+                    										<img class="video-icon" alt="">
+                    										
+                    										<div class="text-wrapper3">
+                      											<div class="copy">
+                        												<b class="header-3">Massimo Bottura (Italy)</b>
+                        												<div class="paragraph-2">Be inspired by Massimo Bottura, whose inventive genius and artistic approach transform traditional Italian cuisine into extraordinary culinary masterpieces</div>
+                      											</div>
+                      											<div class="info-wrapper">
+                        												<div class="button">
+                          													<div class="text">read more</div>
+                        												</div>
+                      											</div>
+                    										</div>
+                  									</div>
+                  									<div class="recipe-card">
+                    										<img class="recipe-image-icon" alt="">
+                    										
+                    										<div class="text-wrapper3">
+                      											<div class="copy">
+                        												<b class="guidebooks-header-3">Heston Blumenthal (UK)</b>
+                        												<div class="guidebooks-paragraph-2">Explore the culinary brilliance of Heston Blumenthal, a master of innovation whose inventive techniques and playful creations redefine the boundaries of flavor</div>
+                      											</div>
+                      											<div class="info-wrapper">
+                        												<div class="button">
+                          													<div class="text">read more</div>
+                        												</div>
+                      											</div>
+                    										</div>
+                  									</div>
+                  									<div class="recipe-card2">
+                    										<img class="guidebooks-recipe-image-icon" alt="">
+                    										
+                    										<div class="text-wrapper2">
+                      											<div class="copy">
+                        												<b class="header-32">Alice Waters (USA)</b>
+                        												<div class="paragraph-22">Learn from Alice Waters, the pioneer of farm-to-table cuisine, whose passion for simplicity and quality elevates every dish to artistry</div>
+                      											</div>
+                      											<div class="info-wrapper">
+                        												<div class="button">
+                          													<div class="text">read more</div>
+                        												</div>
+                      											</div>
+                    										</div>
+                  									</div>
+                								</div>
+              							</div>
+            						</div>
+          					</div>
+        				</div>
+      			</div>
+    		</div>
+    		<div class="explore-section">
+      			<div class="filter-text-wrapper">
+        				<div class="guidebooks-header-wrapper">
+          					<b class="headline-2">Recipes of Culinary Greats</b>
+          					<div class="arrow-wrapper">
+            						<img class="arrow-left-icon" alt="">
+            						
+            						<img class="arrow-right-icon" alt="">
+            						
+          					</div>
+        				</div>
+        				<div class="recipes-sectio0n2">
+          					<div class="recipe-cards-wrapper2">
+            						<div class="card-wrapper2">
+              							<div class="recipe-card6">
+                								<div class="recipe-image-parent">
+                  									<img class="recipe-image-icon4" alt="">
+                  									
+                  									<div class="copy-parent">
+                    										<div class="copy6">
+                      											<b class="header-36">Sticky Toffee Pudding</b>
+                      											<div class="paragraph-22">Indulge in the rich, caramel-soaked delight of Sticky Toffee Pudding, a timeless dessert that brings warmth and sweetness to every bite</div>
+                    										</div>
+                    										<div class="info-wrapper6">
+                      											<div class="text6">30 min - 01 Aug 25 </div>
+                      											<div class="button6">
+                        												<div class="text">read more</div>
+                      											</div>
+                    										</div>
+                  									</div>
+                								</div>
+              							</div>
+              							<div class="recipe-card6">
+                								<div class="recipe-image-parent">
+                  									<img class="recipe-image-icon4" alt="">
+                  									
+                  									<div class="copy-parent">
+                    										<div class="copy6">
+                      											<b class="header-36">French Onion Soup</b>
+                      											<div class="paragraph-22">Savor the deep flavors of French Onion Soup—sweet, slow-cooked onions, hearty broth, and a golden cheesy crust that delights every palate</div>
+                    										</div>
+                    										<div class="info-wrapper6">
+                      											<div class="text6">20 min - 27 sep 25 </div>
+                      											<div class="button6">
+                        												<div class="text">read more</div>
+                      											</div>
+                    										</div>
+                  									</div>
+                  									<div class="copy-parent">
+                    										<div class="copy6">
+                      											<b class="header-36">French Onion Soup</b>
+                      											<div class="paragraph-22">Savor the deep flavors of French Onion Soup—sweet, slow-cooked onions, hearty broth, and a golden cheesy crust that delights every palate</div>
+                    										</div>
+                    										<div class="info-wrapper6">
+                      											<div class="text6">20 min - 27 sep 25 </div>
+                      											<div class="button6">
+                        												<div class="text">read more</div>
+                      											</div>
+                    										</div>
+                  									</div>
+                								</div>
+              							</div>
+              							<div class="recipe-card6">
+                								<div class="recipe-image-parent">
+                  									<img class="recipe-image-icon4" alt="">
+                  									
+                  									<div class="frame-div">
+                    										<div class="copy6">
+                      											<b class="header-36">Tortellini in Brodo</b>
+                      											<div class="paragraph-22">Experience the classic elegance of Tortellini in Brodo—tender, filled pasta swimming in a savory broth, perfect for a refined yet comforting meal</div>
+                    										</div>
+                    										<div class="info-wrapper6">
+                      											<div class="text6">25 min - 15 oct 25 </div>
+                      											<div class="button6">
+                        												<div class="text">read more</div>
+                      											</div>
+                    										</div>
+                  									</div>
+                  									<div class="recipe-card9">
+                    										<div class="recipe-image-parent">
+                      											<img class="recipe-image-icon4" alt="">
+                      											
+                      											<div class="copy-parent">
+                        												<div class="copy6">
+                          													<b class="header-36">Apple Tart</b>
+                          													<div class="paragraph-22">Delight in the warm, buttery sweetness of Apple Tart, where tender apples and flaky pastry create a perfect harmony of flavor</div>
+                        												</div>
+                        												<div class="info-wrapper6">
+                          													<div class="text6">30 min - 01 Aug 25 </div>
+                          													<div class="button6">
+                            														<div class="text">read more</div>
+                          													</div>
+                        												</div>
+                      											</div>
+                    										</div>
+                  									</div>
+                								</div>
+              							</div>
+            						</div>
+          					</div>
+        				</div>
+      			</div>
+    		</div>
+    		<div class="navigation">
+      			<div class="logo-nav-bar">
+      			</div>
+      			<div class="link-wrapper">
+        				<div class="link">
+          					<div class="text">Home</div>
+        				</div>
+        				<div class="guidebooks-link">
+          					<div class="text">recipes</div>
+        				</div>
+        				<div class="guidebooks-link">
+          					<div class="text">categories</div>
+        				</div>
+        				<div class="link3">
+          					<div class="text">guidebooks</div>
+        				</div>
+        				<div class="guidebooks-link">
+          					<div class="text">cooking tips</div>
+        				</div>
+        				<div class="guidebooks-link">
+          					<div class="text">community</div>
+        				</div>
+        				<div class="guidebooks-link">
+          					<div class="text">about us</div>
+        				</div>
+      			</div>
+      			<div class="button-wrapper">
+      			</div>
+      			<img class="search-icon" alt="">
+      			
+      			<div class="guidebooks-button-wrapper">
+        				<div class="button-parent">
+          					<div class="button11">
+            						<div class="login">Login</div>
+          					</div>
+          					<div class="button12">
+            						<div class="sign-up">Sign Up</div>
+          					</div>
+        				</div>
+      			</div>
+    		</div>
+    		<div class="cta-section">
+      			<div class="cta-bg">
+        				<div class="bg">
+        				</div>
+        				<div class="bg-wrapper">
+          					<div class="guidebooks-bg">
+          					</div>
+        				</div>
+      			</div>
+      			<div class="text-wrapper6">
+        				<div class="text23">
+          					<div class="text24">subscribe</div>
+          					<div class="header-2">
+            						<p class="join-the-fun">Join the fun</p>
+            						<p class="join-the-fun">Subscribe now!</p>
+          					</div>
+          					<div class="guidebooks-paragraph-1">Subscribe to our newsletter for a weekly serving of recipes, cooking tips, and exclusive insights straight to your inbox.</div>
+        				</div>
+        				<div class="input-wrapper">
+          					<div class="input">
+            						<div class="text25">Email Address</div>
+          					</div>
+          					<div class="button13">
+            						<div class="text">subscribe</div>
+          					</div>
+        				</div>
+      			</div>
+    		</div>
+    		<div class="footer">
+      			<div class="wrapper">
+        				<div class="logo-nav-bar">
+        				</div>
+        				<div class="guidebooks-link-wrapper">
+          					<div class="text">Home</div>
+          					<div class="separation-line">
+          					</div>
+          					<div class="text">recipes</div>
+          					<div class="separation-line">
+          					</div>
+          					<div class="text">cooking tips</div>
+          					<div class="separation-line">
+          					</div>
+          					<div class="text">About us</div>
+        				</div>
+        				<div class="card-wrapper">
+          					<img class="icbaseline-tiktok-icon" alt="">
+          					
+          					<img class="icbaseline-tiktok-icon" alt="">
+          					
+          					<img class="icbaseline-tiktok-icon" alt="">
+          					
+          					<img class="icbaseline-tiktok-icon" alt="">
+          					
+        				</div>
+      			</div>
+      			<div class="small-text">Copyright: © 2025 zestora.</div>
+    		</div>
+    		<div class="zestora">Zestora</div>
+    		<div class="guidebooks-zestora">Zestora</div>
+    		<div class="recipe-image-parent2">
+      			<img class="recipe-image-icon4" alt="">
+      			
+      			<div class="copy-parent">
+        				<div class="copy6">
+          					<b class="header-36">Chinois Chicken Salad</b>
+          					<div class="paragraph-22">Enjoy the crisp, vibrant flavors of Chinois Chicken Salad, a refreshing mix of tender chicken and fresh vegetables in a zesty dressing</div>
+        				</div>
+        				<div class="info-wrapper6">
+          					<div class="text6">30 min - 01 Aug 25 </div>
+          					<div class="button6">
+            						<div class="text">read more</div>
+          					</div>
+        				</div>
+      			</div>
+    		</div>
+    		<div class="recipe-card10">
+      			<div class="recipe-image-parent">
+        				<img class="recipe-image-icon4" alt="">
+        				
+        				<div class="copy-parent">
+          					<div class="copy6">
+            						<b class="header-36">Braised Short Ribs</b>
+            						<div class="paragraph-22">Savor the tender, melt-in-your-mouth Braised Short Ribs, slow-cooked to perfection in rich, savory flavors</div>
+          					</div>
+          					<div class="info-wrapper6">
+            						<div class="text6">30 min - 01 Aug 25 </div>
+            						<div class="button6">
+              							<div class="text">read more</div>
+            						</div>
+          					</div>
+        				</div>
+      			</div>
+    		</div>
+    		<div class="recipe-cards-wrapper3">
+      			<div class="card-wrapper">
+        				<div class="recipe-card">
+          					<img class="video-icon" alt="">
+          					
+          					<div class="text-wrapper">
+            						<div class="copy">
+              							<b class="header-3">Alain Ducasse (France)</b>
+              							<div class="paragraph-2">Draw inspiration from Alain Ducasse, the culinary maestro whose impeccable technique and visionary approach have redefined fine dining around the world</div>
+            						</div>
+            						<div class="info-wrapper">
+              							<div class="button">
+                								<div class="text">read more</div>
+              							</div>
+            						</div>
+          					</div>
+        				</div>
+        				<div class="recipe-card">
+          					<img class="recipe-image-icon" alt="">
+          					
+          					<div class="text-wrapper">
+            						<div class="copy">
+              							<b class="guidebooks-header-3">Paul Bocuse (France)</b>
+              							<div class="guidebooks-paragraph-2">Embrace the brilliance of Paul Bocuse, the legendary French master whose artistry and innovation set the gold standard for haute cuisine</div>
+            						</div>
+            						<div class="info-wrapper">
+              							<div class="button">
+                								<div class="text">read more</div>
+              							</div>
+            						</div>
+          					</div>
+        				</div>
+        				<div class="recipe-card2">
+          					<img class="guidebooks-recipe-image-icon" alt="">
+          					
+          					<div class="text-wrapper2">
+            						<div class="copy">
+              							<b class="header-32">Nigella Lawson (UK)</b>
+              							<div class="paragraph-22">Indulge in the culinary world of Nigella Lawson, whose sensuous approach to cooking turns every dish into a celebration of flavor and comfort</div>
+            						</div>
+            						<div class="info-wrapper">
+              							<div class="button">
+                								<div class="text">read more</div>
+              							</div>
+            						</div>
+          					</div>
+        				</div>
+      			</div>
+      			<div class="recipes-sectio0n-wrapper">
+        				<div class="guidebooks-recipes-sectio0n">
+          					<div class="recipe-card">
+            						<div class="card-wrapper">
+              							<div class="recipe-card">
+                								<img class="video-icon" alt="">
+                								
+                								<div class="text-wrapper">
+                  									<div class="copy">
+                    										<b class="header-3">Wolfgang Puck (USA/Austria)</b>
+                    										<div class="paragraph-2">Follow Wolfgang Puck, a culinary innovator whose creativity and mastery turn every dish into a work of art</div>
+                  									</div>
+                  									<div class="info-wrapper">
+                    										<div class="button">
+                      											<div class="text">read more</div>
+                    										</div>
+                  									</div>
+                								</div>
+              							</div>
+              							<div class="recipe-card">
+                								<img class="recipe-image-icon" alt="">
+                								
+                								<div class="text-wrapper">
+                  									<div class="copy">
+                    										<b class="guidebooks-header-3">Julia Child (USA)</b>
+                    										<div class="guidebooks-paragraph-2">Learn from Julia Child, the culinary icon whose elegant techniques and love for cooking have transformed kitchens and hearts alike</div>
+                  									</div>
+                  									<div class="info-wrapper">
+                    										<div class="button">
+                      											<div class="text">read more</div>
+                    										</div>
+                  									</div>
+                								</div>
+              							</div>
+              							<div class="recipe-card2">
+                								<img class="guidebooks-recipe-image-icon" alt="">
+                								
+                								<div class="text-wrapper2">
+                  									<div class="copy">
+                    										<b class="header-32">René Redzepi (Denmark)</b>
+                    										<div class="paragraph-22">Explore the innovative world of René Redzepi, the master of foraging and flavor, whose groundbreaking creations redefine modern cuisine</div>
+                  									</div>
+                  									<div class="info-wrapper">
+                    										<div class="button">
+                      											<div class="text">read more</div>
+                    										</div>
+                  									</div>
+                								</div>
+              							</div>
+            						</div>
+          					</div>
+        				</div>
+      			</div>
+    		</div>
+    		<div class="paragraph-1-container">
+      			<div class="paragraph-12">Zestora invites you into a world of culinary mastery, where the treasured recipes of renowned chefs become your guide to cooking with artistry and passion. Step into Zestora’s guidebook, your gateway to the legendary recipes and secrets of the culinary masters—bringing the flavors of the world’s finest kitchens to your home.</div>
+    		</div>
+  	</div>
+  	
+  	
+  	
+  	
+</body>
+</html>

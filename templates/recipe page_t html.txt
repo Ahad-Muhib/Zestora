@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html>
+<head>
+  	<meta charset="utf-8">
+  	<meta name="viewport" content="initial-scale=1, width=device-width">
+  	
+  	<link rel="stylesheet"  href="./index.css" />
+  	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=[object Object]&display=swap" />
+  	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=[object Object]&display=swap" />
+  	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=[object Object]&display=swap" />
+  	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=[object Object]&display=swap" />
+  	
+  	
+  	
+</head>
+<body>
+  	
+  	<div class="recipes-page">
+    		<div class="hero-section">
+      			<div class="hero-text-wrapper">
+        				<div class="text-wrapper">
+          					<div class="copy">
+            						<div class="headline-1">Unleash Culinary Excellence</div>
+            						<div class="paragraph-1">Explore a world of flavors, discover handcrafted recipes, and let the aroma of our passion for cooking fill your kitchen</div>
+          					</div>
+        				</div>
+        				<div class="button" id="buttonContainer">
+          					<div class="text">explore recipes</div>
+        				</div>
+      			</div>
+    		</div>
+    		<div class="navigation">
+      			<div class="logo-nav-bar">
+        				<div class="div">
+          					<div class="recipes-page-div">
+            						<div class="zestora">Zestora</div>
+          					</div>
+        				</div>
+      			</div>
+      			<div class="link-wrapper">
+        				<div class="link">
+          					<div class="text">Home</div>
+        				</div>
+        				<div class="recipes-page-link">
+          					<div class="text2">RECIPES</div>
+        				</div>
+        				<div class="link2">
+          					<div class="text">CATEGORIES</div>
+        				</div>
+        				<div class="link2">
+          					<div class="text">GUIDEBOOKS</div>
+        				</div>
+        				<div class="link2">
+          					<div class="text5">cooking tips</div>
+        				</div>
+        				<div class="link2">
+          					<div class="text">COMMUNITY</div>
+        				</div>
+        				<div class="link2">
+          					<div class="text">about us</div>
+        				</div>
+      			</div>
+      			<img class="search-icon" alt="">
+      			
+      			<div class="button-wrapper">
+        				<div class="button-parent">
+          					<div class="recipes-page-button">
+            						<div class="login">Login</div>
+          					</div>
+          					<div class="button2">
+            						<div class="sign-up">Sign Up</div>
+          					</div>
+        				</div>
+      			</div>
+    		</div>
+    		<div class="explore-section">
+      			<div class="filter-text-wrapper">
+        				<div class="recipes-page-text-wrapper">
+          					<div class="tag">
+            						<div class="tagline">explore</div>
+          					</div>
+          					<div class="recipes-page-copy">
+            						<b class="our-diverse-palette">Our diverse Palette</b>
+            						<div class="paragraph-2">If you are a breakfast enthusiast, a connoisseur of savory delights, or on the lookout for irresistible desserts, our curated selection has something to satisfy every palate.</div>
+          					</div>
+        				</div>
+        				<div class="button3">
+          					<div class="text">see more</div>
+        				</div>
+      			</div>
+      			<div class="filter-wrapper">
+        				<div class="filter">
+          					<img class="icon" alt="">
+          					
+          					<div class="text9">breakfest</div>
+        				</div>
+        				<div class="filter">
+          					<img class="icon" alt="">
+          					
+          					<div class="text9">lunch</div>
+        				</div>
+        				<div class="filter">
+          					<img class="icon" alt="">
+          					
+          					<div class="text9">dinner</div>
+        				</div>
+        				<div class="filter">
+          					<img class="icon" alt="">
+          					
+          					<div class="text9">dessert</div>
+        				</div>
+        				<div class="filter4">
+          					<img class="icon4" alt="">
+          					
+          					<div class="text9">quick bite!</div>
+        				</div>
+      			</div>
+    		</div>
+    		<div class="featured-section">
+      			<div class="header-wrapper">
+        				<b class="headline-2">featured recipes</b>
+        				<div class="arrow-wrapper">
+          					<img class="arrow-left-icon" alt="">
+          					
+          					<img class="icon" alt="">
+          					
+        				</div>
+      			</div>
+      			<div class="card-wrapper">
+        				<div class="recipe-card">
+          					<img class="recipe-image-icon" alt="">
+          					
+          					<div class="text-wrapper2">
+            						<div class="copy2">
+              							<b class="headline-3">Savory Herb-Infused Chicken</b>
+              							<div class="recipes-page-paragraph-2">Indulge in the rich and savory symphony of flavors with our Savory Herb-Infused Chicken</div>
+            						</div>
+            						<div class="info-wrapper">
+              							<div class="text14">40 Min - easy prep - 3 serves</div>
+              							<div class="button4">
+                								<div class="text">view recipe</div>
+              							</div>
+            						</div>
+          					</div>
+        				</div>
+        				<div class="recipes-page-recipe-card">
+          					<img class="recipes-page-recipe-image-icon" alt="">
+          					
+          					<div class="text-wrapper3">
+            						<div class="copy2">
+              							<b class="headline-3">Decadent Chocolate Mousse</b>
+              							<div class="recipes-page-paragraph-2">Dive into the velvety indulgence of our Decadent Chocolate Mousse. A dessert that transcends sweetness!</div>
+            						</div>
+            						<div class="info-wrapper">
+              							<div class="text14">30 Min - medium prep- 4 serves</div>
+              							<div class="button4">
+                								<div class="text">view recipe</div>
+              							</div>
+            						</div>
+          					</div>
+          					<div class="recipes-page-tag">
+            						<img class="icon5" alt="">
+            						
+            						<img class="text-icon" alt="">
+            						
+            						<img class="recipes-page-text-icon" alt="">
+            						
+          					</div>
+        				</div>
+      			</div>
+    		</div>
+    		<div class="recipes-sectio0n" data-scroll-to="recipesSectio0nContainer">
+      			<div class="recipes-page-header-wrapper">
+        				<div class="text-wrapper4">
+          					<div class="tag">
+            						<div class="tagline">recipes</div>
+          					</div>
+          					<div class="copy-wrapper">
+            						<b class="header-2">Embark on a journey</b>
+            						<div class="recipes-page-paragraph-1">With our diverse collection of recipes we have something to satisfy every palate.</div>
+          					</div>
+        				</div>
+        				<div class="tab-wrapper">
+          					<div class="tab">
+            						<div class="text">All</div>
+          					</div>
+          					<div class="recipes-page-tab">
+            						<div class="text">Vegan</div>
+          					</div>
+          					<div class="tab2">
+            						<div class="text">breakfast</div>
+          					</div>
+          					<div class="recipes-page-tab">
+            						<div class="text">lunch </div>
+          					</div>
+          					<div class="recipes-page-tab">
+            						<div class="text">dinner</div>
+          					</div>
+          					<div class="recipes-page-tab">
+            						<div class="text">dessert</div>
+          					</div>
+          					<div class="recipes-page-tab">
+            						<div class="text">quick bite!</div>
+          					</div>
+        				</div>
+      			</div>
+      			<div class="recipe-cards-wrapper">
+        				<div class="recipes-page-card-wrapper">
+          					<div class="recipe-card">
+            						<img class="recipe-image-icon2" alt="">
+            						
+            						<div class="text-wrapper5">
+              							<div class="copy4">
+                								<b class="headline-3">Mediterranean Stuffed Peppers</b>
+                								<div class="paragraph-23">Colorful peppers filled with quinoa, olives, and herbs for a wholesome bite</div>
+              							</div>
+              							<div class="info-wrapper">
+                								<div class="text14">40 Min - easy prep - 3 serves</div>
+                								<div class="button4">
+                  									<div class="text">view recipe</div>
+                								</div>
+              							</div>
+            						</div>
+          					</div>
+          					<div class="recipe-card">
+            						<img class="recipe-image-icon3" alt="">
+            						
+            						<div class="text-wrapper5">
+              							<div class="copy4">
+                								<b class="recipes-page-header-3">Lemon Garlic Roasted Chicken</b>
+                								<div class="paragraph-24">Experience the perfect blend of zesty lemon and aromatic garlic with this roasted chicken recipe</div>
+              							</div>
+              							<div class="info-wrapper">
+                								<div class="text14">1 hour - hard prep - 4 serves</div>
+                								<div class="button4">
+                  									<div class="text">view recipe</div>
+                								</div>
+              							</div>
+            						</div>
+          					</div>
+          					<div class="recipe-card4">
+            						<img class="recipe-image-icon4" alt="">
+            						
+            						<div class="text-wrapper7">
+              							<div class="copy4">
+                								<b class="header-32">Fried Dried Shrimp With Loitta Shutki</b>
+                								<div class="recipes-page-paragraph-2">Fried and marinated in garlic, diced onion, turmeric, chili powder</div>
+              							</div>
+              							<div class="info-wrapper">
+                								<div class="text14">40 Min - easy prep - 3 serves</div>
+                								<div class="button4">
+                  									<div class="text">view recipe</div>
+                								</div>
+              							</div>
+            						</div>
+          					</div>
+        				</div>
+        				<div class="recipes-page-card-wrapper">
+          					<div class="recipe-card5">
+            						<img class="recipe-image-icon2" alt="">
+            						
+            						<div class="text-wrapper8">
+              							<div class="copy4">
+                								<b class="headline-3">Sidol Aru Mangsho Thali</b>
+                								<div class="paragraph-23">Marinated with sidol, spices and many more</div>
+              							</div>
+              							<div class="info-wrapper">
+                								<div class="text14">30 Min - medium prep - 4 serves</div>
+                								<div class="button4">
+                  									<div class="text">view recipe</div>
+                								</div>
+              							</div>
+            						</div>
+          					</div>
+          					<div class="recipe-card6">
+            						<img class="recipe-image-icon3" alt="">
+            						
+            						<div class="text-wrapper9">
+              							<div class="copy4">
+                								<b class="header-34">Smoky BBQ Pulled Pork</b>
+                								<div class="paragraph-24">Slow-cooked pork, shredded and smothered in a rich, smoky barbecue sauce</div>
+              							</div>
+              							<div class="info-wrapper">
+                								<div class="text14">20 min - easy prep - 2 serves</div>
+                								<div class="button4">
+                  									<div class="text">view recipe</div>
+                								</div>
+              							</div>
+            						</div>
+          					</div>
+          					<div class="recipe-card7">
+            						<img class="recipe-image-icon7" alt="">
+            						
+            						<div class="text-wrapper10">
+              							<div class="copy4">
+                								<b class="header-32">Grilled Veggies with Sauce</b>
+                								<div class="paragraph-28">Served with a zesty chimichurri sauce its a perfect addition to your outdoor gatherings.</div>
+              							</div>
+              							<div class="info-wrapper">
+                								<div class="text14">25 Min - medium prep - 6 serves</div>
+                								<div class="button4">
+                  									<div class="text">view recipe</div>
+                								</div>
+              							</div>
+            						</div>
+            						<div class="tag3">
+              							<img class="icon5" alt="">
+              							
+              							<img class="text-icon2" alt="">
+              							
+              							<div class="text37">
+                								<div class="letter">v</div>
+                								<div class="recipes-page-letter">e</div>
+                								<div class="letter2">g</div>
+                								<div class="letter3">a</div>
+                								<div class="letter4">n</div>
+              							</div>
+            						</div>
+          					</div>
+        				</div>
+      			</div>
+    		</div>
+    		<div class="about-us-section">
+      			<div class="about-us-image-wrapper">
+        				<div class="image-wrapper">
+          					<img class="recipe-card-icon" alt="">
+          					
+          					<img class="recipes-page-recipe-card-icon" alt="">
+          					
+        				</div>
+        				<img class="about-us-image" alt="">
+        				
+      			</div>
+      			<div class="text-wrapper11">
+        				<div class="tag">
+          					<div class="tagline">about us</div>
+        				</div>
+        				<div class="recipes-page-copy-wrapper">
+          					<b class="recipes-page-header-2">Our Culinary Chronicle</b>
+          					<div class="paragraph-12">Our journey is crafted with dedication, creativity, and an unrelenting commitment to delivering delightful culinary experiences. Join us in savoring the essence of every dish and the stories that unfold.</div>
+          					<div class="button4">
+            						<div class="text">Read more</div>
+          					</div>
+        				</div>
+      			</div>
+    		</div>
+    		<div class="cta-section">
+      			<div class="cta-bg">
+        				<div class="bg">
+        				</div>
+      			</div>
+      			<div class="text-wrapper12">
+        				<div class="text39">
+          					<b class="text40">subscribe</b>
+          					<b class="header-22">
+            						<p class="join-the-fun">Join the fun</p>
+            						<p class="join-the-fun">Subscribe now!</p>
+          					</b>
+          					<b class="paragraph-13">Subscribe to our newsletter for a weekly serving of recipes, cooking tips, and exclusive insights straight to your inbox.</b>
+        				</div>
+        				<div class="input-wrapper">
+          					<div class="input">
+            						<b class="text41">Email Address</b>
+          					</div>
+          					<div class="button13">
+            						<b class="text42">subscribe</b>
+          					</div>
+        				</div>
+      			</div>
+    		</div>
+    		<div class="footer">
+      			<div class="wrapper">
+        				<div class="recipes-page-zestora">Zestora</div>
+        				<div class="recipes-page-link-wrapper">
+          					<div class="text">Home</div>
+          					<div class="separation-line">
+          					</div>
+          					<div class="text">recipes</div>
+          					<div class="separation-line">
+          					</div>
+          					<div class="text">cooking tips</div>
+          					<div class="separation-line">
+          					</div>
+          					<div class="text">About us</div>
+        				</div>
+        				<div class="recipes-page-card-wrapper">
+          					<img class="icbaseline-tiktok-icon" alt="">
+          					
+          					<img class="icbaseline-tiktok-icon" alt="">
+          					
+          					<img class="icbaseline-tiktok-icon" alt="">
+          					
+          					<img class="icbaseline-tiktok-icon" alt="">
+          					
+        				</div>
+      			</div>
+      			<div class="small-text">Copyright: © 2025 Zestora.</div>
+    		</div>
+    		<div class="recipes-page-featured-section">
+      			<div class="header-wrapper">
+        				<b class="headline-2">featured recipes</b>
+        				<div class="arrow-wrapper">
+          					<img class="arrow-left-icon" alt="">
+          					
+          					<img class="icon" alt="">
+          					
+        				</div>
+      			</div>
+      			<div class="card-wrapper">
+        				<div class="recipe-card">
+          					<img class="recipe-image-icon" alt="">
+          					
+          					<div class="text-wrapper2">
+            						<div class="copy2">
+              							<b class="headline-3">Savory Herb-Infused Chicken</b>
+              							<div class="recipes-page-paragraph-2">Indulge in the rich and savory symphony of flavors with our Savory Herb-Infused Chicken</div>
+            						</div>
+            						<div class="info-wrapper">
+              							<div class="text14">40 Min - easy prep - 3 serves</div>
+              							<div class="button4">
+                								<div class="text">view recipe</div>
+              							</div>
+            						</div>
+          					</div>
+        				</div>
+        				<div class="recipe-card9">
+          					<img class="recipe-image-icon" alt="">
+          					
+          					<div class="text-wrapper14">
+            						<div class="copy2">
+              							<b class="headline-3">Decadent Chocolate Mousse</b>
+              							<div class="recipes-page-paragraph-2">Dive into the velvety indulgence of our Decadent Chocolate Mousse. A dessert that transcends sweetness!</div>
+            						</div>
+            						<div class="info-wrapper">
+              							<div class="text14">30 Min - medium prep- 4 serves</div>
+              							<div class="button4">
+                								<div class="text">view recipe</div>
+              							</div>
+            						</div>
+          					</div>
+        				</div>
+      			</div>
+    		</div>
+    		<div class="card-wrapper4">
+      			<div class="recipe-card">
+        				<img class="recipe-image-icon2" alt="">
+        				
+        				<div class="text-wrapper5">
+          					<div class="copy4">
+            						<b class="headline-3">Golden Garlic Butter Salmon</b>
+            						<div class="paragraph-23">Flaky salmon fillets enriched with a luscious garlic-butter glaze</div>
+          					</div>
+          					<div class="info-wrapper">
+            						<div class="text14">40 Min - easy prep - 3 serves</div>
+            						<div class="button4">
+              							<div class="text">view recipe</div>
+            						</div>
+          					</div>
+        				</div>
+      			</div>
+      			<div class="recipe-card">
+        				<img class="recipe-image-icon3" alt="">
+        				
+        				<div class="text-wrapper5">
+          					<div class="copy4">
+            						<b class="recipes-page-header-3">Smoky Paprika Beef Stew</b>
+            						<div class="paragraph-24">Tender beef simmered slowly in a rich, smoky paprika broth</div>
+          					</div>
+          					<div class="info-wrapper">
+            						<div class="text14">1 hour - hard prep - 4 serves</div>
+            						<div class="button4">
+              							<div class="text">view recipe</div>
+            						</div>
+          					</div>
+        				</div>
+      			</div>
+      			<div class="recipe-card4">
+        				<img class="recipe-image-icon4" alt="">
+        				
+        				<div class="text-wrapper7">
+          					<div class="copy4">
+            						<b class="header-32">Spiced Lentil Stew</b>
+            						<div class="recipes-page-paragraph-2">Hearty lentils simmered in warm spices for a cozy, protein-packed meal</div>
+          					</div>
+          					<div class="info-wrapper">
+            						<div class="text14">40 Min - easy prep - 3 serves</div>
+            						<div class="button4">
+              							<div class="text">view recipe</div>
+            						</div>
+          					</div>
+        				</div>
+      			</div>
+    		</div>
+    		<div class="card-wrapper5">
+      			<div class="recipe-card">
+        				<img class="recipe-image-icon2" alt="">
+        				
+        				<div class="text-wrapper5">
+          					<div class="copy4">
+            						<b class="headline-3">Creamy Tuscan Shrimp Pasta</b>
+            						<div class="paragraph-23">Juicy shrimp tossed in a velvety sun-dried tomato and spinach cream sauce</div>
+          					</div>
+          					<div class="info-wrapper">
+            						<div class="text14">40 Min - easy prep - 3 serves</div>
+            						<div class="button4">
+              							<div class="text">view recipe</div>
+            						</div>
+          					</div>
+        				</div>
+      			</div>
+      			<div class="recipe-card">
+        				<img class="recipe-image-icon3" alt="">
+        				
+        				<div class="text-wrapper5">
+          					<div class="copy4">
+            						<b class="recipes-page-header-3">Pistachio Baklava Bites</b>
+            						<div class="paragraph-24">Flaky pastry layered with nuts and honey syrup in bite-sized form</div>
+          					</div>
+          					<div class="info-wrapper">
+            						<div class="text14">1 hour - hard prep - 4 serves</div>
+            						<div class="button4">
+              							<div class="text">view recipe</div>
+            						</div>
+          					</div>
+        				</div>
+      			</div>
+      			<div class="recipe-card4">
+        				<img class="recipe-image-icon4" alt="">
+        				
+        				<div class="text-wrapper7">
+          					<div class="copy4">
+            						<b class="header-32">Rustic Garlic Rosemary Bread</b>
+            						<div class="recipes-page-paragraph-2">Crusty homemade bread infused with garlic and fresh rosemary</div>
+          					</div>
+          					<div class="info-wrapper">
+            						<div class="text14">40 Min - easy prep - 3 serves</div>
+            						<div class="button4">
+              							<div class="text">view recipe</div>
+            						</div>
+          					</div>
+        				</div>
+      			</div>
+    		</div>
+    		<div class="card-wrapper6">
+      			<div class="recipe-card">
+        				<img class="recipe-image-icon2" alt="">
+        				
+        				<div class="text-wrapper5">
+          					<div class="copy4">
+            						<b class="headline-3">Creamy Spinach Alfredo Pasta</b>
+            						<div class="paragraph-23">Pasta tossed in a velvety Alfredo sauce with fresh spinach</div>
+          					</div>
+          					<div class="info-wrapper">
+            						<div class="text14">40 Min - easy prep - 3 serves</div>
+            						<div class="button4">
+              							<div class="text">view recipe</div>
+            						</div>
+          					</div>
+        				</div>
+      			</div>
+      			<div class="recipe-card">
+        				<img class="recipe-image-icon3" alt="">
+        				
+        				<div class="text-wrapper5">
+          					<div class="copy4">
+            						<b class="recipes-page-header-3">Caramel Apple Crumble</b>
+            						<div class="paragraph-24">Tender baked apples topped with a golden, buttery crumble</div>
+          					</div>
+          					<div class="info-wrapper">
+            						<div class="text14">1 hour - hard prep - 4 serves</div>
+            						<div class="button4">
+              							<div class="text">view recipe</div>
+            						</div>
+          					</div>
+        				</div>
+      			</div>
+      			<div class="recipe-card4">
+        				<img class="recipe-image-icon4" alt="">
+        				
+        				<div class="text-wrapper7">
+          					<div class="copy4">
+            						<b class="header-32">Coconut Panna Cotta</b>
+            						<div class="recipes-page-paragraph-2">Silky coconut cream dessert with a tropical twist & fresh fruits</div>
+          					</div>
+          					<div class="info-wrapper">
+            						<div class="text14">40 Min - easy prep - 3 serves</div>
+            						<div class="button4">
+              							<div class="text">view recipe</div>
+            						</div>
+          					</div>
+        				</div>
+      			</div>
+    		</div>
+    		<div class="tag5">
+      			<img class="icon5" alt="">
+      			
+      			<img class="text-icon2" alt="">
+      			
+      			<div class="text37">
+        				<div class="letter">v</div>
+        				<div class="recipes-page-letter">e</div>
+        				<div class="letter2">g</div>
+        				<div class="letter3">a</div>
+        				<div class="letter4">n</div>
+      			</div>
+    		</div>
+  	</div>
+  	
+  	
+  	
+  	
+  	<script>
+    		var buttonContainer = document.getElementById("buttonContainer");
+    		if(buttonContainer) {
+      			buttonContainer.addEventListener("click", function () {
+        				var anchor = document.querySelector("[data-scroll-to='recipesSectio0nContainer']");
+        				if(anchor) {
+          					anchor.scrollIntoView({"block":"start","behavior":"smooth"})
+        				}
+      			});
+    		}
+  	</script></body>
+</html>
