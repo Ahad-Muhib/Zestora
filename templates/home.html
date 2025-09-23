@@ -54,31 +54,89 @@
         <div class="featured-header">
             <h2>FEATURED RECIPES</h2>
             <div class="nav-arrows">
-                <button class="nav-arrow">‹</button>
-                <button class="nav-arrow">›</button>
+                <button class="nav-arrow" id="prevBtn">‹</button>
+                <button class="nav-arrow" id="nextBtn">›</button>
             </div>
         </div>
-        <div class="recipes-grid">
-            <div class="recipe-card">
-                <div class="recipe-image"></div>
-                <div class="recipe-content">
-                    <h3 class="recipe-title">Savory Herb-Infused Chicken</h3>
-                    <p class="recipe-description">Indulge in the rich and savory symphony of flavors with our Savory Herb-Infused Chicken.</p>
-                    <div class="recipe-meta">
-                        <span>45 MIN • EASY PREP • 5 PEOPLE</span>
+        <div class="recipes-carousel-container">
+            <div class="recipes-grid" id="featuredCarousel">
+                <div class="recipe-card">
+                    <div class="recipe-image">
+                        <img src="{% static 'images/recipes/herb-chicken.jpg' %}" alt="Savory Herb-Infused Chicken">
                     </div>
-                    <button class="view-recipe-btn">VIEW RECIPE</button>
+                    <div class="recipe-content">
+                        <h3 class="recipe-title">Savory Herb-Infused Chicken</h3>
+                        <p class="recipe-description">Indulge in the rich and savory symphony of flavors with our Savory Herb-Infused Chicken.</p>
+                        <div class="recipe-meta">
+                            <span>45 MIN • EASY PREP • 5 PEOPLE</span>
+                        </div>
+                        <button class="view-recipe-btn">VIEW RECIPE</button>
+                    </div>
                 </div>
-            </div>
-            <div class="recipe-card">
-                <div class="recipe-image"></div>
-                <div class="recipe-content">
-                    <h3 class="recipe-title">Decadent Chocolate Mousse</h3>
-                    <p class="recipe-description">Dive into the velvety indulgence of our Decadent Chocolate Mousse. A dessert that transcends the ordinary.</p>
-                    <div class="recipe-meta">
-                        <span>30 MIN • MODERATE • 4 PEOPLE</span>
+                <div class="recipe-card">
+                    <div class="recipe-image">
+                        <img src="{% static 'images/recipes/chocolate-mousse.jpg' %}" alt="Decadent Chocolate Mousse">
                     </div>
-                    <button class="view-recipe-btn">VIEW RECIPE</button>
+                    <div class="recipe-content">
+                        <h3 class="recipe-title">Decadent Chocolate Mousse</h3>
+                        <p class="recipe-description">Dive into the velvety indulgence of our Decadent Chocolate Mousse. A dessert that transcends the ordinary.</p>
+                        <div class="recipe-meta">
+                            <span>30 MIN • MODERATE • 4 PEOPLE</span>
+                        </div>
+                        <button class="view-recipe-btn">VIEW RECIPE</button>
+                    </div>
+                </div>
+                <div class="recipe-card">
+                    <div class="recipe-image">
+                        <img src="{% static 'images/recipes/pasta-salad.jpg' %}?v=2" alt="Mediterranean Pasta Salad">
+                    </div>
+                    <div class="recipe-content">
+                        <h3 class="recipe-title">Mediterranean Pasta Salad</h3>
+                        <p class="recipe-description">A refreshing pasta salad with olives, tomatoes, and feta cheese, perfect for summer gatherings.</p>
+                        <div class="recipe-meta">
+                            <span>20 MIN • EASY PREP • 6 PEOPLE</span>
+                        </div>
+                        <button class="view-recipe-btn">VIEW RECIPE</button>
+                    </div>
+                </div>
+                <div class="recipe-card">
+                    <div class="recipe-image">
+                        <img src="{% static 'images/recipes/thai-curry.jpg' %}" alt="Spicy Thai Curry">
+                    </div>
+                    <div class="recipe-content">
+                        <h3 class="recipe-title">Spicy Thai Curry</h3>
+                        <p class="recipe-description">An authentic Thai curry with coconut milk, vegetables, and aromatic spices that will transport you to Thailand.</p>
+                        <div class="recipe-meta">
+                            <span>35 MIN • MODERATE • 4 PEOPLE</span>
+                        </div>
+                        <button class="view-recipe-btn">VIEW RECIPE</button>
+                    </div>
+                </div>
+                <div class="recipe-card">
+                    <div class="recipe-image">
+                        <img src="{% static 'images/recipes/beef-tacos.jpg' %}" alt="Classic Beef Tacos">
+                    </div>
+                    <div class="recipe-content">
+                        <h3 class="recipe-title">Classic Beef Tacos</h3>
+                        <p class="recipe-description">Tender seasoned beef in crispy taco shells with fresh toppings and zesty lime.</p>
+                        <div class="recipe-meta">
+                            <span>25 MIN • EASY PREP • 4 PEOPLE</span>
+                        </div>
+                        <button class="view-recipe-btn">VIEW RECIPE</button>
+                    </div>
+                </div>
+                <div class="recipe-card">
+                    <div class="recipe-image">
+                        <img src="{% static 'images/recipes/blueberry-pancakes.jpg' %}" alt="Lemon Blueberry Pancakes">
+                    </div>
+                    <div class="recipe-content">
+                        <h3 class="recipe-title">Lemon Blueberry Pancakes</h3>
+                        <p class="recipe-description">Fluffy pancakes bursting with fresh blueberries and a hint of lemon zest for the perfect breakfast.</p>
+                        <div class="recipe-meta">
+                            <span>15 MIN • EASY PREP • 3 PEOPLE</span>
+                        </div>
+                        <button class="view-recipe-btn">VIEW RECIPE</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -94,17 +152,20 @@
             <p class="journey-subtitle">With our diverse collection of recipes, there's something to satisfy every palate.</p>
         </div>
         <div class="category-tabs">
-            <a href="#" class="category-tab active">ALL</a>
-            <a href="#" class="category-tab">VEGAN</a>
-            <a href="#" class="category-tab">BREAKFAST</a>
-            <a href="#" class="category-tab">LUNCH</a>
-            <a href="#" class="category-tab">DINNER</a>
-            <a href="#" class="category-tab">DESSERT</a>
-            <a href="#" class="category-tab">QUICK BITE</a>
+            <a href="#" class="category-tab active" data-category="all">ALL</a>
+            <a href="#" class="category-tab" data-category="vegan">VEGAN</a>
+            <a href="#" class="category-tab" data-category="breakfast">BREAKFAST</a>
+            <a href="#" class="category-tab" data-category="lunch">LUNCH</a>
+            <a href="#" class="category-tab" data-category="dinner">DINNER</a>
+            <a href="#" class="category-tab" data-category="dessert">DESSERT</a>
+            <a href="#" class="category-tab" data-category="quick-bite">QUICK BITE</a>
         </div>
         <div class="recipes-journey-grid">
-            <div class="recipe-card">
-                <div class="recipe-image"></div>
+            <!-- ALL/DINNER recipes -->
+            <div class="recipe-card" data-category="dinner">
+                <div class="recipe-image">
+                    <img src="{% static 'images/recipes/herb-chicken.jpg' %}" alt="Savory Herb-Infused Chicken">
+                </div>
                 <div class="recipe-content">
                     <h3 class="recipe-title">Savory Herb-Infused Chicken</h3>
                     <p class="recipe-description">Indulge in the rich and savory symphony of flavors with our Savory Herb-Infused Chicken.</p>
@@ -114,57 +175,197 @@
                     <button class="view-recipe-btn">VIEW RECIPE</button>
                 </div>
             </div>
-            <div class="recipe-card">
-                <div class="recipe-image"></div>
+            
+            <!-- BREAKFAST recipes -->
+            <div class="recipe-card" data-category="breakfast">
+                <div class="recipe-image">
+                    <img src="{% static 'images/recipes/blueberry-pancakes.jpg' %}" alt="Lemon Blueberry Pancakes">
+                </div>
                 <div class="recipe-content">
-                    <h3 class="recipe-title">Lemon Garlic Roasted Chicken</h3>
-                    <p class="recipe-description">Experience the perfect blend of zesty lemon and aromatic garlic with our Roasted Chicken recipe.</p>
+                    <h3 class="recipe-title">Lemon Blueberry Pancakes</h3>
+                    <p class="recipe-description">Fluffy pancakes bursting with fresh blueberries and a hint of lemon zest for the perfect breakfast.</p>
                     <div class="recipe-meta">
-                        <span>1 HOUR • HARD PREP • 6 PEOPLE</span>
+                        <span>15 MIN • EASY PREP • 3 PEOPLE</span>
                     </div>
                     <button class="view-recipe-btn">VIEW RECIPE</button>
                 </div>
             </div>
-            <div class="recipe-card">
-                <div class="recipe-image"></div>
+            
+            <!-- LUNCH recipes -->
+            <div class="recipe-card" data-category="lunch">
+                <div class="recipe-image">
+                    <img src="{% static 'images/recipes/pasta-salad.jpg' %}?v=2" alt="Mediterranean Pasta Salad">
+                </div>
                 <div class="recipe-content">
-                    <h3 class="recipe-title">Fried Dried Shrimp With Lotta Shuki</h3>
-                    <p class="recipe-description">Fried and marinated garlic dried sweet turmeric and powder.</p>
+                    <h3 class="recipe-title">Mediterranean Pasta Salad</h3>
+                    <p class="recipe-description">A refreshing pasta salad with olives, tomatoes, and feta cheese, perfect for summer gatherings.</p>
                     <div class="recipe-meta">
-                        <span>35 MIN • EASY PREP • 3 PEOPLE</span>
+                        <span>20 MIN • EASY PREP • 6 PEOPLE</span>
                     </div>
                     <button class="view-recipe-btn">VIEW RECIPE</button>
                 </div>
             </div>
-            <div class="recipe-card">
-                <div class="recipe-image"></div>
+            
+            <!-- DINNER recipes -->
+            <div class="recipe-card" data-category="dinner">
+                <div class="recipe-image">
+                    <img src="{% static 'images/recipes/thai-curry.jpg' %}" alt="Spicy Thai Curry">
+                </div>
                 <div class="recipe-content">
-                    <h3 class="recipe-title">Sidol Aru Mangsho Thali</h3>
-                    <p class="recipe-description">Marinated with black spices and many more.</p>
+                    <h3 class="recipe-title">Spicy Thai Curry</h3>
+                    <p class="recipe-description">An authentic Thai curry with coconut milk, vegetables, and aromatic spices that will transport you to Thailand.</p>
                     <div class="recipe-meta">
-                        <span>35 MIN • MODERATE PREP • 4 PEOPLE</span>
+                        <span>35 MIN • MODERATE • 4 PEOPLE</span>
                     </div>
                     <button class="view-recipe-btn">VIEW RECIPE</button>
                 </div>
             </div>
-            <div class="recipe-card">
-                <div class="recipe-image"></div>
+            
+            <!-- QUICK BITE recipes -->
+            <div class="recipe-card" data-category="quick-bite">
+                <div class="recipe-image">
+                    <img src="{% static 'images/recipes/beef-tacos.jpg' %}" alt="Classic Beef Tacos">
+                </div>
                 <div class="recipe-content">
-                    <h3 class="recipe-title">Garlic Spaghetti</h3>
-                    <p class="recipe-description">A minimalist yet flavorful dish with garlic olive oil, and a hint of red pepper flakes.</p>
+                    <h3 class="recipe-title">Classic Beef Tacos</h3>
+                    <p class="recipe-description">Tender seasoned beef in crispy taco shells with fresh toppings and zesty lime.</p>
                     <div class="recipe-meta">
-                        <span>20 MIN • EASY PREP • 2 PEOPLE</span>
+                        <span>25 MIN • EASY PREP • 4 PEOPLE</span>
                     </div>
                     <button class="view-recipe-btn">VIEW RECIPE</button>
                 </div>
             </div>
-            <div class="recipe-card">
-                <div class="recipe-image"></div>
+            
+            <!-- DESSERT recipes -->
+            <div class="recipe-card" data-category="dessert">
+                <div class="recipe-image">
+                    <img src="{% static 'images/recipes/chocolate-mousse.jpg' %}" alt="Decadent Chocolate Mousse">
+                </div>
                 <div class="recipe-content">
-                    <h3 class="recipe-title">Grilled Veggies with Sauce</h3>
-                    <p class="recipe-description">Served with a zesty herb-infused sauce for a perfect addition to your outdoor gatherings.</p>
+                    <h3 class="recipe-title">Decadent Chocolate Mousse</h3>
+                    <p class="recipe-description">Dive into the velvety indulgence of our Decadent Chocolate Mousse. A dessert that transcends the ordinary.</p>
                     <div class="recipe-meta">
-                        <span>25 MIN • MODERATE PREP • 4 PEOPLE</span>
+                        <span>30 MIN • MODERATE • 4 PEOPLE</span>
+                    </div>
+                    <button class="view-recipe-btn">VIEW RECIPE</button>
+                </div>
+            </div>
+            
+            <!-- VEGAN recipes -->
+            <div class="recipe-card" data-category="vegan">
+                <div class="recipe-image">
+                    <img src="{% static 'images/recipes/quinoa-bowl.jpg' %}?v=1" alt="Quinoa Buddha Bowl">
+                </div>
+                <div class="recipe-content">
+                    <h3 class="recipe-title">Quinoa Buddha Bowl</h3>
+                    <p class="recipe-description">A nutritious bowl packed with quinoa, roasted vegetables, and tahini dressing.</p>
+                    <div class="recipe-meta">
+                        <span>25 MIN • EASY PREP • 2 PEOPLE</span>
+                    </div>
+                    <button class="view-recipe-btn">VIEW RECIPE</button>
+                </div>
+            </div>
+            
+            <!-- BREAKFAST recipes -->
+            <div class="recipe-card" data-category="breakfast">
+                <div class="recipe-image">
+                    <img src="{% static 'images/recipes/avocado-toast.jpg' %}?v=1" alt="Avocado Toast">
+                </div>
+                <div class="recipe-content">
+                    <h3 class="recipe-title">Gourmet Avocado Toast</h3>
+                    <p class="recipe-description">Creamy avocado on artisan bread topped with herbs and a drizzle of olive oil.</p>
+                    <div class="recipe-meta">
+                        <span>10 MIN • EASY PREP • 1 PERSON</span>
+                    </div>
+                    <button class="view-recipe-btn">VIEW RECIPE</button>
+                </div>
+            </div>
+            
+            <!-- LUNCH recipes -->
+            <div class="recipe-card" data-category="lunch">
+                <div class="recipe-image">
+                    <img src="{% static 'images/recipes/caesar-salad.jpg' %}?v=1" alt="Caesar Salad">
+                </div>
+                <div class="recipe-content">
+                    <h3 class="recipe-title">Classic Caesar Salad</h3>
+                    <p class="recipe-description">Crisp romaine lettuce with homemade caesar dressing, croutons, and parmesan.</p>
+                    <div class="recipe-meta">
+                        <span>15 MIN • EASY PREP • 4 PEOPLE</span>
+                    </div>
+                    <button class="view-recipe-btn">VIEW RECIPE</button>
+                </div>
+            </div>
+            
+            <!-- VEGAN recipes -->
+            <div class="recipe-card" data-category="vegan">
+                <div class="recipe-image">
+                    <img src="{% static 'images/recipes/veggie-stir-fry.jpg' %}?v=1" alt="Veggie Stir Fry">
+                </div>
+                <div class="recipe-content">
+                    <h3 class="recipe-title">Rainbow Veggie Stir Fry</h3>
+                    <p class="recipe-description">Colorful vegetables stir-fried with ginger, garlic, and soy sauce for a healthy meal.</p>
+                    <div class="recipe-meta">
+                        <span>20 MIN • EASY PREP • 3 PEOPLE</span>
+                    </div>
+                    <button class="view-recipe-btn">VIEW RECIPE</button>
+                </div>
+            </div>
+            
+            <!-- QUICK BITE recipes -->
+            <div class="recipe-card" data-category="quick-bite">
+                <div class="recipe-image">
+                    <img src="{% static 'images/recipes/grilled-sandwich.jpg' %}?v=1" alt="Grilled Cheese Sandwich">
+                </div>
+                <div class="recipe-content">
+                    <h3 class="recipe-title">Gourmet Grilled Cheese</h3>
+                    <p class="recipe-description">Crispy grilled cheese with artisan bread and premium cheeses, served hot.</p>
+                    <div class="recipe-meta">
+                        <span>12 MIN • EASY PREP • 2 PEOPLE</span>
+                    </div>
+                    <button class="view-recipe-btn">VIEW RECIPE</button>
+                </div>
+            </div>
+            
+            <!-- DESSERT recipes -->
+            <div class="recipe-card" data-category="dessert">
+                <div class="recipe-image">
+                    <img src="{% static 'images/recipes/tiramisu.jpg' %}?v=1" alt="Classic Tiramisu">
+                </div>
+                <div class="recipe-content">
+                    <h3 class="recipe-title">Classic Tiramisu</h3>
+                    <p class="recipe-description">Traditional Italian dessert with coffee-soaked ladyfingers and mascarpone cream.</p>
+                    <div class="recipe-meta">
+                        <span>4 HOURS • MODERATE PREP • 8 PEOPLE</span>
+                    </div>
+                    <button class="view-recipe-btn">VIEW RECIPE</button>
+                </div>
+            </div>
+            
+            <!-- BREAKFAST recipes -->
+            <div class="recipe-card" data-category="breakfast">
+                <div class="recipe-image">
+                    <img src="{% static 'images/recipes/french-toast.jpg' %}?v=1" alt="French Toast">
+                </div>
+                <div class="recipe-content">
+                    <h3 class="recipe-title">Cinnamon French Toast</h3>
+                    <p class="recipe-description">Golden french toast with cinnamon, vanilla, and maple syrup for a perfect morning treat.</p>
+                    <div class="recipe-meta">
+                        <span>20 MIN • EASY PREP • 4 PEOPLE</span>
+                    </div>
+                    <button class="view-recipe-btn">VIEW RECIPE</button>
+                </div>
+            </div>
+            
+            <!-- DINNER recipes -->
+            <div class="recipe-card" data-category="dinner">
+                <div class="recipe-image">
+                    <img src="{% static 'images/recipes/salmon-teriyaki.jpg' %}?v=1" alt="Salmon Teriyaki">
+                </div>
+                <div class="recipe-content">
+                    <h3 class="recipe-title">Glazed Salmon Teriyaki</h3>
+                    <p class="recipe-description">Perfectly grilled salmon with a sweet and savory teriyaki glaze, served with rice.</p>
+                    <div class="recipe-meta">
+                        <span>30 MIN • MODERATE PREP • 4 PEOPLE</span>
                     </div>
                     <button class="view-recipe-btn">VIEW RECIPE</button>
                 </div>
@@ -180,12 +381,18 @@
             <div class="chronicle-badge">BLOG</div>
             <h2>OUR CULINARY CHRONICLE</h2>
             <p>Our journey is woven with food experiences, and culinary adventures from around the globe. Discover our delicious culinary explorations. Join us in savoring the essence of every dish and ingredient that touches our taste buds.</p>
-            <button class="read-more-btn">READ MORE</button>
+            <a href="{% url 'about' %}" class="read-more-btn">READ MORE</a>
         </div>
         <div class="chronicle-images">
-            <div class="chronicle-image"></div>
-            <div class="chronicle-image"></div>
-            <div class="chronicle-image large"></div>
+            <div class="chronicle-image">
+                <img src="{% static 'images/chronicle/cooking-process.jpg' %}?v=1" alt="Cooking Process">
+            </div>
+            <div class="chronicle-image">
+                <img src="{% static 'images/chronicle/ingredients.jpg' %}?v=1" alt="Fresh Ingredients">
+            </div>
+            <div class="chronicle-image large">
+                <img src="{% static 'images/chronicle/chef-team.jpg' %}?v=1" alt="Our Chef Team">
+            </div>
         </div>
     </div>
     </section>

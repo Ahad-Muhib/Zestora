@@ -13,7 +13,10 @@
 }
 
 .navbar-logo {
-  font-weight: 700;
+  font-family: "Jaro", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
   font-size: 1.7em;
   margin-right: 38px;
   letter-spacing: 2px;
@@ -163,6 +166,14 @@
   font-size: 1.4rem;
   font-weight: 700;
   letter-spacing: 1px;
+}
+
+/* Apply Jaro font specifically to Zestora in footer */
+.footer-section h3 {
+  font-family: "Jaro", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
 }
 
 .footer-section p {

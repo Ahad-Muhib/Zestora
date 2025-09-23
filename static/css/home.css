@@ -83,7 +83,7 @@
         /* Hero Section */
         .hero {
             height: 100vh;
-            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><rect fill="%23654321" width="1200" height="800"/><rect fill="%23654321" width="1200" height="400" y="400" opacity="0.8"/></svg>');
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('/static/images/hero/hero-cooking.jpg');
             background-size: cover;
             background-position: center;
             display: flex;
@@ -104,9 +104,10 @@
 
         .hero-content p {
             font-size: 1.2rem;
-            margin-bottom: 30px;
+            margin: 0 auto 30px auto;
             max-width: 600px;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            text-align: center;
         }
 
         .explore-btn {
@@ -244,21 +245,35 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: background 0.3s ease;
+            transition: all 0.3s ease;
+            font-size: 18px;
+            font-weight: bold;
         }
 
-        .nav-arrow:hover {
+        .nav-arrow:hover:not(:disabled) {
             background: #ff6b5a;
             color: white;
         }
 
+        .nav-arrow:disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .recipes-carousel-container {
+            overflow: hidden;
+            position: relative;
+        }
+
         .recipes-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            display: flex;
             gap: 30px;
+            transition: transform 0.5s ease;
+            width: calc(350px * 6); /* Width for 6 cards */
         }
 
         .recipe-card {
+            flex: 0 0 300px; /* Fixed width for each card */
             background: white;
             border-radius: 15px;
             overflow: hidden;
@@ -274,6 +289,18 @@
             height: 200px;
             background: linear-gradient(45deg, #ff6b5a, #ff8c42);
             position: relative;
+            overflow: hidden;
+        }
+
+        .recipe-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .recipe-card:hover .recipe-image img {
+            transform: scale(1.05);
         }
 
         .recipe-content {
@@ -391,6 +418,14 @@
             margin-bottom: 50px;
         }
 
+        .recipes-journey-grid .recipe-card {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .recipes-journey-grid .recipe-card:hover {
+            transform: translateY(-5px);
+        }
+
         /* Chronicle Section */
         .chronicle-section {
             background: #333;
@@ -446,6 +481,19 @@
             height: 150px;
             background: linear-gradient(45deg, #666, #888);
             border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .chronicle-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .chronicle-image:hover img {
+            transform: scale(1.05);
         }
 
         .chronicle-image.large {
@@ -608,5 +656,14 @@
                 justify-content: flex-start;
                 overflow-x: auto;
                 padding-bottom: 10px;
+            }
+            
+            /* Mobile carousel adjustments */
+            .recipes-grid {
+                width: calc(320px * 6); /* Smaller width for mobile */
+            }
+            
+            .recipe-card {
+                flex: 0 0 280px; /* Smaller cards on mobile */
             }
         }

@@ -10,6 +10,98 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Featured Recipes Carousel
+    const carousel = document.getElementById('featuredCarousel');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    
+    if (carousel && prevBtn && nextBtn) {
+        let currentIndex = 0;
+        const totalCards = carousel.children.length;
+        
+        function getCardWidth() {
+            return window.innerWidth <= 768 ? 300 : 330; // Responsive card width
+        }
+        
+        function getVisibleCards() {
+            return window.innerWidth <= 768 ? 1 : 2; // Show 1 card on mobile, 2 on desktop
+        }
+        
+        function updateCarousel() {
+            const cardWidth = getCardWidth();
+            const visibleCards = getVisibleCards();
+            const maxIndex = Math.max(0, totalCards - visibleCards);
+            
+            // Adjust currentIndex if it's out of bounds
+            if (currentIndex > maxIndex) {
+                currentIndex = maxIndex;
+            }
+            
+            const translateX = -currentIndex * cardWidth;
+            carousel.style.transform = `translateX(${translateX}px)`;
+            
+            // Update button states
+            prevBtn.disabled = currentIndex === 0;
+            nextBtn.disabled = currentIndex >= maxIndex;
+            
+            // Update button styles
+            prevBtn.style.opacity = currentIndex === 0 ? '0.5' : '1';
+            nextBtn.style.opacity = currentIndex >= maxIndex ? '0.5' : '1';
+        }
+        
+        prevBtn.addEventListener('click', function() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateCarousel();
+            }
+        });
+        
+        nextBtn.addEventListener('click', function() {
+            const visibleCards = getVisibleCards();
+            const maxIndex = Math.max(0, totalCards - visibleCards);
+            if (currentIndex < maxIndex) {
+                currentIndex++;
+                updateCarousel();
+            }
+        });
+        
+        // Handle window resize
+        window.addEventListener('resize', updateCarousel);
+        
+        // Initialize carousel
+        updateCarousel();
+        
+        // Auto-play carousel (optional)
+        let autoPlayInterval = setInterval(function() {
+            const visibleCards = getVisibleCards();
+            const maxIndex = Math.max(0, totalCards - visibleCards);
+            if (currentIndex >= maxIndex) {
+                currentIndex = 0;
+            } else {
+                currentIndex++;
+            }
+            updateCarousel();
+        }, 5000); // Change slide every 5 seconds
+        
+        // Pause auto-play on hover
+        carousel.addEventListener('mouseenter', function() {
+            clearInterval(autoPlayInterval);
+        });
+        
+        carousel.addEventListener('mouseleave', function() {
+            autoPlayInterval = setInterval(function() {
+                const visibleCards = getVisibleCards();
+                const maxIndex = Math.max(0, totalCards - visibleCards);
+                if (currentIndex >= maxIndex) {
+                    currentIndex = 0;
+                } else {
+                    currentIndex++;
+                }
+                updateCarousel();
+            }, 5000);
+        });
+    }
+
     // Search form enhancement
     const searchForm = document.querySelector('.search-form');
     const searchInput = document.querySelector('.search-input');
@@ -49,4 +141,43 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    // Category filtering for Journey section
+    const categoryTabs = document.querySelectorAll('.category-tab');
+    const recipeCards = document.querySelectorAll('.recipes-journey-grid .recipe-card');
+    
+    if (categoryTabs.length > 0 && recipeCards.length > 0) {
+        categoryTabs.forEach(tab => {
+            tab.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active class from all tabs
+                categoryTabs.forEach(t => t.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                this.classList.add('active');
+                
+                // Get selected category
+                const selectedCategory = this.getAttribute('data-category');
+                
+                // Filter recipe cards
+                recipeCards.forEach(card => {
+                    const cardCategory = card.getAttribute('data-category');
+                    
+                    if (selectedCategory === 'all' || cardCategory === selectedCategory) {
+                        card.style.display = 'block';
+                        card.style.opacity = '0';
+                        setTimeout(() => {
+                            card.style.opacity = '1';
+                        }, 100);
+                    } else {
+                        card.style.opacity = '0';
+                        setTimeout(() => {
+                            card.style.display = 'none';
+                        }, 300);
+                    }
+                });
+            });
+        });
+    }
 });
