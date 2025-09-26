@@ -45,6 +45,25 @@
             max-width: 400px;
         }
 
+        .alert {
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+
+        .alert-error {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+
         .welcome-text {
             color: #666;
             font-size: 14px;
@@ -160,6 +179,7 @@
             justify-content: center;
             gap: 10px;
             transition: background-color 0.3s ease;
+            text-decoration: none;
         }
 
         .google-btn:hover {

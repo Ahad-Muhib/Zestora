@@ -30,14 +30,14 @@ urlpatterns = [
     path('about/', views.about, name='about'),
     path('logout/', views.logout_view, name='logout'),
 
-
+    # Custom auth views
     path("login/", views.login_view, name="login"),
     path("signup/", views.signup_view, name="signup"),
+    
+    # Django Allauth URLs
+    path('accounts/', include('allauth.urls')),
+    
     path('recipes/', include('recipes.urls')),
-
-
-
-
 ]
 
 

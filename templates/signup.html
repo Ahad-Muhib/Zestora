@@ -1,4 +1,5 @@
 {% load static %}
+{% load socialaccount %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,55 +23,47 @@ Have an Account?<br>Sign in</a>
         <div class="welcome-text">Welcome to Zestora</div>
         <h1 class="signup-title">Sign up</h1>
         
-        <form method = "post">
-             {% csrf_token %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        
+        <form method="post">
+            {% csrf_token %}
             <div class="form-group">
-                <label class="form-label">Enter your username/email</label>
-                <input type="text" class="form-input" placeholder="username or email address">
+                <label class="form-label">Enter your email</label>
+                <input type="email" name="email" class="form-input" placeholder="email address" required>
             </div>
             
             <div class="form-row">
                 <div class="form-group">
                     <label class="form-label">User name</label>
-                    <input type="text" class="form-input" placeholder="User name">
+                    <input type="text" name="username" class="form-input" placeholder="User name" required>
                 </div>
                 <div class="form-group">
                     <label class="form-label">Contact Number</label>
-                    <input type="tel" class="form-input" placeholder="Contact number">
+                    <input type="tel" name="contact" class="form-input" placeholder="Contact number">
                 </div>
             </div>
             
             <div class="form-group">
                 <label class="form-label">Enter your Password</label>
-                <input type="password" class="form-input" placeholder="Password">
+                <input type="password" name="password" class="form-input" placeholder="Password" required>
             </div>
             
             <button type="submit" class="signup-btn">Sign up</button>
         </form>
-        
         <div class="divider">
             <span>OR</span>
         </div>
         
-        <button class="google-btn" onclick="signInWithGoogle()">
+        <a href="/accounts/google/login/" class="google-btn">
             <div class="google-icon"></div>
-            Sign in with Google
-        </button>
+            Sign up with Google
+        </a>
     </div>
-
-      <script>
-        function signInWithGoogle() {
-            // Redirect to Google OAuth sign-in page
-            // Replace 'YOUR_CLIENT_ID' with your actual Google OAuth client ID
-            const clientId = '636363384340-qk2dq5bkvrto7l1iaqptfm9febsmosqh.apps.googleusercontent.com';
-            const redirectUri = encodeURIComponent(window.location.origin + '/auth/google/callback');
-            const scope = encodeURIComponent('openid email profile');
-            const responseType = 'code';
-            
-            const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&response_type=${responseType}&access_type=offline&prompt=consent`;
-            
-            window.location.href = googleAuthUrl;
-        }
-    </script>
 </body>
 </html>
