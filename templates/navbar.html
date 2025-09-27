@@ -1,37 +1,82 @@
-<nav class="navbar">
-  <div class="navbar-logo">Zestora</div>
-  <ul class="navbar-links">
-    <li class="active"><a href="{% url 'home' %}">HOME</a></li>
-    <li><a href="{% url 'recipes:recipe_list' %}" class="nav-link">RECIPES</a></li>
-    <li><a href="{% url 'recipes:category_list' %}" class="nav-link">CATEGORIES</a></li>
-    <li><a href="{% url 'guidebooks' %}" class="nav-link">GUIDEBOOKS</a></li>
-    <li><a href="{% url 'tips:tip_list' %}" class="nav-link">COOKING TIPS</a></li>
-    <li><a href="{% url 'community:community_home' %}" class="nav-link">COMMUNITY</a></li>
-    <li><a href="{% url 'about' %}" class="nav-link">ABOUT US</a></li>
-  </ul>
-  <div class="nav-actions">
-    <div class="search-container">
-        <form method="GET" action="{% url 'search' %}" class="search-form">
-            <input type="text" name="q" placeholder="Search recipes..." class="search-input">
-            <button type="submit" class="search-btn">🔍</button>
-        </form>
-    </div>
-    
-    <div class="auth-buttons">
-        {% if user.is_authenticated %}
-            <span class="welcome-text">Hello, {{ user.first_name|default:user.username }}!</span>
-            <a href="{% url 'logout' %}" class="btn btn-outline">Logout</a>
-        {% else %}
-            <a href="{% url 'login' %}" class="btn btn-outline">Login</a>
-            <a href="{% url 'signup' %}" class="btn btn-primary">Sign Up</a>
-        {% endif %}
-    </div>
-</div>
+<nav class="navbar navbar-expand-lg custom-navbar">
+  <div class="container-fluid">
+    <!-- Brand -->
+    <a class="navbar-brand" href="{% url 'home' %}">Zestora</a>
 
-<div class="mobile-menu-toggle" id="mobile-menu-toggle">
-    <span></span>
-    <span></span>
-    <span></span>
-</div>
-</div>
+    <!-- Mobile toggle -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Main navbar content -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <!-- Left side navigation links -->
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'home' %}">HOME</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'recipes:recipe_list' %}">RECIPES</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'recipes:category_list' %}">CATEGORIES</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'guidebooks' %}">GUIDEBOOKS</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'tips:tip_list' %}">COOKING TIPS</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'community:community_home' %}">COMMUNITY</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'about' %}">ABOUT US</a>
+        </li>
+        
+        <!-- Admin dropdown -->
+        {% if user.is_staff or user.is_superuser %}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle admin-dropdown-btn" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-user-shield"></i>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#" onclick="goToAdminProfile()"><i class="fas fa-user-cog me-2"></i>Admin Profile</a></li>
+            <li><a class="dropdown-item" href="/admin/"><i class="fas fa-cogs me-2"></i>Django Admin</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#" onclick="showStats()"><i class="fas fa-chart-bar me-2"></i>Statistics</a></li>
+            <li><a class="dropdown-item" href="#" onclick="manageUsers()"><i class="fas fa-users me-2"></i>Manage Users</a></li>
+            <li><a class="dropdown-item" href="#" onclick="systemTools()"><i class="fas fa-tools me-2"></i>System Tools</a></li>
+          </ul>
+        </li>
+        {% endif %}
+      </ul>
+
+      <!-- Right side - Search and Auth -->
+      <div class="d-flex align-items-center gap-3">
+        <!-- Search -->
+        <form method="GET" action="{% url 'search' %}" class="d-flex search-form">
+          <input type="text" name="q" placeholder="Search recipes..." class="form-control search-input">
+          <button type="submit" class="btn search-btn">
+            <i class="fas fa-search"></i>
+          </button>
+        </form>
+
+        <!-- Auth buttons -->
+        <div class="auth-buttons">
+          {% if user.is_authenticated %}
+            {% if not user.is_staff and not user.is_superuser %}
+              <a href="#" class="btn btn-user-icon" onclick="goToUserProfile()">
+                <i class="fas fa-user"></i>
+              </a>
+            {% endif %}
+            <a href="{% url 'logout' %}" class="btn btn-outline-secondary">Logout</a>
+          {% else %}
+            <a href="{% url 'login' %}" class="btn btn-outline-secondary">Login</a>
+            <a href="{% url 'signup' %}" class="btn btn-primary">Sign Up</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
 </nav>

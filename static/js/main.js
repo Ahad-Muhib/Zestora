@@ -181,3 +181,66 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+// Profile Functions
+function goToAdminProfile() {
+    alert('Admin Profile Page\n\n(Feature coming soon!)');
+}
+
+function goToUserProfile() {
+    alert('User Profile Page\n\n(Feature coming soon!)');
+}
+
+function showStats() {
+    alert('Admin Statistics:\n\n' +
+          'Total Users: 1,234\n' +
+          'Total Recipes: 567\n' +
+          'Total Categories: 12\n' +
+          'Active Users Today: 89\n' +
+          'New Registrations: 23');
+}
+
+function manageUsers() {
+    alert('User Management:\n\nThis would redirect to user management page.\n(Feature coming soon!)');
+}
+
+function systemTools() {
+    alert('System Tools:\n\n' +
+          '• Clear Cache\n' +
+          '• Database Backup\n' +
+          '• System Health Check\n' +
+          '• Error Logs\n\n' +
+          '(Features coming soon!)');
+}
+
+function showStats() {
+    alert('Admin Statistics:\n\n' +
+          'Total Users: 1,234\n' +
+          'Total Recipes: 567\n' +
+          'Total Categories: 12\n' +
+          'Active Users Today: 89\n' +
+          'New Registrations: 23');
+}
+
+function manageUsers() {
+    alert('User Management:\n\nThis would redirect to user management page.\n(Feature coming soon!)');
+}
+
+function systemTools() {
+    alert('System Tools:\n\n' +
+          '• Clear Cache\n' +
+          '• Database Backup\n' +
+          '• System Health Check\n' +
+          '• Error Logs\n\n' +
+          '(Features coming soon!)');
+}
+
+function goToAdminProfile() {
+    // Redirect to admin profile page (implement later)
+    alert('Admin Profile Page\n\n(Feature coming soon!)');
+}
+
+function goToUserProfile() {
+    // Redirect to user profile page (implement later) 
+    alert('User Profile Page\n\n(Feature coming soon!)');
+}

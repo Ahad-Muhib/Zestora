@@ -3,10 +3,16 @@ from .models import Category, Recipe, RecipeStep
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('name', 'slug', 'created_at')
+    list_display = ('name', 'slug', 'created_at', 'has_image')
     prepopulated_fields = {'slug': ('name',)}
     search_fields = ('name', 'description')
     list_filter = ('created_at',)
+    fields = ('name', 'slug', 'description', 'image')
+    
+    def has_image(self, obj):
+        return bool(obj.image)
+    has_image.boolean = True
+    has_image.short_description = 'Image'
 
 @admin.register(Recipe)
 class RecipeAdmin(admin.ModelAdmin):

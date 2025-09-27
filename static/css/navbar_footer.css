@@ -266,3 +266,163 @@
   color: #cac5bd;
   letter-spacing: 0.5px;
 }
+
+/* Bootstrap Navbar Customization */
+.custom-navbar {
+  background: #edeada !important;
+  border-radius: 32px;
+  margin: 8px auto;
+  width: 98%;
+  box-shadow: 0 1px 8px rgba(0,0,0,0.04);
+  padding: 10px 32px;
+}
+
+.navbar-brand {
+  font-family: "Jaro", sans-serif !important;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 1.7em !important;
+  color: #222 !important;
+  letter-spacing: 2px;
+}
+
+.navbar-nav .nav-link {
+  color: #686760 !important;
+  font-weight: 500 !important;
+  font-size: 1em !important;
+  padding: 8px 13px !important;
+  transition: color 0.17s;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #111 !important;
+}
+
+.navbar-nav .nav-link.active {
+  color: #222 !important;
+  font-weight: bold !important;
+}
+
+/* Admin Dropdown Styling */
+.admin-dropdown-btn {
+  font-size: 1.1em !important;
+  padding: 8px 12px !important;
+  border-radius: 6px;
+}
+
+.admin-dropdown-btn:hover {
+  background: rgba(0,0,0,0.05) !important;
+}
+
+.dropdown-menu {
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  border: 1px solid #ddd;
+  margin-top: 8px !important;
+}
+
+.dropdown-item {
+  padding: 12px 18px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background: #f8f9fa;
+  color: #222;
+}
+
+.dropdown-item i {
+  width: 16px;
+  text-align: center;
+}
+
+/* Search Form */
+.search-form {
+  margin-right: 1rem;
+}
+
+.search-input {
+  border-radius: 20px 0 0 20px !important;
+  border-right: none !important;
+  padding: 8px 16px !important;
+  font-size: 0.95em;
+  min-width: 200px;
+}
+
+.search-btn {
+  border-radius: 0 20px 20px 0 !important;
+  background: #fff !important;
+  border: 1px solid #ced4da !important;
+  border-left: none !important;
+  color: #666 !important;
+  padding: 8px 16px !important;
+}
+
+.search-btn:hover {
+  background: #f8f9fa !important;
+  color: #333 !important;
+}
+
+/* Auth Buttons */
+.auth-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-user-icon {
+  background: #fff !important;
+  color: #666 !important;
+  border: 1px solid #ddd !important;
+  padding: 8px 12px !important;
+  border-radius: 8px !important;
+  font-size: 1.1em !important;
+  transition: all 0.14s;
+}
+
+.btn-user-icon:hover {
+  background: #f0f0f0 !important;
+  color: #333 !important;
+  border-color: #ccc !important;
+}
+
+.btn-outline-secondary {
+  border-radius: 8px !important;
+  font-weight: 500 !important;
+}
+
+.btn-primary {
+  background: #000 !important;
+  border-color: #000 !important;
+  border-radius: 8px !important;
+  font-weight: 500 !important;
+}
+
+.btn-primary:hover {
+  background: #222 !important;
+  border-color: #222 !important;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 991px) {
+  .custom-navbar {
+    border-radius: 16px;
+    padding: 10px 16px;
+  }
+  
+  .search-form {
+    margin: 10px 0;
+  }
+  
+  .search-input {
+    min-width: 150px;
+  }
+  
+  .auth-buttons {
+    margin-top: 10px;
+  }
+}
+
+/* Footer styles remain the same */

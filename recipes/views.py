@@ -20,24 +20,31 @@ def category_list(request):
 def category_detail(request, slug):
     category = get_object_or_404(Category, slug=slug)
     recipes = Recipe.objects.filter(category=category)
-    return render(request, 'recipes/category_detail.html', {'category': category, 'recipes': recipes})
+    
+    # Handle sorting
+    sort_by = request.GET.get('sort', 'newest')
+    if sort_by == 'oldest':
+        recipes = recipes.order_by('created_at')
+    elif sort_by == 'difficulty':
+        recipes = recipes.order_by('difficulty', 'title')
+    elif sort_by == 'time':
+        recipes = recipes.extra(select={'total_time': 'prep_time + cook_time'}).order_by('total_time')
+    else:  # newest (default)
+        recipes = recipes.order_by('-created_at')
+    
+    return render(request, 'recipes/category_detail.html', {
+        'category': category, 
+        'recipes': recipes,
+        'sort_by': sort_by
+    })
 
+@login_required
 def add_recipe(request):
     if request.method == 'POST':
         form = RecipeForm(request.POST, request.FILES)
         if form.is_valid():
             recipe = form.save(commit=False)
-            # For now, create a default author (will be replaced with actual user when auth is implemented)
-            from django.contrib.auth.models import User
-            default_user, created = User.objects.get_or_create(
-                username='default_chef',
-                defaults={
-                    'first_name': 'Chef',
-                    'last_name': 'Zestora',
-                    'email': 'chef@zestora.com'
-                }
-            )
-            recipe.author = default_user
+            recipe.author = request.user  # Use the currently logged-in user
             recipe.save()
             messages.success(request, f'Recipe "{recipe.title}" has been added successfully!')
             return redirect('recipes:recipe_detail', slug=recipe.slug)
