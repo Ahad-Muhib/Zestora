@@ -22,10 +22,16 @@
             {% for recipe in recipes %}
             <div class="recipe-card">
                 {% if recipe.image %}
-                    <img src="{% static recipe.image %}" alt="{{ recipe.title }}">
+                    {% if recipe.image.name|slice:":8" == "recipes/" %}
+                        <!-- Uploaded to media/recipes/ -->
+                        <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
+                    {% else %}
+                        <!-- Static image from static/images/recipes/ -->
+                        <img src="{% static recipe.image %}" alt="{{ recipe.title }}">
+                    {% endif %}
                 {% else %}
-                    <!-- Try to find matching static image based on recipe slug -->
-                    <img src="{% static 'images/recipes/'|add:recipe.slug|add:'.jpg' %}" alt="{{ recipe.title }}" onerror="this.src='https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'">
+                    <!-- Placeholder when no image is available -->
+                    <div style="height: 250px; background: linear-gradient(45deg, #ff6b5a, #ff8c42); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">🍽️</div>
                 {% endif %}
                 <div class="recipe-card-content">
                     <h3>{{ recipe.title }}</h3>

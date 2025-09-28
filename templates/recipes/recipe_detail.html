@@ -8,11 +8,15 @@
     <div class="recipe-header">
         <div class="recipe-image">
             {% if recipe.image %}
-                <img src="{% static recipe.image %}" alt="{{ recipe.title }}">
+                {% if recipe.image.name|slice:":8" == "recipes/" %}
+                    <!-- Uploaded to media/recipes/ -->
+                    <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
+                {% else %}
+                    <!-- Static image from static/images/recipes/ -->
+                    <img src="{% static recipe.image %}" alt="{{ recipe.title }}">
+                {% endif %}
             {% else %}
-                <!-- Try to find matching static image based on recipe slug -->
-                {% load static %}
-                <img src="{% static 'images/recipes/'|add:recipe.slug|add:'.jpg' %}" alt="{{ recipe.title }}" onerror="this.src='https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80'; this.onerror=null;">
+                <div class="placeholder-image">🍽️</div>
             {% endif %}
         </div>
         
@@ -55,27 +59,14 @@
         <div class="ingredients-section">
             <h2>Ingredients</h2>
             <div class="ingredients-list">
-                {% for ingredient in recipe.ingredients|linebreaksbr %}
-                    {% if ingredient.strip %}
-                        <div class="ingredient-item">
-                            <span class="ingredient-text">{{ ingredient|striptags }}</span>
-                        </div>
-                    {% endif %}
-                {% endfor %}
+                {{ recipe.ingredients|linebreaks }}
             </div>
         </div>
         
         <div class="instructions-section">
             <h2>Instructions</h2>
             <div class="instructions-list">
-                {% for instruction in recipe.instructions|linebreaksbr %}
-                    {% if instruction.strip %}
-                        <div class="instruction-step">
-                            <div class="step-number">{{ forloop.counter }}</div>
-                            <div class="step-content">{{ instruction|striptags }}</div>
-                        </div>
-                    {% endif %}
-                {% endfor %}
+                {{ recipe.instructions|linebreaks }}
             </div>
         </div>
     </div>
@@ -289,65 +280,63 @@
 }
 
 .ingredients-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    color: #333;
+    font-size: 1rem;
+    line-height: 1.6;
 }
 
-.ingredient-item {
-    display: flex;
-    align-items: center;
-    padding: 10px 0;
-    border-bottom: 1px solid #f0f0f0;
+.ingredients-list p {
+    margin-bottom: 10px;
+    position: relative;
+    padding-left: 20px;
 }
 
-.ingredient-item:last-child {
-    border-bottom: none;
-}
-
-.ingredient-item::before {
+.ingredients-list p::before {
     content: '•';
     color: #ff6b5a;
     font-weight: bold;
-    margin-right: 10px;
+    position: absolute;
+    left: 0;
     font-size: 1.2rem;
 }
 
-.ingredient-text {
-    color: #333;
-    font-size: 1rem;
+.ingredients-list p:last-child {
+    margin-bottom: 0;
 }
 
 .instructions-list {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+    color: #333;
+    font-size: 1rem;
+    line-height: 1.6;
+    counter-reset: step-counter;
 }
 
-.instruction-step {
-    display: flex;
-    gap: 15px;
-    align-items: flex-start;
+.instructions-list p {
+    margin-bottom: 15px;
+    position: relative;
+    padding-left: 40px;
 }
 
-.step-number {
+.instructions-list p::before {
+    content: counter(step-counter);
+    counter-increment: step-counter;
+    position: absolute;
+    left: 0;
+    top: 0;
     background: #ff6b5a;
     color: white;
-    width: 30px;
-    height: 30px;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: bold;
     font-size: 0.9rem;
-    flex-shrink: 0;
 }
 
-.step-content {
-    color: #333;
-    font-size: 1rem;
-    line-height: 1.6;
+.instructions-list p:last-child {
+    margin-bottom: 0;
 }
 
 .recipe-footer {

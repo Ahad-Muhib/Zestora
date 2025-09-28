@@ -22,7 +22,15 @@
                     <div class="recipe-carousel" data-category="{{ category.id }}">
                         {% for recipe in category_data.sample_recipes %}
                             {% if recipe.image %}
-                                <img src="{% static recipe.image %}" alt="{{ recipe.title }}" class="carousel-image{% if forloop.first %} active{% endif %}">
+                                {% comment %} Handle both static image paths and uploaded images {% endcomment %}
+                                {% load static %}
+                                {% if recipe.image.name|slice:":8" == "recipes/" %}
+                                    <!-- Uploaded to media/recipes/ -->
+                                    <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" class="carousel-image{% if forloop.first %} active{% endif %}">
+                                {% else %}
+                                    <!-- Static image from static/images/recipes/ -->
+                                    <img src="{% static recipe.image %}" alt="{{ recipe.title }}" class="carousel-image{% if forloop.first %} active{% endif %}">
+                                {% endif %}
                             {% endif %}
                         {% endfor %}
                         {% if category_data.sample_recipes|length > 1 %}

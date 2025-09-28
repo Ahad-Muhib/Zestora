@@ -52,7 +52,13 @@
                 <div class="recipe-card">
                     <div class="recipe-image">
                         {% if recipe.image %}
-                            <img src="{% static recipe.image %}" alt="{{ recipe.title }}">
+                            {% if recipe.image.name|slice:":8" == "recipes/" %}
+                                <!-- Uploaded to media/recipes/ -->
+                                <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
+                            {% else %}
+                                <!-- Static image from static/images/recipes/ -->
+                                <img src="{% static recipe.image %}" alt="{{ recipe.title }}">
+                            {% endif %}
                         {% else %}
                             <div class="recipe-placeholder">🍽️</div>
                         {% endif %}
