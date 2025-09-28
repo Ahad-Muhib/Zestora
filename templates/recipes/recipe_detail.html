@@ -49,8 +49,19 @@
             </div>
             
             <div class="recipe-actions">
-                <button class="btn btn-primary">Save Recipe</button>
-                <button class="btn btn-secondary">Share</button>
+                {% if user.is_authenticated and recipe.author == user %}
+                    <!-- Owner actions -->
+                    <a href="{% url 'recipes:edit_recipe' recipe.slug %}" class="btn btn-primary">
+                        <i class="fas fa-edit"></i> Edit Recipe
+                    </a>
+                    <a href="{% url 'recipes:delete_recipe' recipe.slug %}" class="btn btn-danger">
+                        <i class="fas fa-trash-alt"></i> Delete
+                    </a>
+                {% else %}
+                    <!-- Regular user actions -->
+                    <button class="btn btn-primary">Save Recipe</button>
+                    <button class="btn btn-secondary">Share</button>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -58,14 +69,14 @@
     <div class="recipe-content">
         <div class="ingredients-section">
             <h2>Ingredients</h2>
-            <div class="ingredients-list">
+            <div class="ingredients-list" id="ingredients-content">
                 {{ recipe.ingredients|linebreaks }}
             </div>
         </div>
         
         <div class="instructions-section">
             <h2>Instructions</h2>
-            <div class="instructions-list">
+            <div class="instructions-list" id="instructions-content">
                 {{ recipe.instructions|linebreaks }}
             </div>
         </div>
@@ -240,6 +251,23 @@
 .btn-secondary:hover {
     background: #f8f9fa;
     border-color: #999;
+}
+
+.btn-danger {
+    background: #e74c3c;
+    color: white;
+    border: 2px solid #e74c3c;
+}
+
+.btn-danger:hover {
+    background: #c0392b;
+    border-color: #c0392b;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+}
+
+.btn i {
+    margin-right: 8px;
 }
 
 .recipe-content {
@@ -426,4 +454,44 @@
     }
 }
 </style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Format ingredients into bullet points
+    const ingredientsContent = document.getElementById('ingredients-content');
+    if (ingredientsContent) {
+        const ingredientsText = ingredientsContent.textContent || ingredientsContent.innerText;
+        const ingredientLines = ingredientsText.split('\n').filter(line => line.trim() !== '');
+        
+        if (ingredientLines.length > 0) {
+            ingredientsContent.innerHTML = '';
+            ingredientLines.forEach(line => {
+                if (line.trim()) {
+                    const p = document.createElement('p');
+                    p.textContent = line.trim();
+                    ingredientsContent.appendChild(p);
+                }
+            });
+        }
+    }
+    
+    // Format instructions into numbered steps
+    const instructionsContent = document.getElementById('instructions-content');
+    if (instructionsContent) {
+        const instructionsText = instructionsContent.textContent || instructionsContent.innerText;
+        const instructionLines = instructionsText.split('\n').filter(line => line.trim() !== '');
+        
+        if (instructionLines.length > 0) {
+            instructionsContent.innerHTML = '';
+            instructionLines.forEach(line => {
+                if (line.trim()) {
+                    const p = document.createElement('p');
+                    p.textContent = line.trim();
+                    instructionsContent.appendChild(p);
+                }
+            });
+        }
+    }
+});
+</script>
 {% endblock %}

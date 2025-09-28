@@ -1,7 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
 from .models import Recipe, Category
 from .forms import RecipeForm
 
@@ -77,5 +78,53 @@ def add_recipe(request):
     return render(request, 'recipes/add_recipe.html', {
         'form': form,
         'page_title': 'Add New Recipe',
+        'active_page': 'recipes'
+    })
+
+@login_required
+def edit_recipe(request, slug):
+    recipe = get_object_or_404(Recipe, slug=slug)
+    
+    # Check if the current user is the author of the recipe
+    if recipe.author != request.user:
+        messages.error(request, 'You can only edit your own recipes.')
+        return redirect('recipes:recipe_detail', slug=recipe.slug)
+    
+    if request.method == 'POST':
+        form = RecipeForm(request.POST, request.FILES, instance=recipe)
+        if form.is_valid():
+            updated_recipe = form.save()
+            messages.success(request, f'Recipe "{updated_recipe.title}" has been updated successfully!')
+            return redirect('recipes:recipe_detail', slug=updated_recipe.slug)
+        else:
+            messages.error(request, 'Please correct the errors below.')
+    else:
+        form = RecipeForm(instance=recipe)
+    
+    return render(request, 'recipes/edit_recipe.html', {
+        'form': form,
+        'recipe': recipe,
+        'page_title': f'Edit {recipe.title}',
+        'active_page': 'recipes'
+    })
+
+@login_required
+def delete_recipe(request, slug):
+    recipe = get_object_or_404(Recipe, slug=slug)
+    
+    # Check if the current user is the author of the recipe
+    if recipe.author != request.user:
+        messages.error(request, 'You can only delete your own recipes.')
+        return redirect('recipes:recipe_detail', slug=recipe.slug)
+    
+    if request.method == 'POST':
+        recipe_title = recipe.title
+        recipe.delete()
+        messages.success(request, f'Recipe "{recipe_title}" has been deleted successfully!')
+        return redirect('recipes:recipe_list')
+    
+    return render(request, 'recipes/delete_recipe.html', {
+        'recipe': recipe,
+        'page_title': f'Delete {recipe.title}',
         'active_page': 'recipes'
     })

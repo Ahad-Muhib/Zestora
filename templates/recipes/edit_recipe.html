@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Add Recipe - Zestora{% endblock %}
+{% block title %}Edit Recipe - Zestora{% endblock %}
 
 {% block content %}
 <div class="add-recipe-container">
     <div class="add-recipe-header">
-        <h1>Add New Recipe</h1>
-        <p>Share your culinary creation with the community</p>
+        <h1>Edit Recipe</h1>
+        <p>Update your culinary creation</p>
     </div>
     
     <div class="add-recipe-form-container">
@@ -103,11 +103,25 @@
             
             <div class="form-section">
                 <h3>Recipe Image</h3>
+                {% if recipe.image %}
+                    <div class="current-image">
+                        <h4>Current Image</h4>
+                        <div class="current-image-preview">
+                            {% if recipe.image.name|slice:":8" == "recipes/" %}
+                                <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" style="max-width: 200px; height: auto; border-radius: 8px; margin-bottom: 15px;">
+                            {% else %}
+                                <img src="{% static recipe.image %}" alt="{{ recipe.title }}" style="max-width: 200px; height: auto; border-radius: 8px; margin-bottom: 15px;">
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endif %}
+                
                 <div class="image-upload-section">
+                    <label for="{{ form.image.id_for_label }}">{% if recipe.image %}Change Image{% else %}Upload Recipe Image{% endif %}</label>
                     <div class="image-upload-area" id="image-upload-area">
                         <div class="upload-content">
                             <i class="fas fa-cloud-upload-alt"></i>
-                            <h4>Upload Recipe Image</h4>
+                            <h4>{% if recipe.image %}Change Recipe Image{% else %}Upload Recipe Image{% endif %}</h4>
                             <p>Drag & drop your image here or click to browse</p>
                             <p class="upload-hint">Recommended: 800x600px or larger, JPG/PNG format</p>
                         </div>
@@ -115,7 +129,7 @@
                     </div>
                     <div class="image-preview" id="image-preview" style="display: none;">
                         <img id="preview-img" src="" alt="Recipe preview">
-                        <button type="button" class="remove-image-btn" id="remove-image">Remove Image</button>
+                        <button type="button" class="remove-image-btn" id="remove-image">Remove New Image</button>
                     </div>
                     {% if form.image.errors %}
                         <div class="error-messages">{{ form.image.errors }}</div>
@@ -124,14 +138,16 @@
             </div>
             
             <div class="form-actions">
-                <button type="submit" class="btn btn-primary">Add Recipe</button>
-                <a href="{% url 'recipes:recipe_list' %}" class="btn btn-secondary">Cancel</a>
+                <button type="submit" class="btn btn-primary">Update Recipe</button>
+                <a href="{% url 'recipes:recipe_detail' recipe.slug %}" class="btn btn-secondary">Cancel</a>
+                <a href="{% url 'recipes:delete_recipe' recipe.slug %}" class="btn btn-danger">Delete Recipe</a>
             </div>
         </form>
     </div>
 </div>
 
 <style>
+/* Reuse styles from add_recipe.html */
 .add-recipe-container {
     max-width: 800px;
     margin: 0 auto;
@@ -241,32 +257,47 @@
     border-style: dashed;
 }
 
-/* Enhanced Image Upload Styles */
+.current-image {
+    margin-bottom: 25px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.current-image h4 {
+    margin-bottom: 15px;
+    color: #333;
+    font-size: 1.1rem;
+}
+
 .image-upload-section {
     margin-bottom: 25px;
 }
 
 .image-upload-area {
     border: 3px dashed #ddd;
-    border-radius: 15px;
+    border-radius: 12px;
     padding: 40px 20px;
     text-align: center;
     cursor: pointer;
     transition: all 0.3s ease;
-    background: #fafafa;
     position: relative;
-    overflow: hidden;
+    background: #fafafa;
 }
 
 .image-upload-area:hover {
     border-color: #ff6b5a;
-    background: #fff5f5;
+    background: #fff5f4;
 }
 
 .image-upload-area.dragover {
     border-color: #ff6b5a;
-    background: #fff5f5;
+    background: #fff5f4;
     transform: scale(1.02);
+}
+
+.upload-content {
+    pointer-events: none;
 }
 
 .upload-content i {
@@ -276,10 +307,9 @@
 }
 
 .upload-content h4 {
-    font-size: 1.3rem;
     color: #333;
     margin-bottom: 10px;
-    font-weight: 600;
+    font-size: 1.2rem;
 }
 
 .upload-content p {
@@ -288,8 +318,7 @@
 }
 
 .upload-hint {
-    font-size: 0.9rem;
-    color: #999;
+    font-size: 0.85rem;
     font-style: italic;
 }
 
@@ -309,26 +338,25 @@
 }
 
 .image-preview img {
-    max-width: 100%;
-    max-height: 300px;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    max-width: 300px;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
 .remove-image-btn {
     margin-top: 15px;
     padding: 8px 20px;
-    background: #dc3545;
+    background: #e74c3c;
     color: white;
     border: none;
     border-radius: 20px;
     cursor: pointer;
     font-size: 0.9rem;
-    transition: background 0.3s ease;
 }
 
 .remove-image-btn:hover {
-    background: #c82333;
+    background: #c0392b;
 }
 
 .help-text {
@@ -358,6 +386,7 @@
     margin-top: 40px;
     padding-top: 30px;
     border-top: 1px solid #eee;
+    flex-wrap: wrap;
 }
 
 .btn {
@@ -393,6 +422,17 @@
 .btn-secondary:hover {
     background: #f8f9fa;
     border-color: #999;
+}
+
+.btn-danger {
+    background: #e74c3c;
+    color: white;
+}
+
+.btn-danger:hover {
+    background: #c0392b;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
 }
 
 /* Responsive Design */
@@ -471,8 +511,7 @@ document.addEventListener('DOMContentLoaded', function() {
             reader.onload = function(e) {
                 previewImg.src = e.target.result;
                 imagePreview.style.display = 'block';
-                uploadArea.style.display = 'none';
-                console.log('Image selected:', file.name, 'Size:', Math.round(file.size/1024) + 'KB');
+                console.log('New image selected:', file.name, 'Size:', Math.round(file.size/1024) + 'KB');
             };
             reader.readAsDataURL(file);
         } else {
@@ -485,8 +524,7 @@ document.addEventListener('DOMContentLoaded', function() {
     removeBtn.addEventListener('click', function() {
         fileInput.value = '';
         imagePreview.style.display = 'none';
-        uploadArea.style.display = 'block';
-        console.log('Image removed');
+        console.log('New image removed');
     });
 
     // Click to upload
@@ -497,14 +535,14 @@ document.addEventListener('DOMContentLoaded', function() {
     // Form submission debugging
     form.addEventListener('submit', function(e) {
         const hasImage = fileInput.files && fileInput.files.length > 0;
-        console.log('Form submitting with image:', hasImage);
+        console.log('Form submitting with new image:', hasImage);
         if (hasImage) {
-            console.log('Image file:', fileInput.files[0].name, 'Size:', Math.round(fileInput.files[0].size/1024) + 'KB');
+            console.log('New image file:', fileInput.files[0].name, 'Size:', Math.round(fileInput.files[0].size/1024) + 'KB');
         }
         
         // Show loading state
         const submitBtn = form.querySelector('button[type="submit"]');
-        submitBtn.textContent = 'Adding Recipe...';
+        submitBtn.textContent = 'Updating Recipe...';
         submitBtn.disabled = true;
     });
 });

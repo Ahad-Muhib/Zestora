@@ -41,7 +41,19 @@
                         <span>🔥 {{ recipe.get_difficulty_display }}</span>
                     </div>
                     <p class="recipe-description">{{ recipe.description|truncatewords:15 }}</p>
-                    <a href="{% url 'recipes:recipe_detail' recipe.slug %}" class="btn btn-outline">View Recipe</a>
+                    <div class="recipe-card-actions">
+                        <a href="{% url 'recipes:recipe_detail' recipe.slug %}" class="btn btn-outline">View Recipe</a>
+                        {% if user.is_authenticated and recipe.author == user %}
+                            <div class="owner-actions">
+                                <a href="{% url 'recipes:edit_recipe' recipe.slug %}" class="btn btn-edit" title="Edit Recipe">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="{% url 'recipes:delete_recipe' recipe.slug %}" class="btn btn-delete" title="Delete Recipe">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
             {% endfor %}
@@ -152,6 +164,58 @@
     background: #e55a49;
     border-color: #e55a49;
     transform: translateY(-2px);
+}
+
+.recipe-card-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.owner-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.btn-edit {
+    background: #3498db;
+    color: white;
+    border: 2px solid #3498db;
+    padding: 0.6rem;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.btn-edit:hover {
+    background: #2980b9;
+    border-color: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
+}
+
+.btn-delete {
+    background: #e74c3c;
+    color: white;
+    border: 2px solid #e74c3c;
+    padding: 0.6rem;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.btn-delete:hover {
+    background: #c0392b;
+    border-color: #c0392b;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(231, 76, 60, 0.3);
 }
 
 /* Section Header */
