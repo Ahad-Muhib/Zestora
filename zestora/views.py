@@ -21,6 +21,7 @@ def home(request):
     
     return render(request, 'home.html', {
         'featured_recipes': featured_recipes,
+        'active_page': 'home',
     })
 
 def search(request):
@@ -59,7 +60,9 @@ def search(request):
             'query': ''
         }
     
-    return render(request, 'search_results.html', results)
+    context = results.copy()
+    context['active_page'] = 'search'
+    return render(request, 'search_results.html', context)
 
 def login_view(request):
     if request.method == 'POST':
@@ -87,7 +90,7 @@ def login_view(request):
         else:
             messages.error(request, 'Please fill in all required fields.')
     
-    return render(request, 'login.html')
+    return render(request, 'login.html', {'active_page': 'login'})
 
 def signup_view(request):
     if request.method == 'POST':
@@ -100,12 +103,12 @@ def signup_view(request):
             # Check if username already exists
             if User.objects.filter(username=username).exists():
                 messages.error(request, 'Username already exists. Please choose a different one.')
-                return render(request, 'signup.html')
+                return render(request, 'signup.html', {'active_page': 'signup'})
             
             # Check if email already exists
             if User.objects.filter(email=email).exists():
                 messages.error(request, 'Email already exists. Please use a different email.')
-                return render(request, 'signup.html')
+                return render(request, 'signup.html', {'active_page': 'signup'})
             
             try:
                 # Create new user
@@ -128,7 +131,7 @@ def signup_view(request):
         else:
             messages.error(request, 'Please fill in all required fields.')
     
-    return render(request, 'signup.html')
+    return render(request, 'signup.html', {'active_page': 'signup'})
 
 def logout_view(request):
     logout(request)
@@ -136,7 +139,7 @@ def logout_view(request):
     return redirect('home')
 
 def guidebooks(request):
-    return render(request, 'guidebooks.html')
+    return render(request, 'guidebooks.html', {'active_page': 'guidebooks'})
 
 def about(request):
-    return render(request, 'about.html')
+    return render(request, 'about.html', {'active_page': 'about'})

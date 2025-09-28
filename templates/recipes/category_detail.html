@@ -52,7 +52,7 @@
                 <div class="recipe-card">
                     <div class="recipe-image">
                         {% if recipe.image %}
-                            <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
+                            <img src="{% static recipe.image %}" alt="{{ recipe.title }}">
                         {% else %}
                             <div class="recipe-placeholder">🍽️</div>
                         {% endif %}
@@ -380,6 +380,24 @@
     }
 }
 </style>
+
+<script>
+function sortRecipes(sortBy) {
+    const currentUrl = new URL(window.location);
+    currentUrl.searchParams.set('sort', sortBy);
+    window.location.href = currentUrl.toString();
+}
+
+// Set the selected option based on current sort parameter
+document.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const sortBy = urlParams.get('sort') || 'newest';
+    const sortSelect = document.querySelector('.sort-select');
+    if (sortSelect) {
+        sortSelect.value = sortBy;
+    }
+});
+</script>
 
 <script>
 function sortRecipes(sortBy) {

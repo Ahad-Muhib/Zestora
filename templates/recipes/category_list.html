@@ -11,23 +11,66 @@
     </div>
     
     <div class="categories-grid">
-        {% for category in categories %}
+        {% for category_data in categories_with_recipes %}
+        {% with category=category_data.category %}
         <div class="category-card">
             <div class="category-image">
                 {% if category.image %}
                     <img src="{{ category.image.url }}" alt="{{ category.name }}">
+                {% elif category_data.sample_recipes %}
+                    <!-- Rotating recipe images -->
+                    <div class="recipe-carousel" data-category="{{ category.id }}">
+                        {% for recipe in category_data.sample_recipes %}
+                            {% if recipe.image %}
+                                <img src="{% static recipe.image %}" alt="{{ recipe.title }}" class="carousel-image{% if forloop.first %} active{% endif %}">
+                            {% endif %}
+                        {% endfor %}
+                        {% if category_data.sample_recipes|length > 1 %}
+                            <div class="carousel-indicators">
+                                {% for recipe in category_data.sample_recipes %}
+                                    {% if recipe.image %}
+                                        <span class="indicator{% if forloop.first %} active{% endif %}" data-slide="{{ forloop.counter0 }}"></span>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
                 {% else %}
                     <div class="placeholder-image">🍽️</div>
                 {% endif %}
+                <div class="category-overlay">
+                    <h3 class="category-title">{{ category.name }}</h3>
+                    <span class="recipe-count">{{ category_data.recipe_count }} Recipe{{ category_data.recipe_count|pluralize }}</span>
+                </div>
             </div>
             <div class="category-content">
-                <h3>{{ category.name }}</h3>
                 <p>{{ category.description|default:"Delicious recipes in this category" }}</p>
-                <a href="{% url 'recipes:category_detail' category.slug %}" class="btn btn-primary">
-                    View Recipes ({{ category.recipe_set.count }})
-                </a>
+                
+                <!-- Show sample recipes if available -->
+                {% if category_data.display_recipes %}
+                    <div class="sample-recipes">
+                        <h4>Featured Recipes:</h4>
+                        <ul class="recipe-list">
+                            {% for recipe in category_data.display_recipes %}
+                            <li class="recipe-item">
+                                <a href="{% url 'recipes:recipe_detail' recipe.slug %}">{{ recipe.title }}</a>
+                                <span class="recipe-time">{{ recipe.prep_time }}+{{ recipe.cook_time }} min</span>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+                
+                {% if category.slug %}
+                    <a href="{% url 'recipes:category_detail' category.slug %}" class="btn btn-primary">
+                        View All {{ category_data.recipe_count }} Recipe{{ category_data.recipe_count|pluralize }}
+                    </a>
+                {% else %}
+                    <span class="btn btn-disabled">No recipes available</span>
+                {% endif %}
             </div>
         </div>
+        {% endwith %}
         {% empty %}
         <div class="no-categories">
             <h3>No categories available yet</h3>
@@ -76,6 +119,19 @@
 
 .category-card:hover {
     transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+}
+
+.category-card:hover .category-overlay {
+    background: linear-gradient(transparent, rgba(0,0,0,0.8));
+}
+
+.category-card:hover .category-title {
+    transform: translateY(-2px);
+}
+
+.recipe-carousel.paused .carousel-image {
+    animation-play-state: paused;
 }
 
 .category-image {
@@ -84,6 +140,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+    overflow: hidden;
 }
 
 .category-image img {
@@ -92,24 +150,147 @@
     object-fit: cover;
 }
 
+.recipe-carousel {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.carousel-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    background: linear-gradient(45deg, #ff6b5a, #ff8c42);
+}
+
+.carousel-image.active {
+    opacity: 1;
+}
+
+.carousel-image.loading {
+    background: linear-gradient(45deg, #ff6b5a, #ff8c42);
+}
+
+.carousel-indicators {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 5px;
+    z-index: 10;
+}
+
+.indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.indicator.active {
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.category-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0,0,0,0.7));
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+.category-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 0 0 5px 0;
+    transition: transform 0.3s ease;
+}
+
+.recipe-count {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
 .placeholder-image {
     font-size: 3rem;
     color: white;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
 }
 
 .category-content {
     padding: 25px;
 }
 
-.category-content h3 {
-    font-size: 1.4rem;
-    color: #333;
-    margin-bottom: 10px;
-}
-
 .category-content p {
     color: #666;
     margin-bottom: 20px;
+}
+
+.sample-recipes {
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 10px;
+}
+
+.sample-recipes h4 {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.recipe-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.recipe-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.recipe-item:last-child {
+    border-bottom: none;
+}
+
+.recipe-item a {
+    color: #ff6b5a;
+    text-decoration: none;
+    font-weight: 500;
+    flex: 1;
+}
+
+.recipe-item a:hover {
+    color: #ff5a47;
+    text-decoration: underline;
+}
+
+.recipe-time {
+    color: #999;
+    font-size: 0.9rem;
+    font-weight: 400;
 }
 
 .btn {
@@ -125,6 +306,19 @@
 
 .btn:hover {
     background: #ff5a47;
+    color: white;
+    text-decoration: none;
+}
+
+.btn-disabled {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #ccc;
+    color: #666;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: 600;
+    cursor: not-allowed;
 }
 
 .no-categories {
@@ -134,4 +328,69 @@
     color: #666;
 }
 </style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize carousels for each category
+    const carousels = document.querySelectorAll('.recipe-carousel');
+    
+    carousels.forEach(carousel => {
+        const images = carousel.querySelectorAll('.carousel-image');
+        const indicators = carousel.querySelectorAll('.indicator');
+        
+        if (images.length <= 1) return; // Skip if only one image
+        
+        let currentIndex = 0;
+        
+        function showImage(index) {
+            // Hide all images
+            images.forEach(img => img.classList.remove('active'));
+            indicators.forEach(indicator => indicator.classList.remove('active'));
+            
+            // Show current image
+            if (images[index]) {
+                images[index].classList.add('active');
+            }
+            if (indicators[index]) {
+                indicators[index].classList.add('active');
+            }
+        }
+        
+        function nextImage() {
+            currentIndex = (currentIndex + 1) % images.length;
+            showImage(currentIndex);
+        }
+        
+        // Auto-rotate every 3 seconds
+        setInterval(nextImage, 3000);
+        
+        // Handle indicator clicks
+        indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+                currentIndex = index;
+                showImage(currentIndex);
+            });
+        });
+        
+        // Handle image loading errors
+        images.forEach(img => {
+            img.addEventListener('error', () => {
+                img.style.display = 'none';
+            });
+            img.addEventListener('load', () => {
+                img.classList.remove('loading');
+            });
+        });
+        
+        // Pause rotation on hover
+        carousel.addEventListener('mouseenter', () => {
+            carousel.classList.add('paused');
+        });
+        
+        carousel.addEventListener('mouseleave', () => {
+            carousel.classList.remove('paused');
+        });
+    });
+});
+</script>
 {% endblock %}

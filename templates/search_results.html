@@ -39,7 +39,7 @@
                         <div class="recipe-card">
                             <div class="recipe-image">
                                 {% if recipe.image %}
-                                    <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
+                                    <img src="{% static recipe.image %}" alt="{{ recipe.title }}">
                                 {% else %}
                                     <div class="placeholder-image">🍽️</div>
                                 {% endif %}
