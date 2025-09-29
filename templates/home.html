@@ -60,6 +60,30 @@
         </div>
         <div class="recipes-carousel-container">
             <div class="recipes-grid" id="featuredCarousel">
+                {% for recipe in featured_recipes %}
+                <div class="recipe-card">
+                    <div class="recipe-image">
+                        {% if recipe.image %}
+                            {% if recipe.image.name|slice:":8" == "recipes/" %}
+                                <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
+                            {% else %}
+                                <img src="{% static recipe.image %}" alt="{{ recipe.title }}">
+                            {% endif %}
+                        {% else %}
+                            <div style="height: 250px; background: linear-gradient(45deg, #ff6b5a, #ff8c42); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">🍽️</div>
+                        {% endif %}
+                    </div>
+                    <div class="recipe-content">
+                        <h3 class="recipe-title">{{ recipe.title }}</h3>
+                        <p class="recipe-description">{{ recipe.description|truncatewords:15 }}</p>
+                        <div class="recipe-meta">
+                            <span>{{ recipe.total_time }} MIN • {{ recipe.get_difficulty_display|upper }} • {{ recipe.servings }} PEOPLE</span>
+                        </div>
+                        <a href="{% url 'recipes:recipe_detail' recipe.slug %}" class="view-recipe-btn">VIEW RECIPE</a>
+                    </div>
+                </div>
+                {% empty %}
+                <!-- Fallback content if no featured recipes -->
                 <div class="recipe-card">
                     <div class="recipe-image">
                         <img src="{% static 'images/recipes/herb-chicken.jpg' %}" alt="Savory Herb-Infused Chicken">
@@ -70,74 +94,37 @@
                         <div class="recipe-meta">
                             <span>45 MIN • EASY PREP • 5 PEOPLE</span>
                         </div>
-                        <button class="view-recipe-btn">VIEW RECIPE</button>
+                        <a href="{% url 'recipes:recipe_list' %}" class="view-recipe-btn">VIEW RECIPES</a>
                     </div>
                 </div>
-                <div class="recipe-card">
-                    <div class="recipe-image">
-                        <img src="{% static 'images/recipes/chocolate-mousse.jpg' %}" alt="Decadent Chocolate Mousse">
-                    </div>
-                    <div class="recipe-content">
-                        <h3 class="recipe-title">Decadent Chocolate Mousse</h3>
-                        <p class="recipe-description">Dive into the velvety indulgence of our Decadent Chocolate Mousse. A dessert that transcends the ordinary.</p>
-                        <div class="recipe-meta">
-                            <span>30 MIN • MODERATE • 4 PEOPLE</span>
+                {% endfor %}
+                
+                <!-- Add more recent recipes to fill the carousel -->
+                {% for recipe in recent_recipes|slice:":6" %}
+                    {% if not recipe.featured %}
+                    <div class="recipe-card">
+                        <div class="recipe-image">
+                            {% if recipe.image %}
+                                {% if recipe.image.name|slice:":8" == "recipes/" %}
+                                    <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
+                                {% else %}
+                                    <img src="{% static recipe.image %}" alt="{{ recipe.title }}">
+                                {% endif %}
+                            {% else %}
+                                <div style="height: 250px; background: linear-gradient(45deg, #ff6b5a, #ff8c42); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">🍽️</div>
+                            {% endif %}
                         </div>
-                        <button class="view-recipe-btn">VIEW RECIPE</button>
-                    </div>
-                </div>
-                <div class="recipe-card">
-                    <div class="recipe-image">
-                        <img src="{% static 'images/recipes/pasta-salad.jpg' %}?v=2" alt="Mediterranean Pasta Salad">
-                    </div>
-                    <div class="recipe-content">
-                        <h3 class="recipe-title">Mediterranean Pasta Salad</h3>
-                        <p class="recipe-description">A refreshing pasta salad with olives, tomatoes, and feta cheese, perfect for summer gatherings.</p>
-                        <div class="recipe-meta">
-                            <span>20 MIN • EASY PREP • 6 PEOPLE</span>
+                        <div class="recipe-content">
+                            <h3 class="recipe-title">{{ recipe.title }}</h3>
+                            <p class="recipe-description">{{ recipe.description|truncatewords:15 }}</p>
+                            <div class="recipe-meta">
+                                <span>{{ recipe.total_time }} MIN • {{ recipe.get_difficulty_display|upper }} • {{ recipe.servings }} PEOPLE</span>
+                            </div>
+                            <a href="{% url 'recipes:recipe_detail' recipe.slug %}" class="view-recipe-btn">VIEW RECIPE</a>
                         </div>
-                        <button class="view-recipe-btn">VIEW RECIPE</button>
                     </div>
-                </div>
-                <div class="recipe-card">
-                    <div class="recipe-image">
-                        <img src="{% static 'images/recipes/thai-curry.jpg' %}" alt="Spicy Thai Curry">
-                    </div>
-                    <div class="recipe-content">
-                        <h3 class="recipe-title">Spicy Thai Curry</h3>
-                        <p class="recipe-description">An authentic Thai curry with coconut milk, vegetables, and aromatic spices that will transport you to Thailand.</p>
-                        <div class="recipe-meta">
-                            <span>35 MIN • MODERATE • 4 PEOPLE</span>
-                        </div>
-                        <button class="view-recipe-btn">VIEW RECIPE</button>
-                    </div>
-                </div>
-                <div class="recipe-card">
-                    <div class="recipe-image">
-                        <img src="{% static 'images/recipes/beef-tacos.jpg' %}" alt="Classic Beef Tacos">
-                    </div>
-                    <div class="recipe-content">
-                        <h3 class="recipe-title">Classic Beef Tacos</h3>
-                        <p class="recipe-description">Tender seasoned beef in crispy taco shells with fresh toppings and zesty lime.</p>
-                        <div class="recipe-meta">
-                            <span>25 MIN • EASY PREP • 4 PEOPLE</span>
-                        </div>
-                        <button class="view-recipe-btn">VIEW RECIPE</button>
-                    </div>
-                </div>
-                <div class="recipe-card">
-                    <div class="recipe-image">
-                        <img src="{% static 'images/recipes/blueberry-pancakes.jpg' %}" alt="Lemon Blueberry Pancakes">
-                    </div>
-                    <div class="recipe-content">
-                        <h3 class="recipe-title">Lemon Blueberry Pancakes</h3>
-                        <p class="recipe-description">Fluffy pancakes bursting with fresh blueberries and a hint of lemon zest for the perfect breakfast.</p>
-                        <div class="recipe-meta">
-                            <span>15 MIN • EASY PREP • 3 PEOPLE</span>
-                        </div>
-                        <button class="view-recipe-btn">VIEW RECIPE</button>
-                    </div>
-                </div>
+                    {% endif %}
+                {% endfor %}
             </div>
         </div>
     </div>
@@ -161,215 +148,186 @@
             <a href="#" class="category-tab" data-category="quick-bite">QUICK BITE</a>
         </div>
         <div class="recipes-journey-grid">
-            <!-- ALL/DINNER recipes -->
-            <div class="recipe-card" data-category="dinner">
-                <div class="recipe-image">
-                    <img src="{% static 'images/recipes/herb-chicken.jpg' %}" alt="Savory Herb-Infused Chicken">
-                </div>
-                <div class="recipe-content">
-                    <h3 class="recipe-title">Savory Herb-Infused Chicken</h3>
-                    <p class="recipe-description">Indulge in the rich and savory symphony of flavors with our Savory Herb-Infused Chicken.</p>
-                    <div class="recipe-meta">
-                        <span>45 MIN • EASY PREP • 5 PEOPLE</span>
-                    </div>
-                    <button class="view-recipe-btn">VIEW RECIPE</button>
-                </div>
-            </div>
+            <!-- Display recipes from different categories -->
             
             <!-- BREAKFAST recipes -->
+            {% for recipe in breakfast_recipes %}
             <div class="recipe-card" data-category="breakfast">
                 <div class="recipe-image">
-                    <img src="{% static 'images/recipes/blueberry-pancakes.jpg' %}" alt="Lemon Blueberry Pancakes">
+                    {% if recipe.image %}
+                        {% if recipe.image.name|slice:":8" == "recipes/" %}
+                            <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
+                        {% else %}
+                            <img src="{% static recipe.image %}" alt="{{ recipe.title }}">
+                        {% endif %}
+                    {% else %}
+                        <div style="height: 250px; background: linear-gradient(45deg, #ff6b5a, #ff8c42); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">🍳</div>
+                    {% endif %}
                 </div>
                 <div class="recipe-content">
-                    <h3 class="recipe-title">Lemon Blueberry Pancakes</h3>
-                    <p class="recipe-description">Fluffy pancakes bursting with fresh blueberries and a hint of lemon zest for the perfect breakfast.</p>
+                    <h3 class="recipe-title">{{ recipe.title }}</h3>
+                    <p class="recipe-description">{{ recipe.description|truncatewords:15 }}</p>
                     <div class="recipe-meta">
-                        <span>15 MIN • EASY PREP • 3 PEOPLE</span>
+                        <span>{{ recipe.total_time }} MIN • {{ recipe.get_difficulty_display|upper }} • {{ recipe.servings }} PEOPLE</span>
                     </div>
-                    <button class="view-recipe-btn">VIEW RECIPE</button>
+                    <a href="{% url 'recipes:recipe_detail' recipe.slug %}" class="view-recipe-btn">VIEW RECIPE</a>
                 </div>
             </div>
+            {% endfor %}
             
             <!-- LUNCH recipes -->
+            {% for recipe in lunch_recipes %}
             <div class="recipe-card" data-category="lunch">
                 <div class="recipe-image">
-                    <img src="{% static 'images/recipes/pasta-salad.jpg' %}?v=2" alt="Mediterranean Pasta Salad">
+                    {% if recipe.image %}
+                        {% if recipe.image.name|slice:":8" == "recipes/" %}
+                            <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
+                        {% else %}
+                            <img src="{% static recipe.image %}" alt="{{ recipe.title }}">
+                        {% endif %}
+                    {% else %}
+                        <div style="height: 250px; background: linear-gradient(45deg, #ff6b5a, #ff8c42); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">🍽️</div>
+                    {% endif %}
                 </div>
                 <div class="recipe-content">
-                    <h3 class="recipe-title">Mediterranean Pasta Salad</h3>
-                    <p class="recipe-description">A refreshing pasta salad with olives, tomatoes, and feta cheese, perfect for summer gatherings.</p>
+                    <h3 class="recipe-title">{{ recipe.title }}</h3>
+                    <p class="recipe-description">{{ recipe.description|truncatewords:15 }}</p>
                     <div class="recipe-meta">
-                        <span>20 MIN • EASY PREP • 6 PEOPLE</span>
+                        <span>{{ recipe.total_time }} MIN • {{ recipe.get_difficulty_display|upper }} • {{ recipe.servings }} PEOPLE</span>
                     </div>
-                    <button class="view-recipe-btn">VIEW RECIPE</button>
+                    <a href="{% url 'recipes:recipe_detail' recipe.slug %}" class="view-recipe-btn">VIEW RECIPE</a>
                 </div>
             </div>
+            {% endfor %}
             
             <!-- DINNER recipes -->
+            {% for recipe in dinner_recipes %}
             <div class="recipe-card" data-category="dinner">
                 <div class="recipe-image">
-                    <img src="{% static 'images/recipes/thai-curry.jpg' %}" alt="Spicy Thai Curry">
+                    {% if recipe.image %}
+                        {% if recipe.image.name|slice:":8" == "recipes/" %}
+                            <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
+                        {% else %}
+                            <img src="{% static recipe.image %}" alt="{{ recipe.title }}">
+                        {% endif %}
+                    {% else %}
+                        <div style="height: 250px; background: linear-gradient(45deg, #ff6b5a, #ff8c42); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">🍖</div>
+                    {% endif %}
                 </div>
                 <div class="recipe-content">
-                    <h3 class="recipe-title">Spicy Thai Curry</h3>
-                    <p class="recipe-description">An authentic Thai curry with coconut milk, vegetables, and aromatic spices that will transport you to Thailand.</p>
+                    <h3 class="recipe-title">{{ recipe.title }}</h3>
+                    <p class="recipe-description">{{ recipe.description|truncatewords:15 }}</p>
                     <div class="recipe-meta">
-                        <span>35 MIN • MODERATE • 4 PEOPLE</span>
+                        <span>{{ recipe.total_time }} MIN • {{ recipe.get_difficulty_display|upper }} • {{ recipe.servings }} PEOPLE</span>
                     </div>
-                    <button class="view-recipe-btn">VIEW RECIPE</button>
+                    <a href="{% url 'recipes:recipe_detail' recipe.slug %}" class="view-recipe-btn">VIEW RECIPE</a>
                 </div>
             </div>
-            
-            <!-- QUICK BITE recipes -->
-            <div class="recipe-card" data-category="quick-bite">
-                <div class="recipe-image">
-                    <img src="{% static 'images/recipes/beef-tacos.jpg' %}" alt="Classic Beef Tacos">
-                </div>
-                <div class="recipe-content">
-                    <h3 class="recipe-title">Classic Beef Tacos</h3>
-                    <p class="recipe-description">Tender seasoned beef in crispy taco shells with fresh toppings and zesty lime.</p>
-                    <div class="recipe-meta">
-                        <span>25 MIN • EASY PREP • 4 PEOPLE</span>
-                    </div>
-                    <button class="view-recipe-btn">VIEW RECIPE</button>
-                </div>
-            </div>
+            {% endfor %}
             
             <!-- DESSERT recipes -->
+            {% for recipe in dessert_recipes %}
             <div class="recipe-card" data-category="dessert">
                 <div class="recipe-image">
-                    <img src="{% static 'images/recipes/chocolate-mousse.jpg' %}" alt="Decadent Chocolate Mousse">
+                    {% if recipe.image %}
+                        {% if recipe.image.name|slice:":8" == "recipes/" %}
+                            <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
+                        {% else %}
+                            <img src="{% static recipe.image %}" alt="{{ recipe.title }}">
+                        {% endif %}
+                    {% else %}
+                        <div style="height: 250px; background: linear-gradient(45deg, #ff6b5a, #ff8c42); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">🍰</div>
+                    {% endif %}
                 </div>
                 <div class="recipe-content">
-                    <h3 class="recipe-title">Decadent Chocolate Mousse</h3>
-                    <p class="recipe-description">Dive into the velvety indulgence of our Decadent Chocolate Mousse. A dessert that transcends the ordinary.</p>
+                    <h3 class="recipe-title">{{ recipe.title }}</h3>
+                    <p class="recipe-description">{{ recipe.description|truncatewords:15 }}</p>
                     <div class="recipe-meta">
-                        <span>30 MIN • MODERATE • 4 PEOPLE</span>
+                        <span>{{ recipe.total_time }} MIN • {{ recipe.get_difficulty_display|upper }} • {{ recipe.servings }} PEOPLE</span>
                     </div>
-                    <button class="view-recipe-btn">VIEW RECIPE</button>
+                    <a href="{% url 'recipes:recipe_detail' recipe.slug %}" class="view-recipe-btn">VIEW RECIPE</a>
                 </div>
             </div>
+            {% endfor %}
             
-            <!-- VEGAN recipes -->
-            <div class="recipe-card" data-category="vegan">
-                <div class="recipe-image">
-                    <img src="{% static 'images/recipes/quinoa-bowl.jpg' %}?v=1" alt="Quinoa Buddha Bowl">
-                </div>
-                <div class="recipe-content">
-                    <h3 class="recipe-title">Quinoa Buddha Bowl</h3>
-                    <p class="recipe-description">A nutritious bowl packed with quinoa, roasted vegetables, and tahini dressing.</p>
-                    <div class="recipe-meta">
-                        <span>25 MIN • EASY PREP • 2 PEOPLE</span>
-                    </div>
-                    <button class="view-recipe-btn">VIEW RECIPE</button>
-                </div>
-            </div>
-            
-            <!-- BREAKFAST recipes -->
-            <div class="recipe-card" data-category="breakfast">
-                <div class="recipe-image">
-                    <img src="{% static 'images/recipes/avocado-toast.jpg' %}?v=1" alt="Avocado Toast">
-                </div>
-                <div class="recipe-content">
-                    <h3 class="recipe-title">Gourmet Avocado Toast</h3>
-                    <p class="recipe-description">Creamy avocado on artisan bread topped with herbs and a drizzle of olive oil.</p>
-                    <div class="recipe-meta">
-                        <span>10 MIN • EASY PREP • 1 PERSON</span>
-                    </div>
-                    <button class="view-recipe-btn">VIEW RECIPE</button>
-                </div>
-            </div>
-            
-            <!-- LUNCH recipes -->
-            <div class="recipe-card" data-category="lunch">
-                <div class="recipe-image">
-                    <img src="{% static 'images/recipes/caesar-salad.jpg' %}?v=1" alt="Caesar Salad">
-                </div>
-                <div class="recipe-content">
-                    <h3 class="recipe-title">Classic Caesar Salad</h3>
-                    <p class="recipe-description">Crisp romaine lettuce with homemade caesar dressing, croutons, and parmesan.</p>
-                    <div class="recipe-meta">
-                        <span>15 MIN • EASY PREP • 4 PEOPLE</span>
-                    </div>
-                    <button class="view-recipe-btn">VIEW RECIPE</button>
-                </div>
-            </div>
-            
-            <!-- VEGAN recipes -->
-            <div class="recipe-card" data-category="vegan">
-                <div class="recipe-image">
-                    <img src="{% static 'images/recipes/veggie-stir-fry.jpg' %}?v=1" alt="Veggie Stir Fry">
-                </div>
-                <div class="recipe-content">
-                    <h3 class="recipe-title">Rainbow Veggie Stir Fry</h3>
-                    <p class="recipe-description">Colorful vegetables stir-fried with ginger, garlic, and soy sauce for a healthy meal.</p>
-                    <div class="recipe-meta">
-                        <span>20 MIN • EASY PREP • 3 PEOPLE</span>
-                    </div>
-                    <button class="view-recipe-btn">VIEW RECIPE</button>
-                </div>
-            </div>
-            
-            <!-- QUICK BITE recipes -->
+            <!-- APPETIZER/QUICK BITE recipes -->
+            {% for recipe in appetizer_recipes %}
+            {% if recipe.slug != "stuffed-mushrooms" %}
             <div class="recipe-card" data-category="quick-bite">
                 <div class="recipe-image">
-                    <img src="{% static 'images/recipes/grilled-sandwich.jpg' %}?v=1" alt="Grilled Cheese Sandwich">
+                    {% if recipe.image %}
+                        {% if recipe.image.name|slice:":8" == "recipes/" %}
+                            <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
+                        {% else %>
+                            <img src="{% static recipe.image %}" alt="{{ recipe.title }}">
+                        {% endif %}
+                    {% else %>
+                        <div style="height: 250px; background: linear-gradient(45deg, #ff6b5a, #ff8c42); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">🥪</div>
+                    {% endif %}
                 </div>
                 <div class="recipe-content">
-                    <h3 class="recipe-title">Gourmet Grilled Cheese</h3>
-                    <p class="recipe-description">Crispy grilled cheese with artisan bread and premium cheeses, served hot.</p>
+                    <h3 class="recipe-title">{{ recipe.title }}</h3>
+                    <p class="recipe-description">{{ recipe.description|truncatewords:15 }}</p>
                     <div class="recipe-meta">
-                        <span>12 MIN • EASY PREP • 2 PEOPLE</span>
+                        <span>{{ recipe.total_time }} MIN • {{ recipe.get_difficulty_display|upper }} • {{ recipe.servings }} PEOPLE</span>
                     </div>
-                    <button class="view-recipe-btn">VIEW RECIPE</button>
+                    <a href="{% url 'recipes:recipe_detail' recipe.slug %}" class="view-recipe-btn">VIEW RECIPE</a>
                 </div>
             </div>
+            {% endif %}
+            {% endfor %}
             
-            <!-- DESSERT recipes -->
-            <div class="recipe-card" data-category="dessert">
-                <div class="recipe-image">
-                    <img src="{% static 'images/recipes/tiramisu.jpg' %}?v=1" alt="Classic Tiramisu">
-                </div>
-                <div class="recipe-content">
-                    <h3 class="recipe-title">Classic Tiramisu</h3>
-                    <p class="recipe-description">Traditional Italian dessert with coffee-soaked ladyfingers and mascarpone cream.</p>
-                    <div class="recipe-meta">
-                        <span>4 HOURS • MODERATE PREP • 8 PEOPLE</span>
+            <!-- VEGAN recipes (filter from all recipes) -->
+            {% for recipe in recent_recipes %}
+                {% if "vegan" in recipe.title|lower or "vegetarian" in recipe.title|lower or "quinoa" in recipe.title|lower %}
+                <div class="recipe-card" data-category="vegan">
+                    <div class="recipe-image">
+                        {% if recipe.image %}
+                            {% if recipe.image.name|slice:":8" == "recipes/" %}
+                                <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
+                            {% else %}
+                                <img src="{% static recipe.image %}" alt="{{ recipe.title }}">
+                            {% endif %}
+                        {% else %}
+                            <div style="height: 250px; background: linear-gradient(45deg, #4CAF50, #8BC34A); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">🥗</div>
+                        {% endif %}
                     </div>
-                    <button class="view-recipe-btn">VIEW RECIPE</button>
+                    <div class="recipe-content">
+                        <h3 class="recipe-title">{{ recipe.title }}</h3>
+                        <p class="recipe-description">{{ recipe.description|truncatewords:15 }}</p>
+                        <div class="recipe-meta">
+                            <span>{{ recipe.total_time }} MIN • {{ recipe.get_difficulty_display|upper }} • {{ recipe.servings }} PEOPLE</span>
+                        </div>
+                        <a href="{% url 'recipes:recipe_detail' recipe.slug %}" class="view-recipe-btn">VIEW RECIPE</a>
+                    </div>
                 </div>
-            </div>
+                {% endif %}
+            {% endfor %}
             
-            <!-- BREAKFAST recipes -->
-            <div class="recipe-card" data-category="breakfast">
+            <!-- Fill remaining space with recent recipes as "all" category -->
+            {% for recipe in recent_recipes|slice:":8" %}
+            <div class="recipe-card" data-category="all">
                 <div class="recipe-image">
-                    <img src="{% static 'images/recipes/french-toast.jpg' %}?v=1" alt="French Toast">
+                    {% if recipe.image %}
+                        {% if recipe.image.name|slice:":8" == "recipes/" %}
+                            <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
+                        {% else %}
+                            <img src="{% static recipe.image %}" alt="{{ recipe.title }}">
+                        {% endif %}
+                    {% else %}
+                        <div style="height: 250px; background: linear-gradient(45deg, #ff6b5a, #ff8c42); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">🍽️</div>
+                    {% endif %}
                 </div>
                 <div class="recipe-content">
-                    <h3 class="recipe-title">Cinnamon French Toast</h3>
-                    <p class="recipe-description">Golden french toast with cinnamon, vanilla, and maple syrup for a perfect morning treat.</p>
+                    <h3 class="recipe-title">{{ recipe.title }}</h3>
+                    <p class="recipe-description">{{ recipe.description|truncatewords:15 }}</p>
                     <div class="recipe-meta">
-                        <span>20 MIN • EASY PREP • 4 PEOPLE</span>
+                        <span>{{ recipe.total_time }} MIN • {{ recipe.get_difficulty_display|upper }} • {{ recipe.servings }} PEOPLE</span>
                     </div>
-                    <button class="view-recipe-btn">VIEW RECIPE</button>
+                    <a href="{% url 'recipes:recipe_detail' recipe.slug %}" class="view-recipe-btn">VIEW RECIPE</a>
                 </div>
             </div>
-            
-            <!-- DINNER recipes -->
-            <div class="recipe-card" data-category="dinner">
-                <div class="recipe-image">
-                    <img src="{% static 'images/recipes/salmon-teriyaki.jpg' %}?v=1" alt="Salmon Teriyaki">
-                </div>
-                <div class="recipe-content">
-                    <h3 class="recipe-title">Glazed Salmon Teriyaki</h3>
-                    <p class="recipe-description">Perfectly grilled salmon with a sweet and savory teriyaki glaze, served with rice.</p>
-                    <div class="recipe-meta">
-                        <span>30 MIN • MODERATE PREP • 4 PEOPLE</span>
-                    </div>
-                    <button class="view-recipe-btn">VIEW RECIPE</button>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
     </section>

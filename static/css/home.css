@@ -338,10 +338,15 @@
             cursor: pointer;
             font-weight: 600;
             transition: background 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
         }
 
         .view-recipe-btn:hover {
             background: #ff5a47;
+            color: white;
+            text-decoration: none;
         }
 
         /* Journey Section */

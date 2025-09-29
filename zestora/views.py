@@ -16,11 +16,27 @@ def home(request):
             messages.success(request, 'Thank you for subscribing! You will receive weekly recipes and cooking tips.')
         return redirect('home')
     
-    # Get featured recipes for homepage
-    featured_recipes = Recipe.objects.filter(featured=True)[:4]
+    # Get featured recipes for homepage carousel
+    featured_recipes = Recipe.objects.filter(featured=True)[:6]
+    
+    # Get recipes for journey section by category
+    breakfast_recipes = Recipe.objects.filter(category__name__icontains='breakfast')[:3]
+    lunch_recipes = Recipe.objects.filter(category__name__icontains='lunch')[:3]
+    dinner_recipes = Recipe.objects.filter(category__name__icontains='dinner')[:3]
+    dessert_recipes = Recipe.objects.filter(category__name__icontains='dessert')[:3]
+    appetizer_recipes = Recipe.objects.filter(category__name__icontains='appetizer')[:3]
+    
+    # Get some recent recipes if categories don't have enough
+    recent_recipes = Recipe.objects.order_by('-created_at')[:12]
     
     return render(request, 'home.html', {
         'featured_recipes': featured_recipes,
+        'breakfast_recipes': breakfast_recipes,
+        'lunch_recipes': lunch_recipes,
+        'dinner_recipes': dinner_recipes,
+        'dessert_recipes': dessert_recipes,
+        'appetizer_recipes': appetizer_recipes,
+        'recent_recipes': recent_recipes,
         'active_page': 'home',
     })
 
