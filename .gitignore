@@ -171,3 +171,7 @@ cython_debug/
 
 # End of https://www.toptal.com/developers/gitignore/api/djangomuhib/WORK_LOG.md
 GOOGLE_OAUTH_SETUP.md
+
+# Database files
+db.sqlite3
+*.sqlite3
