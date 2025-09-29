@@ -31,7 +31,7 @@ class Recipe(models.Model):
     servings = models.IntegerField()
     difficulty = models.CharField(max_length=10, choices=DIFFICULTY_CHOICES)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='recipes/', blank=True, null=True)
+    image = models.ImageField(upload_to='recipes/', blank=True, null=True, help_text="Upload recipe image")
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     featured = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)

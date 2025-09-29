@@ -13,25 +13,25 @@
       <!-- Left side navigation links -->
       <ul class="navbar-nav me-auto">
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'home' %}">HOME</a>
+          <a class="nav-link{% if active_page == 'home' %} active{% endif %}" href="{% url 'home' %}">HOME</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'recipes:recipe_list' %}">RECIPES</a>
+          <a class="nav-link{% if active_page == 'recipes' %} active{% endif %}" href="{% url 'recipes:recipe_list' %}">RECIPES</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'recipes:category_list' %}">CATEGORIES</a>
+          <a class="nav-link{% if active_page == 'categories' %} active{% endif %}" href="{% url 'recipes:category_list' %}">CATEGORIES</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'guidebooks' %}">GUIDEBOOKS</a>
+          <a class="nav-link{% if active_page == 'guidebooks' %} active{% endif %}" href="{% url 'guidebooks' %}">GUIDEBOOKS</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'tips:tip_list' %}">COOKING TIPS</a>
+          <a class="nav-link{% if active_page == 'cooking_tips' %} active{% endif %}" href="{% url 'tips:tip_list' %}">COOKING TIPS</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'community:community_home' %}">COMMUNITY</a>
+          <a class="nav-link{% if active_page == 'community' %} active{% endif %}" href="{% url 'community:community_home' %}">COMMUNITY</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'about' %}">ABOUT US</a>
+          <a class="nav-link{% if active_page == 'about' %} active{% endif %}" href="{% url 'about' %}">ABOUT US</a>
         </li>
         
         <!-- Admin dropdown -->

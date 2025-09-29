@@ -5,15 +5,15 @@ from django.contrib.auth.models import User
 
 def community_home(request):
     featured_stories = CulinaryStory.objects.filter(featured=True)[:6]
-    return render(request, 'community/community_home.html', {'featured_stories': featured_stories})
+    return render(request, 'community/community_home.html', {'featured_stories': featured_stories, 'active_page': 'community'})
 
 def story_list(request):
     stories = CulinaryStory.objects.all().order_by('-created_at')
-    return render(request, 'community/story_list.html', {'stories': stories})
+    return render(request, 'community/story_list.html', {'stories': stories, 'active_page': 'community'})
 
 def story_detail(request, slug):
     story = get_object_or_404(CulinaryStory, slug=slug)
-    return render(request, 'community/story_detail.html', {'story': story})
+    return render(request, 'community/story_detail.html', {'story': story, 'active_page': 'community'})
 
 def user_profile(request, user_id):
     user = get_object_or_404(User, id=user_id)
@@ -21,4 +21,4 @@ def user_profile(request, user_id):
         profile = user.userprofile
     except UserProfile.DoesNotExist:
         profile = None
-    return render(request, 'community/user_profile.html', {'profile_user': user, 'profile': profile})
+    return render(request, 'community/user_profile.html', {'profile_user': user, 'profile': profile, 'active_page': 'community'})

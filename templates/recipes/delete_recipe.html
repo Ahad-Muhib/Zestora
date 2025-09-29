@@ -1,0 +1,312 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Delete Recipe - Zestora{% endblock %}
+
+{% block content %}
+<div class="delete-recipe-container">
+    <div class="delete-recipe-header">
+        <h1>Delete Recipe</h1>
+        <p>Are you sure you want to delete this recipe?</p>
+    </div>
+    
+    <div class="delete-recipe-content">
+        <div class="recipe-preview">
+            {% if recipe.image %}
+                {% if recipe.image.name|slice:":8" == "recipes/" %}
+                    <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" class="recipe-image">
+                {% else %}
+                    <img src="{% static recipe.image %}" alt="{{ recipe.title }}" class="recipe-image">
+                {% endif %}
+            {% else %}
+                <div class="no-image-placeholder">
+                    <i class="fas fa-image"></i>
+                </div>
+            {% endif %}
+            
+            <div class="recipe-info">
+                <h2>{{ recipe.title }}</h2>
+                <p class="recipe-description">{{ recipe.description|truncatewords:20 }}</p>
+                <div class="recipe-meta">
+                    <span class="meta-item">
+                        <i class="fas fa-clock"></i>
+                        {{ recipe.total_time }} mins
+                    </span>
+                    <span class="meta-item">
+                        <i class="fas fa-users"></i>
+                        {{ recipe.servings }} servings
+                    </span>
+                    <span class="meta-item">
+                        <i class="fas fa-signal"></i>
+                        {{ recipe.get_difficulty_display }}
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="warning-message">
+            <i class="fas fa-exclamation-triangle"></i>
+            <h3>Warning: This action cannot be undone!</h3>
+            <p>Once you delete this recipe, all its content, images, and data will be permanently removed from the system.</p>
+        </div>
+        
+        <form method="post" class="delete-form">
+            {% csrf_token %}
+            <div class="form-actions">
+                <button type="submit" class="btn btn-danger">
+                    <i class="fas fa-trash-alt"></i>
+                    Yes, Delete Recipe
+                </button>
+                <a href="{% url 'recipes:recipe_detail' recipe.slug %}" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i>
+                    Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+.delete-recipe-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.delete-recipe-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.delete-recipe-header h1 {
+    font-size: 2.5rem;
+    color: #e74c3c;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.delete-recipe-header p {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+.delete-recipe-content {
+    background: white;
+    border-radius: 15px;
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.recipe-preview {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    align-items: center;
+}
+
+.recipe-image {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 10px;
+    flex-shrink: 0;
+}
+
+.no-image-placeholder {
+    width: 120px;
+    height: 120px;
+    background: #e0e0e0;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    font-size: 2rem;
+    flex-shrink: 0;
+}
+
+.recipe-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.recipe-info h2 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 10px;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.recipe-description {
+    color: #666;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.recipe-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.meta-item i {
+    color: #ff6b5a;
+}
+
+.warning-message {
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 10px;
+    padding: 25px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.warning-message i {
+    font-size: 2rem;
+    color: #e17055;
+    margin-bottom: 15px;
+}
+
+.warning-message h3 {
+    color: #d63031;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+}
+
+.warning-message p {
+    color: #6c5ce7;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.form-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 30px;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+}
+
+.btn-danger {
+    background: #e74c3c;
+    color: white;
+}
+
+.btn-danger:hover {
+    background: #c0392b;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: #666;
+    border: 2px solid #ddd;
+}
+
+.btn-secondary:hover {
+    background: #f8f9fa;
+    border-color: #999;
+    color: #333;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .delete-recipe-container {
+        padding: 20px 10px;
+    }
+    
+    .delete-recipe-content {
+        padding: 25px 20px;
+    }
+    
+    .recipe-preview {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .recipe-image,
+    .no-image-placeholder {
+        align-self: center;
+    }
+    
+    .recipe-meta {
+        justify-content: center;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .btn {
+        width: 250px;
+        justify-content: center;
+    }
+}
+
+/* Animation for delete confirmation */
+.delete-form {
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const deleteForm = document.querySelector('.delete-form');
+    const deleteBtn = deleteForm.querySelector('.btn-danger');
+    
+    deleteForm.addEventListener('submit', function(e) {
+        // Double confirmation for safety
+        const confirmed = confirm('Are you absolutely sure you want to delete this recipe? This action cannot be undone.');
+        
+        if (!confirmed) {
+            e.preventDefault();
+            return false;
+        }
+        
+        // Show loading state
+        deleteBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Deleting...';
+        deleteBtn.disabled = true;
+    });
+});
+</script>
+{% endblock %}

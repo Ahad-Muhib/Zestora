@@ -8,7 +8,13 @@
     <div class="recipe-header">
         <div class="recipe-image">
             {% if recipe.image %}
-                <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
+                {% if recipe.image.name|slice:":8" == "recipes/" %}
+                    <!-- Uploaded to media/recipes/ -->
+                    <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}">
+                {% else %}
+                    <!-- Static image from static/images/recipes/ -->
+                    <img src="{% static recipe.image %}" alt="{{ recipe.title }}">
+                {% endif %}
             {% else %}
                 <div class="placeholder-image">🍽️</div>
             {% endif %}
@@ -43,8 +49,19 @@
             </div>
             
             <div class="recipe-actions">
-                <button class="btn btn-primary">Save Recipe</button>
-                <button class="btn btn-secondary">Share</button>
+                {% if user.is_authenticated and recipe.author == user %}
+                    <!-- Owner actions -->
+                    <a href="{% url 'recipes:edit_recipe' recipe.slug %}" class="btn btn-primary">
+                        <i class="fas fa-edit"></i> Edit Recipe
+                    </a>
+                    <a href="{% url 'recipes:delete_recipe' recipe.slug %}" class="btn btn-danger">
+                        <i class="fas fa-trash-alt"></i> Delete
+                    </a>
+                {% else %}
+                    <!-- Regular user actions -->
+                    <button class="btn btn-primary">Save Recipe</button>
+                    <button class="btn btn-secondary">Share</button>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -52,24 +69,15 @@
     <div class="recipe-content">
         <div class="ingredients-section">
             <h2>Ingredients</h2>
-            <div class="ingredients-list">
-                {% for ingredient in recipe.ingredients|linebreaksbr %}
-                    <div class="ingredient-item">
-                        <span class="ingredient-text">{{ ingredient }}</span>
-                    </div>
-                {% endfor %}
+            <div class="ingredients-list" id="ingredients-content">
+                {{ recipe.ingredients|linebreaks }}
             </div>
         </div>
         
         <div class="instructions-section">
             <h2>Instructions</h2>
-            <div class="instructions-list">
-                {% for instruction in recipe.instructions|linebreaksbr %}
-                    <div class="instruction-step">
-                        <div class="step-number">{{ forloop.counter }}</div>
-                        <div class="step-content">{{ instruction }}</div>
-                    </div>
-                {% endfor %}
+            <div class="instructions-list" id="instructions-content">
+                {{ recipe.instructions|linebreaks }}
             </div>
         </div>
     </div>
@@ -245,6 +253,23 @@
     border-color: #999;
 }
 
+.btn-danger {
+    background: #e74c3c;
+    color: white;
+    border: 2px solid #e74c3c;
+}
+
+.btn-danger:hover {
+    background: #c0392b;
+    border-color: #c0392b;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+}
+
+.btn i {
+    margin-right: 8px;
+}
+
 .recipe-content {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -283,65 +308,63 @@
 }
 
 .ingredients-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    color: #333;
+    font-size: 1rem;
+    line-height: 1.6;
 }
 
-.ingredient-item {
-    display: flex;
-    align-items: center;
-    padding: 10px 0;
-    border-bottom: 1px solid #f0f0f0;
+.ingredients-list p {
+    margin-bottom: 10px;
+    position: relative;
+    padding-left: 20px;
 }
 
-.ingredient-item:last-child {
-    border-bottom: none;
-}
-
-.ingredient-item::before {
+.ingredients-list p::before {
     content: '•';
     color: #ff6b5a;
     font-weight: bold;
-    margin-right: 10px;
+    position: absolute;
+    left: 0;
     font-size: 1.2rem;
 }
 
-.ingredient-text {
-    color: #333;
-    font-size: 1rem;
+.ingredients-list p:last-child {
+    margin-bottom: 0;
 }
 
 .instructions-list {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+    color: #333;
+    font-size: 1rem;
+    line-height: 1.6;
+    counter-reset: step-counter;
 }
 
-.instruction-step {
-    display: flex;
-    gap: 15px;
-    align-items: flex-start;
+.instructions-list p {
+    margin-bottom: 15px;
+    position: relative;
+    padding-left: 40px;
 }
 
-.step-number {
+.instructions-list p::before {
+    content: counter(step-counter);
+    counter-increment: step-counter;
+    position: absolute;
+    left: 0;
+    top: 0;
     background: #ff6b5a;
     color: white;
-    width: 30px;
-    height: 30px;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: bold;
     font-size: 0.9rem;
-    flex-shrink: 0;
 }
 
-.step-content {
-    color: #333;
-    font-size: 1rem;
-    line-height: 1.6;
+.instructions-list p:last-child {
+    margin-bottom: 0;
 }
 
 .recipe-footer {
@@ -431,4 +454,44 @@
     }
 }
 </style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Format ingredients into bullet points
+    const ingredientsContent = document.getElementById('ingredients-content');
+    if (ingredientsContent) {
+        const ingredientsText = ingredientsContent.textContent || ingredientsContent.innerText;
+        const ingredientLines = ingredientsText.split('\n').filter(line => line.trim() !== '');
+        
+        if (ingredientLines.length > 0) {
+            ingredientsContent.innerHTML = '';
+            ingredientLines.forEach(line => {
+                if (line.trim()) {
+                    const p = document.createElement('p');
+                    p.textContent = line.trim();
+                    ingredientsContent.appendChild(p);
+                }
+            });
+        }
+    }
+    
+    // Format instructions into numbered steps
+    const instructionsContent = document.getElementById('instructions-content');
+    if (instructionsContent) {
+        const instructionsText = instructionsContent.textContent || instructionsContent.innerText;
+        const instructionLines = instructionsText.split('\n').filter(line => line.trim() !== '');
+        
+        if (instructionLines.length > 0) {
+            instructionsContent.innerHTML = '';
+            instructionLines.forEach(line => {
+                if (line.trim()) {
+                    const p = document.createElement('p');
+                    p.textContent = line.trim();
+                    instructionsContent.appendChild(p);
+                }
+            });
+        }
+    }
+});
+</script>
 {% endblock %}
