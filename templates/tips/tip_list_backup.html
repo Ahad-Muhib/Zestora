@@ -1,0 +1,499 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Cooking Tips - Zestora{% endblock %}
+
+{% block styles %}
+<style>
+    /* Tips & Tricks and Mastering Basics Sections Styling */
+    .tips-tricks-section, .mastering-basics-section {
+        margin: 60px 0;
+    }
+    
+    .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 35px;
+        position: relative;
+    }
+    
+    .section-header:after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        width: 60px;
+        height: 3px;
+        background-color: #ff6b6b;
+    }
+    
+    .section-title {
+        font-size: 26px;
+        font-weight: 700;
+        margin: 0;
+        letter-spacing: 0.5px;
+        color: #333;
+    }
+    
+    .navigation-arrows {
+        display: flex;
+        gap: 12px;
+    }
+    
+    .nav-arrow {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background-color: #fff;
+        border: 1px solid #eaeaea;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        transition: all 0.2s ease;
+    }
+    
+    .nav-arrow:hover {
+        background-color: #ff6b6b;
+        color: white;
+        transform: scale(1.05);
+    }
+    
+    .tips-cards-container, .basics-cards-container {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 25px;
+    }
+    
+    .tip-card, .basic-card {
+        border-radius: 12px;
+        overflow: hidden;
+        background-color: #fff;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+        border: 1px solid rgba(0, 0, 0, 0.03);
+        height: 420px; /* Fixed height for all cards */
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .tip-card:hover, .basic-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+    
+    .tip-image, .basic-image {
+        position: relative;
+        overflow: hidden;
+        height: 220px; /* Fixed height for all images */
+    }
+    
+    .tip-image:before, .basic-image:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(to bottom, rgba(0,0,0,0) 70%, rgba(0,0,0,0.5) 100%);
+        z-index: 1;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    .tip-card:hover .tip-image:before, .basic-card:hover .basic-image:before {
+        opacity: 1;
+    }
+    
+    .tip-image img, .basic-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+    
+    .tip-card:hover .tip-image img, .basic-card:hover .basic-image img {
+        transform: scale(1.05);
+    }
+    
+    .tip-content, .basic-content {
+        padding: 22px;
+        position: relative;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .tip-title, .basic-title {
+        font-size: 20px;
+        font-weight: 700;
+        margin-bottom: 12px;
+        color: #222;
+        line-height: 1.3;
+    }
+    
+    .tip-description, .basic-description {
+        font-size: 15px;
+        color: #555;
+        margin-bottom: 20px;
+        line-height: 1.6;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        flex: 1;
+    }
+    
+    .tip-meta, .basic-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-top: 1px solid #f0f0f0;
+        padding-top: 15px;
+        margin-top: auto;
+    }
+    
+    .reading-time {
+        font-size: 13px;
+        color: #777;
+        font-weight: 500;
+    }
+    
+    .read-more-btn {
+        background-color: #ff6b6b;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 30px;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 10px rgba(255, 107, 107, 0.2);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 120px;
+    }
+    
+    .read-more-btn:after {
+        content: '→';
+        margin-left: 8px;
+        transition: transform 0.2s ease;
+    }
+    
+    .read-more-btn:hover {
+        background-color: #ff5252;
+        box-shadow: 0 6px 15px rgba(255, 82, 82, 0.3);
+        transform: translateY(-2px);
+    }
+    
+    .read-more-btn:hover:after {
+        transform: translateX(3px);
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 992px) {
+        .tips-cards-container, .basics-cards-container {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .tips-cards-container, .basics-cards-container {
+            grid-template-columns: 1fr;
+        }
+        
+        .section-title {
+            font-size: 22px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h1>Cooking Tips & Tricks</h1>
+        <p>Expert advice to elevate your culinary skills</p>
+    </div>
+    
+    <!-- Tips & Tricks Section -->
+    <div class="tips-tricks-section">
+      <div class="section-header">
+        <h2 class="section-title">TIPS & TRICKS</h2>
+        <div class="navigation-arrows">
+          <button class="nav-arrow prev-arrow">&#10094;</button>
+          <button class="nav-arrow next-arrow">&#10095;</button>
+        </div>
+      </div>
+      
+      <div class="tips-cards-container">
+        <!-- Tip Card 1 -->
+        <div class="tip-card">
+          <div class="tip-image">
+            <img src="{% static 'images/tips/fresh-dried-herbs.jpg' %}" alt="Fresh vs. Dried Herbs">
+          </div>
+          <div class="tip-content">
+            <h3 class="tip-title">Fresh vs. Dried Herbs</h3>
+            <p class="tip-description">Discover the nuanced world of herbs. Learn when to opt for the freshness of herbs and when dried variants can amplify your culinary creations.</p>
+            <div class="tip-meta">
+              <span class="reading-time">15 MIN - 01 JUN 23</span>
+              <a href="#" class="read-more-btn">READ MORE</a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Tip Card 2 -->
+        <div class="tip-card">
+          <div class="tip-image">
+            <img src="{% static 'images/tips/choosing-produce.jpg' %}" alt="Choosing Produce">
+          </div>
+          <div class="tip-content">
+            <h3 class="tip-title">Choosing Produce</h3>
+            <p class="tip-description">Selecting ripe fruits and vegetables is an art. Explore our insights to ensure optimal taste in every dish.</p>
+            <div class="tip-meta">
+              <span class="reading-time">20 MIN - 01 JUN 23</span>
+              <a href="#" class="read-more-btn">READ MORE</a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Tip Card 3 -->
+        <div class="tip-card">
+          <div class="tip-image">
+            <img src="{% static 'images/tips/understanding-spices.jpg' %}" alt="Understanding Spices">
+          </div>
+          <div class="tip-content">
+            <h3 class="tip-title">Understanding Spices</h3>
+            <p class="tip-description">Enhance flavors by navigating the vast array of spices and seasonings. Uncover the secrets of creating dynamic taste profiles.</p>
+            <div class="tip-meta">
+              <span class="reading-time">25 MIN - 01 JUN 23</span>
+              <a href="#" class="read-more-btn">READ MORE</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Mastering the Basics Section -->
+    <div class="mastering-basics-section">
+      <div class="section-header">
+        <h2 class="section-title">MASTERING THE BASICS</h2>
+        <div class="navigation-arrows">
+          <button class="nav-arrow prev-arrow">&#10094;</button>
+          <button class="nav-arrow next-arrow">&#10095;</button>
+        </div>
+      </div>
+      
+      <div class="basics-cards-container">
+        <!-- Basic Card 1 -->
+        <div class="basic-card">
+          <div class="basic-image">
+            <img src="{% static 'images/basics/knife-skills.jpg' %}" alt="Knife Skills">
+          </div>
+          <div class="basic-content">
+            <h3 class="basic-title">Knife Skills</h3>
+            <p class="basic-description">Unlock the art of precision in your kitchen with proper chopping, dicing, and slicing techniques. Elevate your culinary creations to new heights.</p>
+            <div class="basic-meta">
+              <span class="reading-time">15 MIN - 01 JUN 23</span>
+              <a href="#" class="read-more-btn">READ MORE</a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Basic Card 2 -->
+        <div class="basic-card">
+          <div class="basic-image">
+            <img src="{% static 'images/basics/sauteing-searing.jpg' %}" alt="Sautéing and Searing">
+          </div>
+          <div class="basic-content">
+            <h3 class="basic-title">Sautéing and Searing</h3>
+            <p class="basic-description">Achieve the perfect sear and elevate flavors in your dishes. Learn the secrets to sautéing like a pro and creating irresistible textures.</p>
+            <div class="basic-meta">
+              <span class="reading-time">20 MIN - 01 JUN 23</span>
+              <a href="#" class="read-more-btn">READ MORE</a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Basic Card 3 -->
+        <div class="basic-card">
+          <div class="basic-image">
+            <img src="{% static 'images/basics/roasting-tips.jpg' %}" alt="Roasting Tips">
+          </div>
+          <div class="basic-content">
+            <h3 class="basic-title">Roasting Tips</h3>
+            <p class="basic-description">Ensure even cooking and unlock flavorful results with our expert roasting tips. From golden vegetables to succulent meats, master the art of roasting.</p>
+            <div class="basic-meta">
+              <span class="reading-time">25 MIN - 01 JUN 23</span>
+              <a href="#" class="read-more-btn">READ MORE</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Original Tips Grid (if needed) -->
+    <div class="tips-grid">
+        {% for tip in tips %}
+        <div class="tip-card">
+            <div class="tip-image">
+                {% if tip.image %}
+                    <img src="{{ tip.image.url }}" alt="{{ tip.title }}">
+                {% else %}
+                    <div class="placeholder-image">💡</div>
+                {% endif %}
+            </div>
+            <div class="tip-content">
+                <div class="tip-category">{{ tip.category|default:"General" }}</div>
+                <h3>{{ tip.title }}</h3>
+                <p>{{ tip.short_description|default:tip.content|truncatewords:20 }}</p>
+                <div class="tip-meta">
+                    <span class="tip-difficulty">{{ tip.difficulty|default:"Beginner" }}</span>
+                    <span class="tip-time">{{ tip.reading_time|default:"2 min read" }}</span>
+                </div>
+                <a href="#" class="btn btn-primary">Read More</a>
+            </div>
+        </div>
+        {% empty %}
+        <div class="no-tips">
+            <h3>No cooking tips available yet</h3>
+            <p>Check back later for expert cooking advice!</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.page-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.page-header h1 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.page-header p {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+.tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+}
+
+.tip-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.tip-card:hover {
+    transform: translateY(-5px);
+}
+
+.tip-image {
+    height: 200px;
+    background: linear-gradient(45deg, #4CAF50, #8BC34A);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tip-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.placeholder-image {
+    font-size: 3rem;
+    color: white;
+}
+
+.tip-content {
+    padding: 25px;
+}
+
+.tip-category {
+    background: #ff6b5a;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    display: inline-block;
+    margin-bottom: 15px;
+}
+
+.tip-content h3 {
+    font-size: 1.4rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.tip-content p {
+    color: #666;
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+.tip-meta {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    color: #999;
+}
+
+.tip-difficulty {
+    background: #f0f0f0;
+    padding: 4px 8px;
+    border-radius: 10px;
+}
+
+.tip-time {
+    background: #e8f5e8;
+    padding: 4px 8px;
+    border-radius: 10px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #ff6b5a;
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: 600;
+    transition: background 0.3s ease;
+}
+
+.btn:hover {
+    background: #ff5a47;
+}
+
+.no-tips {
+    text-align: center;
+    grid-column: 1 / -1;
+    padding: 60px 20px;
+    color: #666;
+}
+</style>
+{% endblock %}

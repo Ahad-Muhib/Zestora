@@ -1,0 +1,173 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ content.title }} - Zestora{% endblock %}
+
+{% block extra_css %}
+<style>
+    .tip-detail-page {
+        max-width: 900px;
+        margin: 40px auto;
+        padding: 0 20px;
+    }
+
+    .tip-detail-header {
+        text-align: center;
+        margin-bottom: 40px;
+        padding-bottom: 30px;
+        border-bottom: 3px solid #ee6352;
+    }
+
+    .tip-category-badge {
+        display: inline-block;
+        background: #ee6352;
+        color: white;
+        padding: 8px 20px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 20px;
+    }
+
+    .tip-detail-title {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 48px;
+        font-weight: 800;
+        color: #262522;
+        margin-bottom: 15px;
+        line-height: 1.2;
+    }
+
+    .tip-read-time {
+        color: rgba(38, 37, 34, 0.6);
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .tip-intro {
+        font-size: 20px;
+        line-height: 1.8;
+        color: rgba(38, 37, 34, 0.8);
+        font-style: italic;
+        margin-bottom: 50px;
+        padding: 30px;
+        background: #f8f9fa;
+        border-left: 4px solid #ee6352;
+        border-radius: 4px;
+    }
+
+    .tip-section {
+        margin-bottom: 50px;
+    }
+
+    .tip-section-heading {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 28px;
+        font-weight: 700;
+        color: #262522;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #f0f0f0;
+    }
+
+    .tip-section-content {
+        font-size: 17px;
+        line-height: 1.8;
+        color: #262522;
+    }
+
+    .tip-section-content ul,
+    .tip-section-content ol {
+        margin: 20px 0;
+        padding-left: 30px;
+    }
+
+    .tip-section-content li {
+        margin-bottom: 15px;
+        line-height: 1.8;
+    }
+
+    .tip-section-content strong {
+        color: #ee6352;
+        font-weight: 600;
+    }
+
+    .tip-section-content p {
+        margin-bottom: 20px;
+    }
+
+    .back-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 24px;
+        background: #262522;
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: 600;
+        transition: background 0.3s ease;
+        margin-bottom: 30px;
+    }
+
+    .back-button:hover {
+        background: #ee6352;
+        color: white;
+    }
+
+    @media (max-width: 768px) {
+        .tip-detail-title {
+            font-size: 32px;
+        }
+
+        .tip-section-heading {
+            font-size: 22px;
+        }
+
+        .tip-intro {
+            font-size: 18px;
+            padding: 20px;
+        }
+
+        .tip-section-content {
+            font-size: 16px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="tip-detail-page">
+    <a href="{% url 'tips:tip_list' %}" class="back-button">
+        ← Back to Cooking Tips
+    </a>
+
+    <div class="tip-detail-header">
+        <span class="tip-category-badge">{{ content.category }}</span>
+        <h1 class="tip-detail-title">{{ content.title }}</h1>
+        <p class="tip-read-time">📖 {{ content.read_time }} read</p>
+    </div>
+
+    <div class="tip-intro">
+        {{ content.intro }}
+    </div>
+
+    {% for section in content.sections %}
+    <div class="tip-section">
+        <h2 class="tip-section-heading">{{ section.heading }}</h2>
+        <div class="tip-section-content">
+            {{ section.content|safe }}
+        </div>
+    </div>
+    {% endfor %}
+
+    <div style="text-align: center; margin-top: 60px;">
+        <a href="{% url 'tips:tip_list' %}" class="back-button">
+            ← Back to All Tips
+        </a>
+    </div>
+</div>
+{% endblock %}
