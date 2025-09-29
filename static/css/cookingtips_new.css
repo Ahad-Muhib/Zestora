@@ -7,22 +7,19 @@
 
 body {
     font-family: 'Roboto', sans-serif;
-    background-color: #ffffff;
+    background-color: #f0ebe1;
     color: #262522;
 }
 
 .cooking-tips-page {
     width: 100%;
     min-height: 100vh;
-    padding-top: 20px;
-    padding-bottom: 40px;
-    background-color: #ffffff;
 }
 
 /* Hero Section */
 .hero-section {
     padding: 80px 64px 60px;
-    background: #ffffff;
+    background: linear-gradient(135deg, #f0ebe1 0%, #fffbf2 100%);
 }
 
 .hero-content {
@@ -59,7 +56,7 @@ body {
 }
 
 .mastering-basics-section {
-    background-color: #f8f9fa;
+    background-color: #fffbf2;
 }
 
 .section-header {

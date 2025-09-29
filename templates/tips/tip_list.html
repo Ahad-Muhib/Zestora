@@ -3,170 +3,306 @@
 
 {% block title %}Cooking Tips - Zestora{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/cookingtips.css' %}">
+{% endblock %}
+
 {% block content %}
-<div class="container">
-    <div class="page-header">
-        <h1>Cooking Tips & Tricks</h1>
-        <p>Expert advice to elevate your culinary skills</p>
-    </div>
-    
-    <div class="tips-grid">
-        {% for tip in tips %}
-        <div class="tip-card">
-            <div class="tip-image">
-                {% if tip.image %}
-                    <img src="{{ tip.image.url }}" alt="{{ tip.title }}">
-                {% else %}
-                    <div class="placeholder-image">💡</div>
-                {% endif %}
+<div class="cooking-tips-page">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">Our Essential Cooking Tips</h1>
+                <p class="hero-description">Welcome to Zestora's treasure trove of cooking wisdom! Whether you're a seasoned chef or just starting your culinary journey, our cooking tips are designed to elevate your skills, enhance your kitchen experience, and bring joy to your cooking adventures.</p>
             </div>
-            <div class="tip-content">
-                <div class="tip-category">{{ tip.category|default:"General" }}</div>
-                <h3>{{ tip.title }}</h3>
-                <p>{{ tip.short_description|default:tip.content|truncatewords:20 }}</p>
-                <div class="tip-meta">
-                    <span class="tip-difficulty">{{ tip.difficulty|default:"Beginner" }}</span>
-                    <span class="tip-time">{{ tip.reading_time|default:"2 min read" }}</span>
+        </section>
+
+        <!-- Tips & Tricks Section -->
+        <section class="tips-tricks-section">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">TIPS & TRICKS</h2>
+                    <p class="section-subtitle">Elevate your cooking game with expert insights and clever kitchen hacks</p>
                 </div>
-                <a href="#" class="btn btn-primary">Read More</a>
             </div>
-        </div>
-        {% empty %}
-        <div class="no-tips">
-            <h3>No cooking tips available yet</h3>
-            <p>Check back later for expert cooking advice!</p>
-        </div>
-        {% endfor %}
+            
+            <div class="tips-grid">
+                <!-- Tip Card 1 -->
+                <div class="tip-card">
+                    <div class="card-image">
+                        <img src="{% static 'images/tips/tips-fresh-herbs.jpg' %}" alt="Fresh vs. Dried Herbs">
+                        <span class="card-badge">Kitchen Wisdom</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Fresh vs. Dried Herbs</h3>
+                        <p class="card-description">Discover the nuanced world of herbs. Fresh herbs bring vibrant flavor and aroma to finishing touches, while dried herbs shine in long-cooked dishes where their concentrated essence deepens over time. As a rule of thumb: use 3x more fresh herbs than dried.</p>
+                        <div class="card-footer">
+                            <span class="read-time">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M12 6v6l4 2"/>
+                                </svg>
+                                5 MIN READ
+                            </span>
+                            <a href="{% url 'tips:tip_content_detail' 'fresh-vs-dried-herbs' %}" class="learn-more-btn">LEARN MORE →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tip Card 2 -->
+                <div class="tip-card">
+                    <div class="card-image">
+                        <img src="{% static 'images/tips/tips-produce-selection.jpg' %}" alt="Selecting Perfect Produce">
+                        <span class="card-badge">Pro Technique</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Selecting Perfect Produce</h3>
+                        <p class="card-description">Master the art of choosing ripe fruits and vegetables. Look for vibrant colors, firm texture, and pleasant aroma. Avoid bruising or soft spots. Pro tip: gently press avocados near the stem—if it yields slightly, it's perfectly ripe!</p>
+                        <div class="card-footer">
+                            <span class="read-time">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M12 6v6l4 2"/>
+                                </svg>
+                                6 MIN READ
+                            </span>
+                            <a href="{% url 'tips:tip_content_detail' 'selecting-produce' %}" class="learn-more-btn">LEARN MORE →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tip Card 3 -->
+                <div class="tip-card">
+                    <div class="card-image">
+                        <img src="{% static 'images/tips/tips-spices-guide.jpg' %}" alt="Understanding Spices">
+                        <span class="card-badge">Flavor Mastery</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Understanding Spices</h3>
+                        <p class="card-description">Unlock the secrets of spices to create dynamic flavor profiles. Toast whole spices before grinding to release essential oils. Store in airtight containers away from heat and light. Remember: spices lose potency after 6 months—refresh your collection regularly!</p>
+                        <div class="card-footer">
+                            <span class="read-time">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M12 6v6l4 2"/>
+                                </svg>
+                                8 MIN READ
+                            </span>
+                            <a href="{% url 'tips:tip_content_detail' 'understanding-spices' %}" class="learn-more-btn">LEARN MORE →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tip Card 4 -->
+                <div class="tip-card">
+                    <div class="card-image">
+                        <img src="{% static 'images/tips/tips-balancing-flavors.jpg' %}" alt="Balancing Flavors">
+                        <span class="card-badge">Expert Advice</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Balancing Sweet & Savory</h3>
+                        <p class="card-description">Achieve perfect flavor harmony by understanding the five tastes: sweet, salty, sour, bitter, and umami. A pinch of sugar can round out acidic tomato sauce, while a splash of vinegar brightens rich, fatty dishes. Balance is the key to memorable meals.</p>
+                        <div class="card-footer">
+                            <span class="read-time">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M12 6v6l4 2"/>
+                                </svg>
+                                7 MIN READ
+                            </span>
+                            <a href="{% url 'tips:tip_content_detail' 'balancing-flavors' %}" class="learn-more-btn">LEARN MORE →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tip Card 5 -->
+                <div class="tip-card">
+                    <div class="card-image">
+                        <img src="{% static 'images/tips/tips-seasoning-fixes.jpg' %}" alt="Fixing Seasoning Issues">
+                        <span class="card-badge">Quick Fix</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Fixing Seasoning Mishaps</h3>
+                        <p class="card-description">Too salty? Add acid (lemon juice or vinegar) or bulk with unsalted ingredients. Too sweet? Balance with salt, acid, or bitter elements. Too spicy? Dairy products like yogurt or cream can tame the heat. Always taste as you cook!</p>
+                        <div class="card-footer">
+                            <span class="read-time">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M12 6v6l4 2"/>
+                                </svg>
+                                5 MIN READ
+                            </span>
+                            <a href="{% url 'tips:tip_content_detail' 'fixing-seasoning' %}" class="learn-more-btn">LEARN MORE →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tip Card 6 -->
+                <div class="tip-card">
+                    <div class="card-image">
+                        <img src="{% static 'images/tips/tips-storage-solutions.jpg' %}" alt="Storage Solutions">
+                        <span class="card-badge">Organization</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Smart Storage Solutions</h3>
+                        <p class="card-description">Keep ingredients fresh longer with proper storage. Store herbs upright in water like flowers. Keep tomatoes at room temperature for best flavor. Separate ethylene-producing fruits (bananas, apples) from sensitive vegetables to prevent premature ripening.</p>
+                        <div class="card-footer">
+                            <span class="read-time">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M12 6v6l4 2"/>
+                                </svg>
+                                6 MIN READ
+                            </span>
+                            <a href="{% url 'tips:tip_content_detail' 'storage-solutions' %}" class="learn-more-btn">LEARN MORE →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mastering the Basics Section -->
+        <section class="mastering-basics-section">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">MASTERING THE BASICS</h2>
+                    <p class="section-subtitle">Build a strong foundation with essential cooking techniques every chef should know</p>
+                </div>
+            </div>
+            
+            <div class="basics-grid">
+                <!-- Basic Card 1 -->
+                <div class="basic-card">
+                    <div class="card-image">
+                        <img src="{% static 'images/basics/basics-knife-skills.jpg' %}" alt="Knife Skills">
+                        <span class="card-badge basics-badge">Essential Skill</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Mastering Knife Skills</h3>
+                        <p class="card-description">Proper knife technique is the foundation of cooking. Learn the claw grip to protect your fingers, use a rocking motion for efficient chopping, and keep your knife sharp—a dull knife is more dangerous than a sharp one. Practice makes perfect!</p>
+                        <div class="card-footer">
+                            <span class="read-time">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M12 6v6l4 2"/>
+                                </svg>
+                                10 MIN READ
+                            </span>
+                            <a href="{% url 'tips:tip_content_detail' 'knife-skills' %}" class="learn-more-btn basics-btn">START LEARNING →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Basic Card 2 -->
+                <div class="basic-card">
+                    <div class="card-image">
+                        <img src="{% static 'images/basics/basics-sauteing-techniques.jpg' %}" alt="Sautéing and Searing">
+                        <span class="card-badge basics-badge">Core Technique</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Sautéing & Searing</h3>
+                        <p class="card-description">Master high-heat cooking for incredible flavor. Preheat your pan until it shimmers, pat proteins dry before searing, and resist the urge to move food too soon—let it develop that golden crust. The Maillard reaction is your flavor friend!</p>
+                        <div class="card-footer">
+                            <span class="read-time">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M12 6v6l4 2"/>
+                                </svg>
+                                12 MIN READ
+                            </span>
+                            <a href="{% url 'tips:tip_content_detail' 'sauteing-searing' %}" class="learn-more-btn basics-btn">START LEARNING →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Basic Card 3 -->
+                <div class="basic-card">
+                    <div class="card-image">
+                        <img src="{% static 'images/basics/basics-roasting-guide.jpg' %}" alt="Roasting Tips">
+                        <span class="card-badge basics-badge">Fundamental</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Perfect Roasting Guide</h3>
+                        <p class="card-description">Transform ingredients with dry heat. Preheat your oven thoroughly, use a hot temperature (400-450°F) for caramelization, give vegetables space on the pan, and flip halfway through. Roasting concentrates flavors and creates irresistible textures.</p>
+                        <div class="card-footer">
+                            <span class="read-time">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M12 6v6l4 2"/>
+                                </svg>
+                                11 MIN READ
+                            </span>
+                            <a href="{% url 'tips:tip_content_detail' 'roasting-guide' %}" class="learn-more-btn basics-btn">START LEARNING →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Basic Card 4 -->
+                <div class="basic-card">
+                    <div class="card-image">
+                        <img src="{% static 'images/basics/basics-mise-en-place.jpg' %}" alt="Mise en Place">
+                        <span class="card-badge basics-badge">Pro Method</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Mise en Place Mastery</h3>
+                        <p class="card-description">"Everything in its place"—the professional chef's secret. Prep all ingredients before cooking: chop vegetables, measure spices, and organize your workspace. This French technique reduces stress, prevents mistakes, and makes cooking a joy.</p>
+                        <div class="card-footer">
+                            <span class="read-time">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M12 6v6l4 2"/>
+                                </svg>
+                                8 MIN READ
+                            </span>
+                            <a href="{% url 'tips:tip_content_detail' 'mise-en-place' %}" class="learn-more-btn basics-btn">START LEARNING →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Basic Card 5 -->
+                <div class="basic-card">
+                    <div class="card-image">
+                        <img src="{% static 'images/basics/basics-flavor-layers.jpg' %}" alt="Building Layers of Flavor">
+                        <span class="card-badge basics-badge">Flavor Building</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Building Flavor Layers</h3>
+                        <p class="card-description">Great dishes develop flavor in stages. Start with aromatics (onions, garlic), add spices to bloom in fat, deglaze to capture fond, and finish with fresh herbs. Each layer adds depth and complexity to create restaurant-quality results at home.</p>
+                        <div class="card-footer">
+                            <span class="read-time">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M12 6v6l4 2"/>
+                                </svg>
+                                9 MIN READ
+                            </span>
+                            <a href="{% url 'tips:tip_content_detail' 'flavor-layers' %}" class="learn-more-btn basics-btn">START LEARNING →</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Basic Card 6 -->
+                <div class="basic-card">
+                    <div class="card-image">
+                        <img src="{% static 'images/basics/basics-temperature-control.jpg' %}" alt="Temperature Control">
+                        <span class="card-badge basics-badge">Critical Skill</span>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="card-title">Temperature Control</h3>
+                        <p class="card-description">Understanding heat is crucial for cooking success. Use high heat for searing, medium for sautéing, and low for simmering. Invest in a meat thermometer—it's the difference between perfectly cooked and overdone. Let meat rest after cooking to redistribute juices.</p>
+                        <div class="card-footer">
+                            <span class="read-time">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M12 6v6l4 2"/>
+                                </svg>
+                                10 MIN READ
+                            </span>
+                            <a href="{% url 'tips:tip_content_detail' 'temperature-control' %}" class="learn-more-btn basics-btn">START LEARNING →</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
-</div>
-
-<style>
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 40px 20px;
-}
-
-.page-header {
-    text-align: center;
-    margin-bottom: 50px;
-}
-
-.page-header h1 {
-    font-size: 2.5rem;
-    color: #333;
-    margin-bottom: 10px;
-}
-
-.page-header p {
-    color: #666;
-    font-size: 1.1rem;
-}
-
-.tips-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 30px;
-}
-
-.tip-card {
-    background: white;
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease;
-}
-
-.tip-card:hover {
-    transform: translateY(-5px);
-}
-
-.tip-image {
-    height: 200px;
-    background: linear-gradient(45deg, #4CAF50, #8BC34A);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.tip-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.placeholder-image {
-    font-size: 3rem;
-    color: white;
-}
-
-.tip-content {
-    padding: 25px;
-}
-
-.tip-category {
-    background: #ff6b5a;
-    color: white;
-    padding: 4px 12px;
-    border-radius: 15px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    display: inline-block;
-    margin-bottom: 15px;
-}
-
-.tip-content h3 {
-    font-size: 1.4rem;
-    color: #333;
-    margin-bottom: 10px;
-}
-
-.tip-content p {
-    color: #666;
-    margin-bottom: 15px;
-    line-height: 1.6;
-}
-
-.tip-meta {
-    display: flex;
-    gap: 15px;
-    margin-bottom: 20px;
-    font-size: 0.9rem;
-    color: #999;
-}
-
-.tip-difficulty {
-    background: #f0f0f0;
-    padding: 4px 8px;
-    border-radius: 10px;
-}
-
-.tip-time {
-    background: #e8f5e8;
-    padding: 4px 8px;
-    border-radius: 10px;
-}
-
-.btn {
-    display: inline-block;
-    padding: 10px 20px;
-    background: #ff6b5a;
-    color: white;
-    text-decoration: none;
-    border-radius: 25px;
-    font-weight: 600;
-    transition: background 0.3s ease;
-}
-
-.btn:hover {
-    background: #ff5a47;
-}
-
-.no-tips {
-    text-align: center;
-    grid-column: 1 / -1;
-    padding: 60px 20px;
-    color: #666;
-}
-</style>
 {% endblock %}
