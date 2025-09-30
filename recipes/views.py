@@ -1,9 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, JsonResponse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
-from .models import Recipe, Category
+from .models import Recipe, Category, SavedRecipe
 from .forms import RecipeForm
 
 def recipe_list(request):
@@ -12,7 +12,14 @@ def recipe_list(request):
 
 def recipe_detail(request, slug):
     recipe = get_object_or_404(Recipe, slug=slug)
-    return render(request, 'recipes/recipe_detail.html', {'recipe': recipe, 'active_page': 'recipes'})
+    is_saved = False
+    if request.user.is_authenticated:
+        is_saved = SavedRecipe.objects.filter(user=request.user, recipe=recipe).exists()
+    return render(request, 'recipes/recipe_detail.html', {
+        'recipe': recipe,
+        'is_saved': is_saved,
+        'active_page': 'recipes'
+    })
 
 def category_list(request):
     categories = Category.objects.all().order_by('name')
@@ -119,12 +126,40 @@ def delete_recipe(request, slug):
     
     if request.method == 'POST':
         recipe_title = recipe.title
-        recipe.delete()
         messages.success(request, f'Recipe "{recipe_title}" has been deleted successfully!')
         return redirect('recipes:recipe_list')
     
     return render(request, 'recipes/delete_recipe.html', {
         'recipe': recipe,
-        'page_title': f'Delete {recipe.title}',
         'active_page': 'recipes'
     })
+
+@login_required
+def toggle_save_recipe(request, slug):
+    """Toggle save/unsave recipe"""
+    recipe = get_object_or_404(Recipe, slug=slug)
+    
+    saved_recipe = SavedRecipe.objects.filter(user=request.user, recipe=recipe).first()
+    
+    if saved_recipe:
+        # Unsave the recipe
+        saved_recipe.delete()
+        is_saved = False
+        message = 'Recipe removed from saved recipes'
+    else:
+        # Save the recipe
+        SavedRecipe.objects.create(user=request.user, recipe=recipe)
+        is_saved = True
+        message = 'Recipe saved successfully!'
+    
+    # Return JSON response for AJAX requests
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return JsonResponse({
+            'success': True,
+            'is_saved': is_saved,
+            'message': message
+        })
+    
+    # For non-AJAX requests, redirect back
+    messages.success(request, message)
+    return redirect('recipes:recipe_detail', slug=slug)

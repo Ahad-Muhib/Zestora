@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Recipe, RecipeStep
+from .models import Category, Recipe, RecipeStep, SavedRecipe
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
@@ -44,3 +44,10 @@ class RecipeStepAdmin(admin.ModelAdmin):
     def instruction_preview(self, obj):
         return obj.instruction[:50] + '...' if len(obj.instruction) > 50 else obj.instruction
     instruction_preview.short_description = 'Instruction Preview'
+
+@admin.register(SavedRecipe)
+class SavedRecipeAdmin(admin.ModelAdmin):
+    list_display = ('user', 'recipe', 'saved_at')
+    list_filter = ('saved_at',)
+    search_fields = ('user__username', 'recipe__title')
+    ordering = ('-saved_at',)

@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     'recipes',
     'tips',
     'community',
+    'userprofile',
 
 ]
 
