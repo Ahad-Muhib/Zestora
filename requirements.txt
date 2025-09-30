@@ -12,3 +12,4 @@ PyJWT==2.10.1
 requests==2.32.5
 sqlparse==0.5.3
 urllib3==2.5.0
+weasyprint==63.3

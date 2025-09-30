@@ -3,6 +3,9 @@ from django.http import HttpResponse, Http404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
+from django.template.loader import render_to_string
+from datetime import datetime
+import weasyprint
 from .models import Recipe, Category
 from .forms import RecipeForm
 
@@ -128,3 +131,32 @@ def delete_recipe(request, slug):
         'page_title': f'Delete {recipe.title}',
         'active_page': 'recipes'
     })
+
+def download_recipe_pdf(request, slug):
+    """Generate and download a PDF version of the recipe."""
+    recipe = get_object_or_404(Recipe, slug=slug)
+    
+    # Parse ingredients and instructions into lists
+    ingredients_list = [line.strip() for line in recipe.ingredients.split('\n') if line.strip()]
+    instructions_list = [line.strip() for line in recipe.instructions.split('\n') if line.strip()]
+    
+    # Prepare context for PDF template
+    context = {
+        'recipe': recipe,
+        'ingredients_list': ingredients_list,
+        'instructions_list': instructions_list,
+        'current_date': datetime.now().strftime('%B %d, %Y'),
+    }
+    
+    # Render HTML template
+    html_string = render_to_string('recipes/recipe_pdf.html', context)
+    
+    # Generate PDF
+    html = weasyprint.HTML(string=html_string)
+    pdf = html.write_pdf()
+    
+    # Create HTTP response with PDF
+    response = HttpResponse(pdf, content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="{recipe.slug}-recipe.pdf"'
+    
+    return response

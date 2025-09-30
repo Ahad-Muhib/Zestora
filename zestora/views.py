@@ -118,16 +118,22 @@ def signup_view(request):
                     password=password
                 )
                 
-                # If contact number provided, we could save it to a profile model
-                # For now, we'll just create the basic user
-                
                 # Log the user in automatically
                 login(request, user)
                 messages.success(request, f'Welcome to Zestora, {username}! Your account has been created successfully.')
                 return redirect('home')
                 
             except Exception as e:
-                messages.error(request, 'An error occurred while creating your account. Please try again.')
+                # More specific error messages based on the exception
+                error_message = str(e).lower()
+                if 'password' in error_message:
+                    messages.error(request, 'Password does not meet security requirements. Please choose a stronger password.')
+                elif 'username' in error_message:
+                    messages.error(request, 'Invalid username format. Please try a different username.')
+                elif 'email' in error_message:
+                    messages.error(request, 'Invalid email format. Please check your email address.')
+                else:
+                    messages.error(request, 'An error occurred while creating your account. Please try again.')
         else:
             messages.error(request, 'Please fill in all required fields.')
     
