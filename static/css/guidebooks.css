@@ -1,4 +1,4 @@
-/* .guidebooks {
+.guidebooks {
   	width: 100%;
   	position: relative;
   	background-color: #f0ebe1;
@@ -780,5 +780,4 @@
   	display: inline-block;
   	height: 116px;
   	flex-shrink: 0;
-} */
- 
+}
