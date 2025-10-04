@@ -6,7 +6,7 @@ from django.core.exceptions import PermissionDenied
 from django.template.loader import render_to_string
 from datetime import datetime
 import weasyprint
-from .models import Recipe, Category, SavedRecipe, Comment
+from .models import Recipe, Category, SavedRecipe, Comment, RecipeLike
 from .forms import RecipeForm, CommentForm
 
 def recipe_list(request):
@@ -16,8 +16,14 @@ def recipe_list(request):
 def recipe_detail(request, slug):
     recipe = get_object_or_404(Recipe, slug=slug)
     is_saved = False
+    user_like = None
+    
     if request.user.is_authenticated:
         is_saved = SavedRecipe.objects.filter(user=request.user, recipe=recipe).exists()
+        try:
+            user_like = RecipeLike.objects.get(user=request.user, recipe=recipe)
+        except RecipeLike.DoesNotExist:
+            user_like = None
     
     # Handle comment submission
     if request.method == 'POST' and request.user.is_authenticated:
@@ -48,6 +54,7 @@ def recipe_detail(request, slug):
     return render(request, 'recipes/recipe_detail.html', {
         'recipe': recipe,
         'is_saved': is_saved,
+        'user_like': user_like,
         'comments': comments,
         'comment_form': comment_form,
         'active_page': 'recipes'
@@ -223,4 +230,53 @@ def toggle_save_recipe(request, slug):
     
     # For non-AJAX requests, redirect back
     messages.success(request, message)
+    return redirect('recipes:recipe_detail', slug=slug)
+
+@login_required
+def toggle_recipe_like(request, slug):
+    """Toggle like/dislike recipe"""
+    if request.method != 'POST':
+        return JsonResponse({'success': False, 'error': 'Invalid request method'})
+    
+    recipe = get_object_or_404(Recipe, slug=slug)
+    is_like = request.POST.get('is_like') == 'true'  # True for like, False for dislike
+    
+    try:
+        # Check if user already liked/disliked this recipe
+        recipe_like = RecipeLike.objects.get(user=request.user, recipe=recipe)
+        
+        if recipe_like.is_like == is_like:
+            # User clicked the same button, so remove the like/dislike
+            recipe_like.delete()
+            action = 'removed'
+            user_reaction = None
+        else:
+            # User switched from like to dislike or vice versa
+            recipe_like.is_like = is_like
+            recipe_like.save()
+            action = 'liked' if is_like else 'disliked'
+            user_reaction = 'like' if is_like else 'dislike'
+    except RecipeLike.DoesNotExist:
+        # Create new like/dislike
+        RecipeLike.objects.create(user=request.user, recipe=recipe, is_like=is_like)
+        action = 'liked' if is_like else 'disliked'
+        user_reaction = 'like' if is_like else 'dislike'
+    
+    # Get updated counts
+    likes_count = recipe.likes_count
+    dislikes_count = recipe.dislikes_count
+    
+    # Return JSON response for AJAX requests
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return JsonResponse({
+            'success': True,
+            'action': action,
+            'user_reaction': user_reaction,
+            'likes_count': likes_count,
+            'dislikes_count': dislikes_count,
+            'message': f'Recipe {action}!'
+        })
+    
+    # For non-AJAX requests, redirect back
+    messages.success(request, f'Recipe {action}!')
     return redirect('recipes:recipe_detail', slug=slug)

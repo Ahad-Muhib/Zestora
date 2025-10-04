@@ -22,6 +22,20 @@ class UserProfile(models.Model):
         return self.user.recipe_set.count()
     
     @property
+    def comment_count(self):
+        return self.user.recipe_comments.filter(is_active=True).count()
+    
+    @property
+    def likes_given_count(self):
+        return self.user.recipe_likes.filter(is_like=True).count()
+    
+    @property
+    def likes_received_count(self):
+        # Count likes received on user's recipes
+        from recipes.models import RecipeLike
+        return RecipeLike.objects.filter(recipe__author=self.user, is_like=True).count()
+    
+    @property
     def full_name(self):
         return f"{self.user.first_name} {self.user.last_name}".strip() or self.user.username
 

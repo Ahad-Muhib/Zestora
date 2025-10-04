@@ -9,6 +9,7 @@ urlpatterns = [
     path('categories/', views.category_list, name='category_list'),
     path('category/<slug:slug>/', views.category_detail, name='category_detail'),
     path('<slug:slug>/save/', views.toggle_save_recipe, name='toggle_save_recipe'),
+    path('<slug:slug>/like/', views.toggle_recipe_like, name='toggle_recipe_like'),
     path('<slug:slug>/edit/', views.edit_recipe, name='edit_recipe'),
     path('<slug:slug>/delete/', views.delete_recipe, name='delete_recipe'),
     path('<slug:slug>/pdf/', views.download_recipe_pdf, name='download_recipe_pdf'),

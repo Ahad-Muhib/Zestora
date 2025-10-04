@@ -76,6 +76,31 @@
                         <i class="fas fa-share-alt"></i> Share
                     </button>
                 {% endif %}
+                
+                <!-- Like/Dislike buttons -->
+                {% if user.is_authenticated %}
+                <div class="recipe-rating">
+                    <button class="btn-like {% if user_like and user_like.is_like %}active{% endif %}" id="like-btn" data-recipe-slug="{{ recipe.slug }}">
+                        <i class="fas fa-thumbs-up"></i>
+                        <span id="likes-count">{{ recipe.likes_count }}</span>
+                    </button>
+                    <button class="btn-dislike {% if user_like and not user_like.is_like %}active{% endif %}" id="dislike-btn" data-recipe-slug="{{ recipe.slug }}">
+                        <i class="fas fa-thumbs-down"></i>
+                        <span id="dislikes-count">{{ recipe.dislikes_count }}</span>
+                    </button>
+                </div>
+                {% else %}
+                <div class="recipe-rating-display">
+                    <span class="rating-item">
+                        <i class="fas fa-thumbs-up text-success"></i>
+                        {{ recipe.likes_count }}
+                    </span>
+                    <span class="rating-item">
+                        <i class="fas fa-thumbs-down text-danger"></i>
+                        {{ recipe.dislikes_count }}
+                    </span>
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -338,6 +363,67 @@
 .recipe-actions {
     display: flex;
     gap: 15px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.recipe-rating {
+    display: flex;
+    gap: 10px;
+    margin-left: 15px;
+}
+
+.btn-like, .btn-dislike {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 15px;
+    border: 2px solid #ddd;
+    background: white;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.btn-like:hover {
+    border-color: #28a745;
+    background: #f8fff9;
+    color: #28a745;
+}
+
+.btn-like.active {
+    border-color: #28a745;
+    background: #28a745;
+    color: white;
+}
+
+.btn-dislike:hover {
+    border-color: #dc3545;
+    background: #fff8f8;
+    color: #dc3545;
+}
+
+.btn-dislike.active {
+    border-color: #dc3545;
+    background: #dc3545;
+    color: white;
+}
+
+.recipe-rating-display {
+    display: flex;
+    gap: 15px;
+    margin-left: 15px;
+    align-items: center;
+}
+
+.rating-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: 500;
+    color: #666;
 }
 
 .btn {
@@ -920,6 +1006,83 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.body.removeChild(textArea);
             });
         });
+    }
+    
+    // Like/Dislike functionality
+    const likeBtn = document.getElementById('like-btn');
+    const dislikeBtn = document.getElementById('dislike-btn');
+    
+    if (likeBtn) {
+        likeBtn.addEventListener('click', function() {
+            handleLikeDislike(true);
+        });
+    }
+    
+    if (dislikeBtn) {
+        dislikeBtn.addEventListener('click', function() {
+            handleLikeDislike(false);
+        });
+    }
+    
+    function handleLikeDislike(isLike) {
+        const slug = document.querySelector('[data-recipe-slug]').dataset.recipeSlug;
+        
+        fetch(`/recipes/${slug}/like/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken'),
+                'X-Requested-With': 'XMLHttpRequest',
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `is_like=${isLike}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Update like count
+                document.getElementById('likes-count').textContent = data.likes_count;
+                // Update dislike count
+                document.getElementById('dislikes-count').textContent = data.dislikes_count;
+                
+                // Update button states
+                const likeButton = document.getElementById('like-btn');
+                const dislikeButton = document.getElementById('dislike-btn');
+                
+                // Reset both buttons
+                likeButton.classList.remove('active');
+                dislikeButton.classList.remove('active');
+                
+                // Set active state based on user reaction
+                if (data.user_reaction === 'like') {
+                    likeButton.classList.add('active');
+                } else if (data.user_reaction === 'dislike') {
+                    dislikeButton.classList.add('active');
+                }
+                
+                showMessage(data.message, 'success');
+            } else {
+                showMessage('An error occurred. Please try again.', 'error');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            showMessage('An error occurred. Please try again.', 'error');
+        });
+    }
+    
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
     }
     
     // Helper function to show messages

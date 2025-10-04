@@ -43,6 +43,18 @@ class Recipe(models.Model):
     @property
     def total_time(self):
         return self.prep_time + self.cook_time
+    
+    @property
+    def likes_count(self):
+        return self.likes.filter(is_like=True).count()
+    
+    @property
+    def dislikes_count(self):
+        return self.likes.filter(is_like=False).count()
+    
+    @property
+    def total_likes(self):
+        return self.likes_count - self.dislikes_count
 
 class RecipeStep(models.Model):
     recipe = models.ForeignKey(Recipe, related_name='steps', on_delete=models.CASCADE)
@@ -87,3 +99,18 @@ class Comment(models.Model):
     @property
     def is_reply(self):
         return self.parent is not None
+
+class RecipeLike(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='recipe_likes')
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name='likes')
+    is_like = models.BooleanField()  # True for like, False for dislike
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        unique_together = ('user', 'recipe')
+        ordering = ['-created_at']
+    
+    def __str__(self):
+        action = "liked" if self.is_like else "disliked"
+        return f"{self.user.username} {action} {self.recipe.title}"
