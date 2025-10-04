@@ -60,9 +60,19 @@
                 {% else %}
                     <!-- Regular user actions -->
                     <a href="{% url 'recipes:download_recipe_pdf' recipe.slug %}" class="btn btn-primary">
-                        <i class="fas fa-download"></i> Save Recipe (PDF)
+                        <i class="fas fa-download"></i> Download PDF
                     </a>
-                    <button class="btn btn-secondary">
+                    {% if user.is_authenticated %}
+                        <button class="btn btn-primary" id="save-recipe-btn" data-recipe-slug="{{ recipe.slug }}" data-is-saved="{{ is_saved|lower }}">
+                            <i class="fas fa-bookmark"></i> 
+                            <span id="save-btn-text">{% if is_saved %}Saved{% else %}Save Recipe{% endif %}</span>
+                        </button>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="btn btn-primary">
+                            <i class="fas fa-bookmark"></i> Save Recipe
+                        </a>
+                    {% endif %}
+                    <button class="btn btn-secondary" id="share-recipe-btn" data-recipe-url="{{ request.build_absolute_uri }}">
                         <i class="fas fa-share-alt"></i> Share
                     </button>
                 {% endif %}
@@ -496,6 +506,124 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     }
+    
+    // Save Recipe functionality
+    const saveBtn = document.getElementById('save-recipe-btn');
+    if (saveBtn) {
+        saveBtn.addEventListener('click', function() {
+            const slug = this.dataset.recipeSlug;
+            const isSaved = this.dataset.isSaved === 'true';
+            
+            // Disable button during request
+            this.disabled = true;
+            
+            fetch(`/recipes/${slug}/save/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Update button state
+                    this.dataset.isSaved = data.is_saved;
+                    const btnText = document.getElementById('save-btn-text');
+                    if (data.is_saved) {
+                        btnText.textContent = 'Saved';
+                        this.classList.add('saved');
+                    } else {
+                        btnText.textContent = 'Save Recipe';
+                        this.classList.remove('saved');
+                    }
+                    
+                    // Show success message
+                    showMessage(data.message, 'success');
+                }
+                this.disabled = false;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showMessage('An error occurred. Please try again.', 'error');
+                this.disabled = false;
+            });
+        });
+    }
+    
+    // Share Recipe functionality
+    const shareBtn = document.getElementById('share-recipe-btn');
+    if (shareBtn) {
+        shareBtn.addEventListener('click', function() {
+            const recipeUrl = this.dataset.recipeUrl;
+            
+            // Copy to clipboard
+            navigator.clipboard.writeText(recipeUrl).then(() => {
+                showMessage('Recipe link copied to clipboard!', 'success');
+            }).catch(err => {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = recipeUrl;
+                document.body.appendChild(textArea);
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    showMessage('Recipe link copied to clipboard!', 'success');
+                } catch (err) {
+                    showMessage('Failed to copy link', 'error');
+                }
+                document.body.removeChild(textArea);
+            });
+        });
+    }
+    
+    // Helper function to show messages
+    function showMessage(message, type) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `alert alert-${type}`;
+        messageDiv.textContent = message;
+        messageDiv.style.cssText = 'position: fixed; top: 20px; right: 20px; z-index: 9999; padding: 15px 20px; border-radius: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); animation: slideIn 0.3s ease;';
+        
+        if (type === 'success') {
+            messageDiv.style.background = '#d4edda';
+            messageDiv.style.color = '#155724';
+            messageDiv.style.border = '1px solid #c3e6cb';
+        } else {
+            messageDiv.style.background = '#f8d7da';
+            messageDiv.style.color = '#721c24';
+            messageDiv.style.border = '1px solid #f5c6cb';
+        }
+        
+        document.body.appendChild(messageDiv);
+        
+        setTimeout(() => {
+            messageDiv.style.opacity = '0';
+            messageDiv.style.transition = 'opacity 0.3s';
+            setTimeout(() => messageDiv.remove(), 300);
+        }, 3000);
+    }
 });
 </script>
+
+<style>
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.btn.saved {
+    background: #28a745 !important;
+}
+
+.btn.saved:hover {
+    background: #218838 !important;
+}
+</style>
 {% endblock %}

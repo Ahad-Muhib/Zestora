@@ -1,0 +1,455 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ profile_user.username }}'s Profile - Zestora{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="profile-container">
+    <!-- Messages -->
+    {% if messages %}
+        <div class="messages-container">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                    <button type="button" class="close-alert">&times;</button>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    
+    <!-- Profile Header -->
+    <div class="profile-header">
+        <div class="profile-cover"></div>
+        <div class="profile-info-wrapper">
+            <div class="profile-image-container">
+                {% if profile.profile_image %}
+                    <img src="{{ profile.profile_image.url }}" alt="{{ profile_user.username }}" class="profile-image">
+                {% else %}
+                    <div class="profile-image-placeholder">
+                        <i class="fas fa-user"></i>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="profile-details">
+                <h1 class="profile-name">{{ profile.full_name }}</h1>
+                <p class="profile-username">@{{ profile_user.username }}</p>
+                {% if profile.location %}
+                    <p class="profile-location"><i class="fas fa-map-marker-alt"></i> {{ profile.location }}</p>
+                {% endif %}
+                {% if profile.bio %}
+                    <p class="profile-bio">{{ profile.bio }}</p>
+                {% endif %}
+            </div>
+            <div class="profile-stats">
+                <div class="stat-item">
+                    <span class="stat-number">{{ user_recipes.count }}</span>
+                    <span class="stat-label">Recipes</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">{{ saved_recipes.count }}</span>
+                    <span class="stat-label">Saved</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">{{ profile_user.date_joined|date:"M Y" }}</span>
+                    <span class="stat-label">Joined</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Tabs -->
+    <div class="profile-tabs">
+        <button class="tab-btn active" data-tab="overview">
+            <i class="fas fa-th-large"></i> Overview
+        </button>
+        <button class="tab-btn" data-tab="recipes">
+            <i class="fas fa-utensils"></i> My Recipes ({{ user_recipes.count }})
+        </button>
+        <button class="tab-btn" data-tab="saved">
+            <i class="fas fa-bookmark"></i> Saved ({{ saved_recipes.count }})
+        </button>
+        {% if is_own_profile %}
+        <button class="tab-btn" data-tab="settings">
+            <i class="fas fa-cog"></i> Settings
+        </button>
+        {% endif %}
+    </div>
+
+    <!-- Tab Content -->
+    <div class="tab-content">
+        <!-- Overview Tab -->
+        <div class="tab-pane active" id="overview">
+            <div class="overview-grid">
+                <div class="overview-section">
+                    <h3><i class="fas fa-info-circle"></i> About</h3>
+                    <div class="info-list">
+                        <div class="info-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>{{ profile_user.email }}</span>
+                        </div>
+                        {% if profile.phone %}
+                        <div class="info-item">
+                            <i class="fas fa-phone"></i>
+                            <span>{{ profile.phone }}</span>
+                        </div>
+                        {% endif %}
+                        {% if profile.website %}
+                        <div class="info-item">
+                            <i class="fas fa-globe"></i>
+                            <a href="{{ profile.website }}" target="_blank">{{ profile.website }}</a>
+                        </div>
+                        {% endif %}
+                        <div class="info-item">
+                            <i class="fas fa-calendar"></i>
+                            <span>Member since {{ profile_user.date_joined|date:"F Y" }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="overview-section">
+                    <h3><i class="fas fa-chart-line"></i> Activity</h3>
+                    <div class="activity-stats">
+                        <div class="activity-item">
+                            <span class="activity-number">{{ user_recipes.count }}</span>
+                            <span class="activity-label">Total Recipes</span>
+                        </div>
+                        <div class="activity-item">
+                            <span class="activity-number">0</span>
+                            <span class="activity-label">Total Likes</span>
+                        </div>
+                        <div class="activity-item">
+                            <span class="activity-number">0</span>
+                            <span class="activity-label">Comments</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Recipes -->
+            {% if user_recipes %}
+            <div class="recent-recipes-section">
+                <h3><i class="fas fa-clock"></i> Recent Recipes</h3>
+                <div class="recipes-grid">
+                    {% for recipe in user_recipes|slice:":6" %}
+                    <div class="recipe-card">
+                        <a href="{% url 'recipes:recipe_detail' recipe.slug %}">
+                            <div class="recipe-image-wrapper">
+                                {% if recipe.image %}
+                                    <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                    <div class="recipe-placeholder" style="display: none;">
+                                        <i class="fas fa-utensils"></i>
+                                    </div>
+                                {% else %}
+                                    <div class="recipe-placeholder">
+                                        <i class="fas fa-utensils"></i>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="recipe-info">
+                                <h4>{{ recipe.title }}</h4>
+                                <p>{{ recipe.description|truncatewords:15 }}</p>
+                                <div class="recipe-meta">
+                                    <span><i class="fas fa-clock"></i> {{ recipe.prep_time }} min</span>
+                                    <span><i class="fas fa-signal"></i> {{ recipe.get_difficulty_display }}</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- My Recipes Tab -->
+        <div class="tab-pane" id="recipes">
+            <div class="recipes-header">
+                <h3>My Recipes</h3>
+                {% if is_own_profile %}
+                <a href="{% url 'recipes:add_recipe' %}" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Add New Recipe
+                </a>
+                {% endif %}
+            </div>
+            
+            {% if user_recipes %}
+            <div class="recipes-grid">
+                {% for recipe in user_recipes %}
+                <div class="recipe-card">
+                    <a href="{% url 'recipes:recipe_detail' recipe.slug %}">
+                        <div class="recipe-image-wrapper">
+                            {% if recipe.image %}
+                                <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <div class="recipe-placeholder" style="display: none;">
+                                    <i class="fas fa-utensils"></i>
+                                </div>
+                            {% else %}
+                                <div class="recipe-placeholder">
+                                    <i class="fas fa-utensils"></i>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="recipe-info">
+                            <h4>{{ recipe.title }}</h4>
+                            <p>{{ recipe.description|truncatewords:15 }}</p>
+                            <div class="recipe-meta">
+                                <span><i class="fas fa-clock"></i> {{ recipe.prep_time }} min</span>
+                                <span><i class="fas fa-signal"></i> {{ recipe.get_difficulty_display }}</span>
+                            </div>
+                            {% if is_own_profile %}
+                            <div class="recipe-actions">
+                                <a href="{% url 'recipes:edit_recipe' recipe.slug %}" class="btn-edit">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="empty-state">
+                <i class="fas fa-utensils"></i>
+                <h3>No recipes yet</h3>
+                <p>{% if is_own_profile %}Start sharing your culinary creations!{% else %}This user hasn't shared any recipes yet.{% endif %}</p>
+                {% if is_own_profile %}
+                <a href="{% url 'recipes:add_recipe' %}" class="btn btn-primary">Add Your First Recipe</a>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Saved Recipes Tab -->
+        <div class="tab-pane" id="saved">
+            <h3>Saved Recipes</h3>
+            {% if saved_recipes %}
+            <div class="recipes-grid">
+                {% for recipe in saved_recipes %}
+                <div class="recipe-card">
+                    <a href="{% url 'recipes:recipe_detail' recipe.slug %}">
+                        <div class="recipe-image-wrapper">
+                            {% if recipe.image %}
+                                <img src="{{ recipe.image.url }}" alt="{{ recipe.title }}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <div class="recipe-placeholder" style="display: none;">
+                                    <i class="fas fa-utensils"></i>
+                                </div>
+                            {% else %}
+                                <div class="recipe-placeholder">
+                                    <i class="fas fa-utensils"></i>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="recipe-info">
+                            <h4>{{ recipe.title }}</h4>
+                            <p>{{ recipe.description|truncatewords:15 }}</p>
+                            <div class="recipe-meta">
+                                <span><i class="fas fa-clock"></i> {{ recipe.prep_time }} min</span>
+                                <span><i class="fas fa-signal"></i> {{ recipe.get_difficulty_display }}</span>
+                            </div>
+                            <div class="recipe-author">
+                                <small>by {{ recipe.author.username }}</small>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="empty-state">
+                <i class="fas fa-bookmark"></i>
+                <h3>No saved recipes</h3>
+                <p>{% if is_own_profile %}Bookmark recipes you love to find them easily later!{% else %}This user hasn't saved any recipes yet.{% endif %}</p>
+                {% if is_own_profile %}
+                <a href="{% url 'recipes:recipe_list' %}" class="btn btn-primary">Browse Recipes</a>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Settings Tab -->
+        {% if is_own_profile %}
+        <div class="tab-pane" id="settings">
+            <div class="settings-container">
+                <!-- Edit Profile Section -->
+                <div class="settings-section">
+                    <h3><i class="fas fa-user-edit"></i> Edit Profile</h3>
+                    <form method="post" action="{% url 'userprofile:edit_profile' %}" enctype="multipart/form-data" class="profile-form">
+                        {% csrf_token %}
+                        
+                        <div class="form-group">
+                            <label>Profile Picture</label>
+                            <div class="image-upload-wrapper">
+                                <div class="current-profile-image">
+                                    {% if profile.profile_image %}
+                                        <img src="{{ profile.profile_image.url }}" alt="Current profile" id="current-image-preview">
+                                    {% else %}
+                                        <div class="no-image-placeholder" id="current-image-preview">
+                                            <i class="fas fa-user"></i>
+                                            <p>No profile picture</p>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <input type="file" name="profile_image" id="profile_image" accept="image/*">
+                                <label for="profile_image" class="upload-label">
+                                    <i class="fas fa-camera"></i> Choose New Image
+                                </label>
+                                <div id="image-preview-container" style="display: none;">
+                                    <img id="image-preview" src="" alt="Preview">
+                                    <button type="button" id="remove-preview" class="btn-remove-preview">
+                                        <i class="fas fa-times"></i> Remove
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>First Name</label>
+                                <input type="text" name="first_name" value="{{ user.first_name }}" class="form-input">
+                            </div>
+                            <div class="form-group">
+                                <label>Last Name</label>
+                                <input type="text" name="last_name" value="{{ user.last_name }}" class="form-input">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" name="email" value="{{ user.email }}" class="form-input" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Bio</label>
+                            <textarea name="bio" class="form-textarea" rows="4" placeholder="Tell us about yourself...">{{ profile.bio }}</textarea>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Location</label>
+                                <input type="text" name="location" value="{{ profile.location }}" class="form-input" placeholder="City, Country">
+                            </div>
+                            <div class="form-group">
+                                <label>Phone</label>
+                                <input type="tel" name="phone" value="{{ profile.phone }}" class="form-input" placeholder="+1234567890">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Website</label>
+                            <input type="url" name="website" value="{{ profile.website }}" class="form-input" placeholder="https://yourwebsite.com">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Save Changes
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Change Password Section -->
+                <div class="settings-section">
+                    <h3><i class="fas fa-lock"></i> Change Password</h3>
+                    <form method="post" action="{% url 'userprofile:change_password' %}" class="password-form">
+                        {% csrf_token %}
+                        
+                        <div class="form-group">
+                            <label>Current Password</label>
+                            <input type="password" name="current_password" class="form-input" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>New Password</label>
+                            <input type="password" name="new_password" class="form-input" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Confirm New Password</label>
+                            <input type="password" name="confirm_password" class="form-input" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-key"></i> Change Password
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<script>
+// Tab switching functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabPanes = document.querySelectorAll('.tab-pane');
+
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const tabName = this.dataset.tab;
+            
+            // Remove active class from all tabs and panes
+            tabBtns.forEach(b => b.classList.remove('active'));
+            tabPanes.forEach(p => p.classList.remove('active'));
+            
+            // Add active class to clicked tab and corresponding pane
+            this.classList.add('active');
+            document.getElementById(tabName).classList.add('active');
+        });
+    });
+    
+    // Close alert messages
+    document.querySelectorAll('.close-alert').forEach(btn => {
+        btn.addEventListener('click', function() {
+            this.parentElement.style.display = 'none';
+        });
+    });
+    
+    // Auto-hide success messages after 5 seconds
+    setTimeout(() => {
+        document.querySelectorAll('.alert-success').forEach(alert => {
+            alert.style.opacity = '0';
+            setTimeout(() => alert.style.display = 'none', 300);
+        });
+    }, 5000);
+    
+    // Profile image preview
+    const profileImageInput = document.getElementById('profile_image');
+    const imagePreviewContainer = document.getElementById('image-preview-container');
+    const imagePreview = document.getElementById('image-preview');
+    const removePreviewBtn = document.getElementById('remove-preview');
+    const currentImagePreview = document.getElementById('current-image-preview');
+    
+    if (profileImageInput) {
+        profileImageInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imagePreview.src = e.target.result;
+                    imagePreviewContainer.style.display = 'block';
+                    if (currentImagePreview) {
+                        currentImagePreview.style.opacity = '0.5';
+                    }
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+        
+        if (removePreviewBtn) {
+            removePreviewBtn.addEventListener('click', function() {
+                profileImageInput.value = '';
+                imagePreviewContainer.style.display = 'none';
+                if (currentImagePreview) {
+                    currentImagePreview.style.opacity = '1';
+                }
+            });
+        }
+    }
+});
+</script>
+{% endblock %}

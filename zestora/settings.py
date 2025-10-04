@@ -35,6 +35,8 @@ CSRF_TRUSTED_ORIGINS = [
     'http://localhost:8000',
     'http://127.0.0.1:1848',
     'http://localhost:1848',
+    'http://127.0.0.1:23304',
+    'http://localhost:23304',
 ]
 
 
@@ -59,6 +61,7 @@ INSTALLED_APPS = [
     'recipes',
     'tips',
     'community',
+    'userprofile',
 
 ]
 

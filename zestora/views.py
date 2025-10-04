@@ -102,12 +102,11 @@ def signup_view(request):
         if email and username and password:
             # Check if username already exists
             if User.objects.filter(username=username).exists():
-                messages.error(request, 'Username already exists. Please choose a different one.')
+                messages.error(request, f'Username "{username}" already exists. Please choose a different one.')
                 return render(request, 'signup.html', {'active_page': 'signup'})
-            
             # Check if email already exists
             if User.objects.filter(email=email).exists():
-                messages.error(request, 'Email already exists. Please use a different email.')
+                messages.error(request, f'Email "{email}" already exists. Please use a different email.')
                 return render(request, 'signup.html', {'active_page': 'signup'})
             
             try:
@@ -118,13 +117,13 @@ def signup_view(request):
                     password=password
                 )
                 
-                # Log the user in automatically
-                login(request, user)
+                # Log the user in automatically with the correct backend
+                login(request, user, backend='django.contrib.auth.backends.ModelBackend')
                 messages.success(request, f'Welcome to Zestora, {username}! Your account has been created successfully.')
                 return redirect('home')
-                
             except Exception as e:
                 # More specific error messages based on the exception
+                print(f"Signup error: {str(e)}")  # Log the actual error
                 error_message = str(e).lower()
                 if 'password' in error_message:
                     messages.error(request, 'Password does not meet security requirements. Please choose a stronger password.')
@@ -133,7 +132,7 @@ def signup_view(request):
                 elif 'email' in error_message:
                     messages.error(request, 'Invalid email format. Please check your email address.')
                 else:
-                    messages.error(request, 'An error occurred while creating your account. Please try again.')
+                    messages.error(request, f'An error occurred while creating your account: {str(e)}')
         else:
             messages.error(request, 'Please fill in all required fields.')
     

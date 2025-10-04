@@ -1,136 +1,694 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Guidebooks - Zestora{% endblock %}
 
 {% block content %}
-<section class="section">
-    <div class="page-header">
-        <h1>Culinary Guidebooks</h1>
-        <p class="page-subtitle">Master the fundamentals with our comprehensive cooking guides</p>
-    </div>
-
-    <div class="guidebooks-grid">
-        <div class="guidebook-card">
-            <img src="https://images.unsplash.com/photo-1556909114-4ae4e2e8c900?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Knife Skills Guide">
-            <div class="guidebook-content">
-                <h3>Essential Knife Skills</h3>
-                <p>Master the fundamental knife techniques every home cook should know.</p>
-                <span class="coming-soon">Coming Soon</span>
-            </div>
-        </div>
-
-        <div class="guidebook-card">
-            <img src="https://images.unsplash.com/photo-1571997478779-2adcbbe9ab2f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Sauce Making Guide">
-            <div class="guidebook-content">
-                <h3>Classic Sauces Mastery</h3>
-                <p>Learn to create the five mother sauces and their variations.</p>
-                <span class="coming-soon">Coming Soon</span>
-            </div>
-        </div>
-
-        <div class="guidebook-card">
-            <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Baking Fundamentals">
-            <div class="guidebook-content">
-                <h3>Baking Fundamentals</h3>
-                <p>Understand the science behind perfect baking and pastry.</p>
-                <span class="coming-soon">Coming Soon</span>
-            </div>
-        </div>
-
-        <div class="guidebook-card">
-            <img src="https://images.unsplash.com/photo-1556908114-4be3b1032d4c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Flavor Pairing">
-            <div class="guidebook-content">
-                <h3>Flavor Pairing Guide</h3>
-                <p>Discover which ingredients work together to create amazing dishes.</p>
-                <span class="coming-soon">Coming Soon</span>
+<div class="guidebooks-container">
+    <div class="hero-section">
+        <div class="hero-text-wrapper">
+            <div class="headline-1">Legendary Chefs & Their Signature Recipes</div>
+            <div class="paragraph-1-wrapper">
+                <div class="paragraph-1">Discover the culinary masterpieces of the world's greatest chefs. Learn their signature recipes, techniques, and the stories behind their iconic dishes.</div>
             </div>
         </div>
     </div>
-
-    <div class="newsletter-cta">
-        <h2>Stay Updated</h2>
-        <p>Be the first to know when our comprehensive guidebooks are released!</p>
-        <a href="{% url 'home' %}#newsletter" class="btn btn-primary">Subscribe to Newsletter</a>
+    <!-- Gordon Ramsay Section -->
+    <div class="chef-section">
+        <div class="chef-profile">
+            <div class="chef-image-container">
+                <img class="chef-image" src="{% static 'images/chefs/gordon-ramsay.jpg' %}" alt="Gordon Ramsay" onerror="this.src='https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=500&q=80'">
+            </div>
+            <div class="chef-details">
+                <h2 class="chef-name">Gordon Ramsay</h2>
+                <p class="chef-country">🇬🇧 United Kingdom</p>
+                <p class="chef-bio">A culinary titan whose precision and passion turn every dish into a masterpiece. With 17 Michelin stars throughout his career, Gordon Ramsay is known for his fiery personality and exceptional culinary skills.</p>
+                <div class="chef-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">7</span>
+                        <span class="stat-label">Michelin Stars</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">35+</span>
+                        <span class="stat-label">Restaurants</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">20+</span>
+                        <span class="stat-label">Cookbooks</span>
+                    </div>
+                </div>
+                <div class="chef-books">
+                    <h4 class="books-title">Free Cookbooks</h4>
+                    <ul class="books-list">
+                        <li><a href="https://www.gutenberg.org/ebooks/10136" target="_blank" rel="noopener">Mrs Beeton's Book of Household Management (Public Domain, PDF/HTML)</a></li>
+                        <li><a href="https://archive.org/details/epicureancomplet00ranhrich" target="_blank" rel="noopener">The Epicurean by Charles Ranhofer (Archive.org PDF)</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="chef-recipes">
+            <h3 class="recipes-title">Signature Recipes</h3>
+            <div class="recipe-cards-grid">
+                <div class="recipe-card-modern" data-recipe-id="beef-wellington">
+                    <img class="recipe-img" src="{% static 'images/recipes/beef-wellington.jpg' %}" alt="Beef Wellington" onerror="this.src='https://images.unsplash.com/photo-1588168333986-5078d3ae3976?auto=format&fit=crop&w=500&q=80'">
+                    <div class="recipe-content">
+                        <h4 class="recipe-title">Beef Wellington</h4>
+                        <p class="recipe-desc">Tender beef fillet coated with mushroom duxelles, wrapped in puff pastry.</p>
+                        <div class="recipe-meta">
+                            <span class="recipe-time">⏱ 2 hrs</span>
+                            <span class="recipe-difficulty">🔥 Advanced</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="recipe-card-modern" data-recipe-id="sticky-toffee-pudding">
+                    <img class="recipe-img" src="{% static 'images/recipes/sticky-toffee-pudding.jpg' %}" alt="Sticky Toffee Pudding" onerror="this.src='https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=500&q=80'">
+                    <div class="recipe-content">
+                        <h4 class="recipe-title">Sticky Toffee Pudding</h4>
+                        <p class="recipe-desc">A timeless British dessert with rich toffee sauce and moist sponge cake.</p>
+                        <div class="recipe-meta">
+                            <span class="recipe-time">⏱ 45 min</span>
+                            <span class="recipe-difficulty">🔥 Medium</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="recipe-card-modern" data-recipe-id="pan-seared-scallops">
+                    <img class="recipe-img" src="{% static 'images/recipes/pan-seared-scallops.jpg' %}" alt="Pan-Seared Scallops" onerror="this.src='https://images.unsplash.com/photo-1559847844-5315695dadae?auto=format&fit=crop&w=500&q=80'">
+                    <div class="recipe-content">
+                        <h4 class="recipe-title">Pan-Seared Scallops</h4>
+                        <p class="recipe-desc">Perfectly seared scallops with cauliflower puree and crispy pancetta.</p>
+                        <div class="recipe-meta">
+                            <span class="recipe-time">⏱ 30 min</span>
+                            <span class="recipe-difficulty">🔥 Medium</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</section>
+
+    <!-- Jamie Oliver Section -->
+    <div class="chef-section chef-section-alt">
+        <div class="chef-profile">
+            <div class="chef-image-container">
+                <img class="chef-image" src="{% static 'images/chefs/jamie-oliver.jpg' %}" alt="Jamie Oliver" onerror="this.src='https://images.unsplash.com/photo-1556911220-bff31c812dba?auto=format&fit=crop&w=500&q=80'">
+            </div>
+            <div class="chef-details">
+                <h2 class="chef-name">Jamie Oliver</h2>
+                <p class="chef-country">🇬🇧 United Kingdom</p>
+                <p class="chef-bio">An innovator who turns simple ingredients into wholesome, unforgettable dishes. Jamie is renowned for his approachable cooking style and campaigns for healthier eating.</p>
+                <div class="chef-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">25+</span>
+                        <span class="stat-label">Cookbooks</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">50+</span>
+                        <span class="stat-label">Restaurants</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">100M+</span>
+                        <span class="stat-label">Books Sold</span>
+                    </div>
+                </div>
+                <div class="chef-books">
+                    <h4 class="books-title">Free Cookbooks</h4>
+                    <ul class="books-list">
+                        <li><a href="https://www.gutenberg.org/ebooks/11209" target="_blank" rel="noopener">The Book of Household Management (Selections) – Public Domain</a></li>
+                        <li><a href="https://archive.org/details/oxfordcompaniont00davi" target="_blank" rel="noopener">Oxford Companion to Food (Borrow/Preview)</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="chef-recipes">
+            <h3 class="recipes-title">Signature Recipes</h3>
+            <div class="recipe-cards-grid">
+                <div class="recipe-card-modern" data-recipe-id="chicken-tikka-masala">
+                    <img class="recipe-img" src="{% static 'images/recipes/chicken-tikka-masala.jpg' %}" alt="Chicken Tikka Masala" onerror="this.src='https://images.unsplash.com/photo-1565557623262-b51c2513a641?auto=format&fit=crop&w=500&q=80'">
+                    <div class="recipe-content">
+                        <h4 class="recipe-title">Chicken Tikka Masala</h4>
+                        <p class="recipe-desc">Tender chicken in a creamy, spiced tomato sauce with aromatic herbs.</p>
+                        <div class="recipe-meta">
+                            <span class="recipe-time">⏱ 1 hr</span>
+                            <span class="recipe-difficulty">🔥 Easy</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="recipe-card-modern" data-recipe-id="pasta-carbonara">
+                    <img class="recipe-img" src="{% static 'images/recipes/pasta-carbonara.jpg' %}" alt="Pasta Carbonara" onerror="this.src='https://images.unsplash.com/photo-1612874742237-6526221588e3?auto=format&fit=crop&w=500&q=80'">
+                    <div class="recipe-content">
+                        <h4 class="recipe-title">Pasta Carbonara</h4>
+                        <p class="recipe-desc">Classic Italian pasta with crispy pancetta, eggs, and Parmesan cheese.</p>
+                        <div class="recipe-meta">
+                            <span class="recipe-time">⏱ 20 min</span>
+                            <span class="recipe-difficulty">🔥 Easy</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="recipe-card-modern" data-recipe-id="lemon-drizzle-cake">
+                    <img class="recipe-img" src="{% static 'images/recipes/lemon-drizzle-cake.jpg' %}" alt="Lemon Drizzle Cake" onerror="this.src='https://images.unsplash.com/photo-1519915212116-7cfef71f1d3e?auto=format&fit=crop&w=500&q=80'">
+                    <div class="recipe-content">
+                        <h4 class="recipe-title">Lemon Drizzle Cake</h4>
+                        <p class="recipe-desc">Moist lemon sponge cake with a sweet and tangy lemon glaze.</p>
+                        <div class="recipe-meta">
+                            <span class="recipe-time">⏱ 50 min</span>
+                            <span class="recipe-difficulty">🔥 Easy</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Thomas Keller Section -->
+    <div class="chef-section">
+        <div class="chef-profile">
+            <div class="chef-image-container">
+                <img class="chef-image" src="{% static 'images/chefs/thomas-keller.jpg' %}" alt="Thomas Keller" onerror="this.src='https://images.unsplash.com/photo-1620921209977-692356c5a164?auto=format&fit=crop&w=500&q=80'">
+            </div>
+            <div class="chef-details">
+                <h2 class="chef-name">Thomas Keller</h2>
+                <p class="chef-country">🇺🇸 United States</p>
+                <p class="chef-bio">His meticulous techniques and exquisite flavors set the standard for perfection. Thomas Keller is the only American chef to hold multiple three-star Michelin ratings.</p>
+                <div class="chef-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">7</span>
+                        <span class="stat-label">Michelin Stars</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">5</span>
+                        <span class="stat-label">Restaurants</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">10+</span>
+                        <span class="stat-label">Cookbooks</span>
+                    </div>
+                </div>
+                <div class="chef-books">
+                    <h4 class="books-title">Free Cookbooks</h4>
+                    <ul class="books-list">
+                        <li><a href="https://archive.org/details/epicureancomplet00ranhrich" target="_blank" rel="noopener">The Epicurean (1894) – PDF</a></li>
+                        <li><a href="https://archive.org/details/whitehousecookbo00gilm" target="_blank" rel="noopener">The White House Cook Book (1913) – PDF</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="chef-recipes">
+            <h3 class="recipes-title">Signature Recipes</h3>
+            <div class="recipe-cards-grid">
+                <div class="recipe-card-modern" data-recipe-id="oysters-and-pearls">
+                    <img class="recipe-img" src="{% static 'images/recipes/oysters-pearls.jpg' %}" alt="Oysters and Pearls" onerror="this.src='https://images.unsplash.com/photo-1626200419199-391ae4be7a41?auto=format&fit=crop&w=500&q=80'">
+                    <div class="recipe-content">
+                        <h4 class="recipe-title">Oysters and Pearls</h4>
+                        <p class="recipe-desc">Sabayon of pearl tapioca with oysters and white sturgeon caviar.</p>
+                        <div class="recipe-meta">
+                            <span class="recipe-time">⏱ 1.5 hrs</span>
+                            <span class="recipe-difficulty">🔥 Advanced</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="recipe-card-modern" data-recipe-id="french-onion-soup">
+                    <img class="recipe-img" src="{% static 'images/recipes/french-onion-soup.jpg' %}" alt="French Onion Soup" onerror="this.src='https://images.unsplash.com/photo-1505253758473-96b7015fcd40?auto=format&fit=crop&w=500&q=80'">
+                    <div class="recipe-content">
+                        <h4 class="recipe-title">French Onion Soup</h4>
+                        <p class="recipe-desc">Sweet, slow-cooked onions in rich broth with Gruyère cheese crust.</p>
+                        <div class="recipe-meta">
+                            <span class="recipe-time">⏱ 2 hrs</span>
+                            <span class="recipe-difficulty">🔥 Medium</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="recipe-card-modern" data-recipe-id="perfect-roasted-chicken">
+                    <img class="recipe-img" src="{% static 'images/recipes/roasted-chicken.jpg' %}" alt="Roasted Chicken" onerror="this.src='https://images.unsplash.com/photo-1598103442097-8b74394b95c6?auto=format&fit=crop&w=500&q=80'">
+                    <div class="recipe-content">
+                        <h4 class="recipe-title">Perfect Roasted Chicken</h4>
+                        <p class="recipe-desc">Simply seasoned, perfectly roasted chicken with crispy golden skin.</p>
+                        <div class="recipe-meta">
+                            <span class="recipe-time">⏱ 1.5 hrs</span>
+                            <span class="recipe-difficulty">🔥 Medium</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Massimo Bottura Section -->
+    <div class="chef-section chef-section-alt">
+        <div class="chef-profile">
+            <div class="chef-image-container">
+                <img class="chef-image" src="{% static 'images/chefs/massimo-bottura.jpg' %}" alt="Massimo Bottura" onerror="this.src='https://images.unsplash.com/photo-1583394293214-28ded15ee548?auto=format&fit=crop&w=500&q=80'">
+            </div>
+            <div class="chef-details">
+                <h2 class="chef-name">Massimo Bottura</h2>
+                <p class="chef-country">🇮🇹 Italy</p>
+                <p class="chef-bio">A visionary who reimagines Italian classics with contemporary artistry. His restaurant Osteria Francescana has been named World's Best Restaurant multiple times.</p>
+                <div class="chef-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">3</span>
+                        <span class="stat-label">Michelin Stars</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">#1</span>
+                        <span class="stat-label">World's Best</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">5</span>
+                        <span class="stat-label">Cookbooks</span>
+                    </div>
+                </div>
+                <div class="chef-books">
+                    <h4 class="books-title">Free Cookbooks</h4>
+                    <ul class="books-list">
+                        <li><a href="https://www.gutenberg.org/ebooks/8151" target="_blank" rel="noopener">Science in the Kitchen and the Art of Eating Well (Artusi) – PDF/HTML</a></li>
+                        <li><a href="https://archive.org/details/cu31924000610117" target="_blank" rel="noopener">The Italian Cook Book (Ada Boni, 1921) – PDF</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="chef-recipes">
+            <h3 class="recipes-title">Signature Recipes</h3>
+            <div class="recipe-cards-grid">
+                <div class="recipe-card-modern" data-recipe-id="tortellini-in-brodo">
+                    <img class="recipe-img" src="{% static 'images/recipes/tortellini-brodo.jpg' %}" alt="Tortellini in Brodo" onerror="this.src='https://images.unsplash.com/photo-1560717845-3c138b78332f?auto=format&fit=crop&w=500&q=80'">
+                    <div class="recipe-content">
+                        <h4 class="recipe-title">Tortellini in Brodo</h4>
+                        <p class="recipe-desc">Traditional filled pasta swimming in a rich, comforting Parmigiano broth.</p>
+                        <div class="recipe-meta">
+                            <span class="recipe-time">⏱ 2 hrs</span>
+                            <span class="recipe-difficulty">🔥 Advanced</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="recipe-card-modern" data-recipe-id="risotto-cacio-e-pepe">
+                    <img class="recipe-img" src="{% static 'images/recipes/risotto-parmesan.jpg' %}" alt="Risotto Cacio e Pepe" onerror="this.src='https://images.unsplash.com/photo-1476124369491-f51a92c0b4dc?auto=format&fit=crop&w=500&q=80'">
+                    <div class="recipe-content">
+                        <h4 class="recipe-title">Risotto Cacio e Pepe</h4>
+                        <p class="recipe-desc">Creamy risotto with Pecorino Romano cheese and black pepper.</p>
+                        <div class="recipe-meta">
+                            <span class="recipe-time">⏱ 40 min</span>
+                            <span class="recipe-difficulty">🔥 Medium</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="recipe-card-modern" data-recipe-id="deconstructed-tiramisu">
+                    <img class="recipe-img" src="{% static 'images/recipes/tiramisu.jpg' %}" alt="Deconstructed Tiramisu" onerror="this.src='https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?auto=format&fit=crop&w=500&q=80'">
+                    <div class="recipe-content">
+                        <h4 class="recipe-title">Deconstructed Tiramisu</h4>
+                        <p class="recipe-desc">A modern take on the classic Italian dessert with artistic presentation.</p>
+                        <div class="recipe-meta">
+                            <span class="recipe-time">⏱ 1 hr</span>
+                            <span class="recipe-difficulty">🔥 Advanced</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <style>
-.page-header {
-    text-align: center;
-    margin-bottom: 3rem;
-}
+    .guidebooks-container {
+        width: 100%;
+        background-color: #f0ebe1;
+        padding: 0;
+        font-family: 'Montserrat', sans-serif;
+        color: #262522;
+        min-height: 100vh;
+    }
 
-.page-subtitle {
-    font-size: 1.2rem;
-    color: #666;
-    margin-top: 1rem;
-}
+    /* Hero Section */
+    .hero-section {
+        text-align: center;
+        padding: 5rem 2rem;
+        background: linear-gradient(135deg, #ee6352 0%, #e85d4a 100%);
+        color: #fffbf2;
+    }
+    .hero-text-wrapper {
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+    .headline-1 {
+        font-size: clamp(2.5rem, 5vw, 4rem);
+        font-weight: 800;
+        text-transform: uppercase;
+        line-height: 1.1;
+        margin-bottom: 1.5rem;
+        letter-spacing: -0.02em;
+    }
+    .paragraph-1 {
+        font-size: 1.25rem;
+        line-height: 1.6;
+        max-width: 700px;
+        margin: 0 auto;
+        opacity: 0.95;
+    }
 
-.guidebooks-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-bottom: 4rem;
-}
+    /* Chef Section */
+    .chef-section {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 5rem 2rem;
+        background-color: #fffbf2;
+    }
+    .chef-section-alt {
+        background-color: #f0ebe1;
+    }
 
-.guidebook-card {
-    background: white;
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-}
+    /* Chef Profile */
+    .chef-profile {
+        display: flex;
+        gap: 3rem;
+        margin-bottom: 4rem;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+    .chef-image-container {
+        flex: 0 0 300px;
+    }
+    .chef-image {
+        width: 300px;
+        height: 300px;
+        border-radius: 24px;
+        object-fit: cover;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    }
+    .chef-details {
+        flex: 1;
+        min-width: 300px;
+    }
+    .chef-name {
+        font-size: 3rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+        color: #262522;
+    }
+    .chef-country {
+        font-size: 1.25rem;
+        color: #ee6352;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+    }
+    .chef-bio {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: rgba(38, 37, 34, 0.8);
+        margin-bottom: 2rem;
+        font-family: 'Roboto', sans-serif;
+    }
+    .chef-stats {
+        display: flex;
+        gap: 3rem;
+        flex-wrap: wrap;
+    }
+    .stat-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: #ee6352;
+        line-height: 1;
+    }
+    .stat-label {
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        color: rgba(38, 37, 34, 0.6);
+        margin-top: 0.5rem;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+    }
 
-.guidebook-card:hover {
-    transform: translateY(-5px);
-}
+    /* Chef Recipes */
+    .chef-recipes {
+        margin-top: 3rem;
+    }
+    .recipes-title {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 2rem;
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+    .recipe-cards-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 2rem;
+    }
+    .recipe-card-modern {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+    }
+    .recipe-card-modern:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    }
+    .recipe-img {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+    }
+    .recipe-content {
+        padding: 1.5rem;
+    }
+    .recipe-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 0.75rem;
+        color: #262522;
+    }
+    .recipe-desc {
+        font-size: 1rem;
+        line-height: 1.6;
+        color: rgba(38, 37, 34, 0.7);
+        margin-bottom: 1.25rem;
+        font-family: 'Roboto', sans-serif;
+    }
+    .recipe-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(38, 37, 34, 0.1);
+    }
+    .recipe-time, .recipe-difficulty {
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: rgba(38, 37, 34, 0.7);
+    }
 
-.guidebook-card img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-}
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .hero-section {
+            padding: 3rem 1.5rem;
+        }
+        .chef-section {
+            padding: 3rem 1.5rem;
+        }
+        .chef-profile {
+            flex-direction: column;
+            text-align: center;
+        }
+        .chef-image-container {
+            flex: 0 0 auto;
+        }
+        .chef-image {
+            width: 250px;
+            height: 250px;
+        }
+        .chef-name {
+            font-size: 2.5rem;
+        }
+        .chef-stats {
+            justify-content: center;
+        }
+        .recipe-cards-grid {
+            grid-template-columns: 1fr;
+        }
+    }
 
-.guidebook-content {
-    padding: 1.5rem;
-}
+    /* Added: Books and modal styles */
+    .chef-books { margin-top: 1.25rem; }
+    .books-title { font-size: 1rem; text-transform: uppercase; letter-spacing: .06em; color: #ee6352; margin-bottom: .5rem; }
+    .books-list { padding-left: 1rem; margin: 0; }
+    .books-list li { margin: .25rem 0; }
+    .books-list a { color: #1f2937; text-decoration: underline; }
 
-.guidebook-content h3 {
-    color: #333;
-    margin-bottom: 0.5rem;
-    font-size: 1.3rem;
-}
-
-.guidebook-content p {
-    color: #666;
-    line-height: 1.6;
-    margin-bottom: 1rem;
-}
-
-.coming-soon {
-    background: #e85a4f;
-    color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    font-weight: 500;
-}
-
-.newsletter-cta {
-    text-align: center;
-    background: #f5f5f5;
-    padding: 3rem;
-    border-radius: 15px;
-}
-
-.newsletter-cta h2 {
-    color: #333;
-    margin-bottom: 1rem;
-}
-
-.newsletter-cta p {
-    color: #666;
-    margin-bottom: 2rem;
-}
+    .recipe-modal-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.5); display: none; align-items: center; justify-content: center; z-index: 1000; }
+    .recipe-modal { width: min(900px, 92vw); max-height: 90vh; overflow: auto; background: #fffbf2; border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,.25); }
+    .recipe-modal header { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid rgba(38,37,34,.1); }
+    .recipe-modal .modal-body { display: grid; grid-template-columns: 320px 1fr; gap: 20px; padding: 20px; }
+    .recipe-modal .modal-body img { width: 100%; border-radius: 12px; object-fit: cover; }
+    .modal-section { margin-bottom: 14px; }
+    .modal-section h5 { margin: 0 0 6px; font-size: 1rem; text-transform: uppercase; letter-spacing: .06em; color: #6b7280; }
+    .modal-meta { display: flex; gap: 10px; font-size: .95rem; color: #6b7280; }
+    .modal-close { background: transparent; border: none; font-size: 22px; cursor: pointer; }
+    @media (max-width: 720px) { .recipe-modal .modal-body { grid-template-columns: 1fr; } }
 </style>
+
+<!-- Modals Container -->
+<div id="modal-backdrop" class="recipe-modal-backdrop" aria-hidden="true">
+  <div class="recipe-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <header>
+      <h3 id="modal-title" class="recipe-title">Recipe</h3>
+      <button class="modal-close" aria-label="Close" onclick="closeRecipeModal()">✕</button>
+    </header>
+    <div class="modal-body">
+      <img id="modal-image" src="" alt="Recipe image">
+      <div>
+        <div class="modal-meta" id="modal-meta"></div>
+        <div class="modal-section">
+          <h5>Overview</h5>
+          <p id="modal-desc"></p>
+        </div>
+        <div class="modal-section">
+          <h5>Ingredients</h5>
+          <ul id="modal-ingredients"></ul>
+        </div>
+        <div class="modal-section">
+          <h5>Steps</h5>
+          <ol id="modal-steps"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="sr-only" aria-live="polite"></div>
+  <style>.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}</style>
+  <script>
+    const RECIPES = {
+      'beef-wellington': {
+        title: 'Beef Wellington',
+        time: '⏱ 2 hrs', difficulty: '🔥 Advanced',
+        image: "{% static 'images/recipes/beef-wellington.jpg' %}",
+        desc: 'Tender beef fillet with mushroom duxelles, Parma ham and puff pastry.',
+        ingredients: [
+          '1kg beef fillet','400g mushrooms, finely chopped','6-8 slices Parma ham','500g puff pastry','2 egg yolks','2 tbsp English mustard','Salt & pepper'
+        ],
+        steps: [
+          'Season and sear beef on all sides; brush with mustard and cool.',
+          'Cook mushrooms to evaporate moisture and cool.',
+          'Lay Parma ham on cling film, spread duxelles, place beef and roll tight.',
+          'Wrap in pastry, seal and chill 20 min.',
+          'Egg wash and bake at 200°C/390°F for 35-40 min to desired doneness.',
+          'Rest 10 min, slice and serve.'
+        ]
+      },
+      'sticky-toffee-pudding': {
+        title: 'Sticky Toffee Pudding',
+        time: '⏱ 45 min', difficulty: '🔥 Medium',
+        image: "{% static 'images/recipes/sticky-toffee-pudding.jpg' %}",
+        desc: 'Moist date sponge with rich toffee sauce.',
+        ingredients: ['200g dates','200ml boiling water','1 tsp baking soda','175g flour','100g butter','150g brown sugar','2 eggs','Toffee sauce'],
+        steps: ['Soak dates in boiling water; add baking soda.','Cream butter and sugar; beat in eggs.','Fold in flour and dates mixture.','Bake 25-30 min at 180°C/355°F.','Simmer toffee sauce; pour over warm pudding.']
+      },
+      'pan-seared-scallops': {
+        title: 'Pan-Seared Scallops', time: '⏱ 30 min', difficulty: '🔥 Medium',
+        image: "{% static 'images/recipes/pan-seared-scallops.jpg' %}",
+        desc: 'Golden crust scallops with cauliflower purée and pancetta.',
+        ingredients: ['12 dry scallops','2 tbsp butter','Cauliflower purée','Crispy pancetta','Lemon','Salt & pepper'],
+        steps: ['Pat scallops dry; season.','Sear in hot pan with oil/butter 1.5–2 min per side.','Serve over purée with pancetta and lemon.']
+      },
+      'chicken-tikka-masala': {
+        title: 'Chicken Tikka Masala', time: '⏱ 1 hr', difficulty: '🔥 Easy',
+        image: "{% static 'images/recipes/chicken-tikka-masala.jpg' %}",
+        desc: 'Marinated grilled chicken in creamy spiced tomato sauce.',
+        ingredients: ['600g chicken','Yogurt','Garam masala','Ginger-garlic','Tomato purée','Cream','Cilantro'],
+        steps: ['Marinate chicken 30+ min; grill/sear.','Bloom spices; add tomato purée; simmer.','Stir in cream; add chicken; finish with cilantro.']
+      },
+      'pasta-carbonara': {
+        title: 'Pasta Carbonara', time: '⏱ 20 min', difficulty: '🔥 Easy',
+        image: "{% static 'images/recipes/pasta-carbonara.jpg' %}",
+        desc: 'Silky egg-and-cheese sauce with crispy pancetta.',
+        ingredients: ['200g spaghetti','2 eggs + 1 yolk','80g Pecorino/Parmesan','100g pancetta','Pepper','Salt'],
+        steps: ['Cook pasta al dente.','Render pancetta; reserve fat.','Off heat, toss pasta with eggs/cheese and fat to emulsify.','Season with pepper; serve.']
+      },
+      'lemon-drizzle-cake': {
+        title: 'Lemon Drizzle Cake', time: '⏱ 50 min', difficulty: '🔥 Easy',
+        image: "{% static 'images/recipes/lemon-drizzle-cake.jpg' %}",
+        desc: 'Bright lemon loaf with tangy glaze.',
+        ingredients: ['200g flour','200g sugar','200g butter','3 eggs','2 lemons (zest/juice)','1 tsp baking powder','Icing sugar'],
+        steps: ['Cream butter and sugar; beat in eggs and zest.','Fold in dry ingredients.','Bake 40-45 min at 180°C/355°F.','Pierce and pour lemon syrup; glaze when cool.']
+      },
+      'oysters-and-pearls': {
+        title: 'Oysters and Pearls', time: '⏱ 1.5 hrs', difficulty: '🔥 Advanced',
+        image: "{% static 'images/recipes/oysters-pearls.jpg' %}",
+        desc: 'Tapioca sabayon with oysters and caviar.',
+        ingredients: ['Fresh oysters','Small pearl tapioca','Egg yolks','Butter','Caviar','Fish stock','Cream'],
+        steps: ['Cook tapioca in stock.','Whisk sabayon with yolks and butter.','Fold tapioca; warm oysters gently.','Plate with caviar on top.']
+      },
+      'french-onion-soup': {
+        title: 'French Onion Soup', time: '⏱ 2 hrs', difficulty: '🔥 Medium',
+        image: "{% static 'images/recipes/french-onion-soup.jpg' %}",
+        desc: 'Deep caramelized onions with Gruyère gratinée.',
+        ingredients: ['1kg onions','Butter','Beef stock','Thyme','Bay leaf','Baguette','Gruyère'],
+        steps: ['Slowly caramelize onions 45–60 min.','Deglaze; add stock and herbs; simmer.','Top with toasts and cheese; broil to melt.']
+      },
+      'perfect-roasted-chicken': {
+        title: 'Perfect Roasted Chicken', time: '⏱ 1.5 hrs', difficulty: '🔥 Medium',
+        image: "{% static 'images/recipes/roasted-chicken.jpg' %}",
+        desc: 'Crisp skin, juicy meat, simple aromatics.',
+        ingredients: ['Whole chicken','Salt','Pepper','Butter','Lemon','Garlic','Herbs'],
+        steps: ['Dry-brine chicken 6–24h if possible.','Stuff aromatics; truss.','Roast at 220°C/430°F for 20 min, then 190°C/375°F until done.','Rest 10–15 min before carving.']
+      },
+      'tortellini-in-brodo': {
+        title: 'Tortellini in Brodo', time: '⏱ 2 hrs', difficulty: '🔥 Advanced',
+        image: "{% static 'images/recipes/tortellini-brodo.jpg' %}",
+        desc: 'Handmade tortellini served in rich broth.',
+        ingredients: ['Fresh pasta dough','Meat/cheese filling','Parmigiano','Nutmeg','Rich capon/beef broth'],
+        steps: ['Prepare filling and pasta dough.','Shape tortellini.','Simmer in seasoned broth; serve with Parmigiano.']
+      },
+      'risotto-cacio-e-pepe': {
+        title: 'Risotto Cacio e Pepe', time: '⏱ 40 min', difficulty: '🔥 Medium',
+        image: "{% static 'images/recipes/risotto-parmesan.jpg' %}",
+        desc: 'Creamy risotto perfumed with black pepper and cheese.',
+        ingredients: ['Arborio rice','Stock','Butter','Pecorino Romano','Black pepper'],
+        steps: ['Sweat rice in butter.','Ladle stock gradually, stirring.','Emulsify with cheese and pepper off heat.']
+      },
+      'deconstructed-tiramisu': {
+        title: 'Deconstructed Tiramisu', time: '⏱ 1 hr', difficulty: '🔥 Advanced',
+        image: "{% static 'images/recipes/tiramisu.jpg' %}",
+        desc: 'Classic flavors in a modern presentation.',
+        ingredients: ['Mascarpone','Eggs','Sugar','Espresso','Ladyfingers','Cocoa'],
+        steps: ['Make zabaglione; fold with mascarpone.','Soak ladyfingers in espresso.','Plate components artfully; dust cocoa.']
+      }
+    };
+
+    function openRecipeModal(id){
+      const data = RECIPES[id];
+      if(!data) return;
+      document.getElementById('modal-title').textContent = data.title;
+      document.getElementById('modal-image').src = data.image;
+      document.getElementById('modal-desc').textContent = data.desc;
+      document.getElementById('modal-meta').innerHTML = `<span>${data.time}</span><span>${data.difficulty}</span>`;
+      const ing = document.getElementById('modal-ingredients');
+      ing.innerHTML = '';
+      data.ingredients.forEach(i=>{ const li=document.createElement('li'); li.textContent=i; ing.appendChild(li); });
+      const steps = document.getElementById('modal-steps');
+      steps.innerHTML = '';
+      data.steps.forEach(s=>{ const li=document.createElement('li'); li.textContent=s; steps.appendChild(li); });
+      const backdrop = document.getElementById('modal-backdrop');
+      backdrop.style.display = 'flex';
+      backdrop.setAttribute('aria-hidden','false');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeRecipeModal(){
+      const backdrop = document.getElementById('modal-backdrop');
+      backdrop.style.display = 'none';
+      backdrop.setAttribute('aria-hidden','true');
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('click', (e)=>{
+      const card = e.target.closest('.recipe-card-modern');
+      if(card && card.dataset.recipeId){ e.preventDefault(); openRecipeModal(card.dataset.recipeId); }
+      if(e.target.id==='modal-backdrop'){ closeRecipeModal(); }
+    });
+    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape'){ closeRecipeModal(); }});
+  </script>
+</div>
 {% endblock %}
