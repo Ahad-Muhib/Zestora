@@ -8,7 +8,9 @@ cssselect2==0.8.0
 Django==5.2.6
 django-allauth==65.11.2
 fonttools==4.60.1
+gunicorn==23.0.0
 idna==3.10
+packaging==25.0
 pillow==11.3.0
 pycparser==2.23
 pydyf==0.11.0
