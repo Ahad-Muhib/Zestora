@@ -31,7 +31,7 @@ class Recipe(models.Model):
     servings = models.IntegerField()
     difficulty = models.CharField(max_length=10, choices=DIFFICULTY_CHOICES)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='recipes/', blank=True, null=True, help_text="Upload recipe image")
+    image = models.ImageField(upload_to='recipes/', blank=True, null=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     featured = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -68,3 +68,22 @@ class SavedRecipe(models.Model):
     
     def __str__(self):
         return f"{self.user.username} saved {self.recipe.title}"
+
+class Comment(models.Model):
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name='comments')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='recipe_comments')
+    content = models.TextField()
+    parent = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True, related_name='replies')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    is_active = models.BooleanField(default=True)
+    
+    class Meta:
+        ordering = ['-created_at']
+    
+    def __str__(self):
+        return f'Comment by {self.user.username} on {self.recipe.title}'
+    
+    @property
+    def is_reply(self):
+        return self.parent is not None

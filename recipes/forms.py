@@ -1,6 +1,6 @@
 from django import forms
 from django.utils.text import slugify
-from .models import Recipe, Category
+from .models import Recipe, Category, Comment
 
 class RecipeForm(forms.ModelForm):
     class Meta:
@@ -82,3 +82,19 @@ class RecipeForm(forms.ModelForm):
         if commit:
             recipe.save()
         return recipe
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['content']
+        widgets = {
+            'content': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': 'Share your thoughts about this recipe...',
+                'rows': 4
+            })
+        }
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['content'].label = ''  # Remove label for cleaner look

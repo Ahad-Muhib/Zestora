@@ -6,8 +6,8 @@ from django.core.exceptions import PermissionDenied
 from django.template.loader import render_to_string
 from datetime import datetime
 import weasyprint
-from .models import Recipe, Category, SavedRecipe
-from .forms import RecipeForm
+from .models import Recipe, Category, SavedRecipe, Comment
+from .forms import RecipeForm, CommentForm
 
 def recipe_list(request):
     recipes = Recipe.objects.all().order_by('-created_at')
@@ -18,9 +18,38 @@ def recipe_detail(request, slug):
     is_saved = False
     if request.user.is_authenticated:
         is_saved = SavedRecipe.objects.filter(user=request.user, recipe=recipe).exists()
+    
+    # Handle comment submission
+    if request.method == 'POST' and request.user.is_authenticated:
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.recipe = recipe
+            comment.user = request.user
+            
+            # Check if this is a reply to another comment
+            parent_id = request.POST.get('parent_id')
+            if parent_id:
+                try:
+                    parent_comment = Comment.objects.get(id=parent_id, recipe=recipe)
+                    comment.parent = parent_comment
+                except Comment.DoesNotExist:
+                    pass
+            
+            comment.save()
+            messages.success(request, 'Your comment has been added!')
+            return redirect('recipes:recipe_detail', slug=slug)
+    else:
+        comment_form = CommentForm() if request.user.is_authenticated else None
+    
+    # Get comments (only top-level comments, replies are accessed via the replies relationship)
+    comments = Comment.objects.filter(recipe=recipe, parent=None, is_active=True).order_by('-created_at')
+    
     return render(request, 'recipes/recipe_detail.html', {
         'recipe': recipe,
         'is_saved': is_saved,
+        'comments': comments,
+        'comment_form': comment_form,
         'active_page': 'recipes'
     })
 

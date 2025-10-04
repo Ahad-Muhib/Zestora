@@ -113,6 +113,113 @@
             {% endif %}
         </div>
     </div>
+
+    <!-- Comments Section -->
+    <div class="comments-section">
+        <h2>💬 Comments & Discussion</h2>
+        <p class="comments-intro">Share your thoughts, cooking tips, or variations you've tried!</p>
+        
+        <!-- Add Comment Form -->
+        {% if comment_form %}
+        <div class="add-comment-form">
+            <h3>Leave a Comment</h3>
+            <form method="post" class="comment-form">
+                {% csrf_token %}
+                <div class="form-group">
+                    {{ comment_form.content }}
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-comment"></i> Post Comment
+                </button>
+            </form>
+        </div>
+        {% elif not user.is_authenticated %}
+        <div class="login-prompt">
+            <p><a href="{% url 'login' %}" class="login-link">Login</a> to join the discussion and share your thoughts!</p>
+        </div>
+        {% endif %}
+
+        <!-- Comments List -->
+        <div class="comments-list">
+            {% if comments %}
+                <h3>{{ comments.count }} Comment{{ comments.count|pluralize }}</h3>
+                {% for comment in comments %}
+                <div class="comment" id="comment-{{ comment.id }}">
+                    <div class="comment-header">
+                        <div class="comment-author">
+                            <div class="author-avatar-small">👤</div>
+                            <div class="author-info-small">
+                                <strong>{{ comment.user.get_full_name|default:comment.user.username }}</strong>
+                                <span class="comment-date">{{ comment.created_at|date:"M d, Y g:i A" }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comment-content">
+                        {{ comment.content|linebreaks }}
+                    </div>
+                    
+                    <!-- Reply Button -->
+                    {% if user.is_authenticated %}
+                    <div class="comment-actions">
+                        <button class="reply-btn" onclick="toggleReplyForm({{ comment.id }})">
+                            <i class="fas fa-reply"></i> Reply
+                        </button>
+                        {% if comment.user == user %}
+                        <span class="comment-author-badge">Author</span>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- Reply Form -->
+                    <div class="reply-form" id="reply-form-{{ comment.id }}" style="display: none;">
+                        <form method="post" class="comment-form">
+                            {% csrf_token %}
+                            <input type="hidden" name="parent_id" value="{{ comment.id }}">
+                            <div class="form-group">
+                                <textarea name="content" class="form-control" rows="3" placeholder="Write a reply..." required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-sm btn-primary">
+                                <i class="fas fa-reply"></i> Reply
+                            </button>
+                            <button type="button" class="btn btn-sm btn-secondary" onclick="toggleReplyForm({{ comment.id }})">
+                                Cancel
+                            </button>
+                        </form>
+                    </div>
+                    {% endif %}
+
+                    <!-- Replies -->
+                    {% if comment.replies.all %}
+                    <div class="replies">
+                        {% for reply in comment.replies.all %}
+                        <div class="comment reply" id="comment-{{ reply.id }}">
+                            <div class="comment-header">
+                                <div class="comment-author">
+                                    <div class="author-avatar-small">👤</div>
+                                    <div class="author-info-small">
+                                        <strong>{{ reply.user.get_full_name|default:reply.user.username }}</strong>
+                                        <span class="comment-date">{{ reply.created_at|date:"M d, Y g:i A" }}</span>
+                                        {% if reply.user == recipe.author %}
+                                        <span class="recipe-author-badge">Recipe Author</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comment-content">
+                                {{ reply.content|linebreaks }}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="no-comments">
+                    <p>No comments yet. Be the first to share your thoughts!</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
 </div>
 
 <style>
@@ -441,6 +548,243 @@
     border-color: #ff6b5a;
 }
 
+/* Comments Section */
+.comments-section {
+    margin-top: 50px;
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+.comments-section h2 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.comments-intro {
+    color: #666;
+    font-size: 1rem;
+    margin-bottom: 30px;
+    line-height: 1.5;
+}
+
+.add-comment-form {
+    background: #f8f9fa;
+    padding: 25px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    border: 2px solid #e9ecef;
+}
+
+.add-comment-form h3 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.comment-form .form-group {
+    margin-bottom: 15px;
+}
+
+.comment-form textarea {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    line-height: 1.5;
+    resize: vertical;
+    min-height: 120px;
+    transition: border-color 0.3s ease;
+}
+
+.comment-form textarea:focus {
+    outline: none;
+    border-color: #ff6b5a;
+    box-shadow: 0 0 0 3px rgba(255, 107, 90, 0.1);
+}
+
+.login-prompt {
+    background: #e3f2fd;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 30px;
+    border: 1px solid #bbdefb;
+}
+
+.login-link {
+    color: #ff6b5a;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.login-link:hover {
+    text-decoration: underline;
+}
+
+.comments-list h3 {
+    color: #333;
+    margin-bottom: 25px;
+    font-size: 1.3rem;
+    font-weight: 600;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 10px;
+}
+
+.comment {
+    background: #fafafa;
+    border: 1px solid #e9ecef;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    transition: box-shadow 0.3s ease;
+}
+
+.comment:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.comment.reply {
+    margin-left: 40px;
+    margin-top: 15px;
+    background: #f0f0f0;
+    border-left: 4px solid #ff6b5a;
+}
+
+.comment-header {
+    margin-bottom: 15px;
+}
+
+.comment-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.author-avatar-small {
+    width: 40px;
+    height: 40px;
+    background: #ff6b5a;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+}
+
+.author-info-small strong {
+    color: #333;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.comment-date {
+    color: #666;
+    font-size: 0.85rem;
+    margin-left: 10px;
+}
+
+.recipe-author-badge {
+    background: #ff6b5a;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    margin-left: 10px;
+}
+
+.comment-author-badge {
+    background: #6c757d;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    margin-left: 10px;
+}
+
+.comment-content {
+    color: #333;
+    line-height: 1.6;
+    font-size: 1rem;
+    margin-bottom: 15px;
+}
+
+.comment-actions {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.reply-btn {
+    background: none;
+    border: none;
+    color: #666;
+    cursor: pointer;
+    font-size: 0.9rem;
+    padding: 5px 10px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.reply-btn:hover {
+    background: #f0f0f0;
+    color: #ff6b5a;
+}
+
+.reply-btn i {
+    margin-right: 5px;
+}
+
+.reply-form {
+    margin-top: 15px;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    border: 2px solid #e9ecef;
+}
+
+.reply-form textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    resize: vertical;
+    min-height: 80px;
+}
+
+.reply-form textarea:focus {
+    outline: none;
+    border-color: #ff6b5a;
+    box-shadow: 0 0 0 2px rgba(255, 107, 90, 0.1);
+}
+
+.replies {
+    margin-top: 20px;
+}
+
+.no-comments {
+    text-align: center;
+    padding: 40px 20px;
+    color: #666;
+    font-style: italic;
+}
+
+.btn-sm {
+    padding: 8px 16px;
+    font-size: 0.875rem;
+    margin-right: 10px;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .recipe-header {
@@ -604,6 +948,21 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 3000);
     }
 });
+
+// Function to toggle reply forms
+function toggleReplyForm(commentId) {
+    const replyForm = document.getElementById(`reply-form-${commentId}`);
+    if (replyForm.style.display === 'none' || replyForm.style.display === '') {
+        replyForm.style.display = 'block';
+        // Focus on the textarea
+        const textarea = replyForm.querySelector('textarea');
+        if (textarea) {
+            textarea.focus();
+        }
+    } else {
+        replyForm.style.display = 'none';
+    }
+}
 </script>
 
 <style>

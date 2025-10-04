@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Recipe, RecipeStep, SavedRecipe
+from .models import Category, Recipe, RecipeStep, SavedRecipe, Comment
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
@@ -51,3 +51,15 @@ class SavedRecipeAdmin(admin.ModelAdmin):
     list_filter = ('saved_at',)
     search_fields = ('user__username', 'recipe__title')
     ordering = ('-saved_at',)
+
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('user', 'recipe', 'content_preview', 'parent', 'is_active', 'created_at')
+    list_filter = ('is_active', 'created_at', 'recipe')
+    search_fields = ('user__username', 'recipe__title', 'content')
+    list_editable = ('is_active',)
+    ordering = ('-created_at',)
+    
+    def content_preview(self, obj):
+        return obj.content[:50] + '...' if len(obj.content) > 50 else obj.content
+    content_preview.short_description = 'Content Preview'
