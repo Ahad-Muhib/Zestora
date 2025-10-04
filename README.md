@@ -220,12 +220,12 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📧 Support
 
-For support, email [your-email@example.com] or open an issue on GitHub.
+For support, email [muhibalahad@gmail.com] or open an issue on GitHub.
 
 ## 🔗 Links
 
-- [Live Demo](https://zestora-1.onrender.com/) *(if deployed)*
-- [Documentation](https://github.com/Ahad-Muhib/Zestora/wiki) *(if available)*
+- [Live Demo](https://zestora-1.onrender.com/)
+- [Documentation](https://github.com/Ahad-Muhib/Zestora/wiki)
 - [Issues](https://github.com/Ahad-Muhib/Zestora/issues)
 
 ---
