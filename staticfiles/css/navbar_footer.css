@@ -1,0 +1,428 @@
+/* Navbar styles */
+.navbar {
+  width: 98%;
+  margin: 8px auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #edeada;
+  border-radius: 32px;
+  padding: 10px 32px;
+  box-sizing: border-box;
+  box-shadow: 0 1px 8px rgba(0,0,0,0.04);
+}
+
+.navbar-logo {
+  font-family: "Jaro", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 1.7em;
+  margin-right: 38px;
+  letter-spacing: 2px;
+}
+
+.navbar-links {
+  list-style: none;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  gap: 26px;
+}
+
+.navbar-links li {
+  font-size: 1em;
+  font-family: inherit;
+  color: #686760;
+  font-weight: 500;
+}
+
+.navbar-links li.active a {
+  font-weight: bold;
+  color: #222;
+}
+
+.navbar-links a {
+  text-decoration: none;
+  color: inherit;
+  padding: 8px 0;
+  transition: color 0.17s;
+}
+
+.navbar-links a:hover {
+  color: #111;
+}
+
+/* --- FIXED: search + auth --- */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-left: auto;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+}
+
+.search-input {
+  padding: 7px 13px;
+  border-radius: 12px;
+  border: none;
+  outline: none;
+  background: #fff;
+  font-size: 1em;
+  color: #333;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.07);
+  width: 125px;
+  transition: width 0.2s;
+}
+.search-input:focus {
+  width: 180px;
+}
+
+.search-btn {
+  background: none;
+  border: none;
+  font-size: 1.1em;
+  cursor: pointer;
+  margin-left: 6px;
+}
+
+.auth-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.auth-buttons .btn {
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-size: 1em;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.14s;
+}
+
+/* Outline (Login / Logout) */
+.btn.btn-outline {
+  background: #fff;
+  color: #222;
+  border: 1px solid #ccc;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.04);
+}
+.btn.btn-outline:hover {
+  background: #f2eedf;
+}
+
+/* Primary (Sign Up) */
+.btn.btn-primary {
+  background: #000;
+  color: #fff;
+  border: none;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.09);
+}
+.btn.btn-primary:hover {
+  background: #222;
+}
+
+.welcome-text {
+  font-size: 0.95em;
+  font-weight: 500;
+  color: #444;
+}
+
+/* Footer */
+.footer {
+  background: #22201c;
+  color: #fff;
+  padding: 50px 20px 20px 20px;
+  border-radius: 28px 28px 0 0;
+}
+
+.footer-content {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 30px;
+  border-bottom: 1px solid #36332e;
+  padding-bottom: 25px;
+}
+
+.footer-section {
+  flex: 1 1 250px;
+  min-width: 220px;
+}
+
+.footer-section h3,
+.footer-section h4 {
+  font-family: 'Montserrat', sans-serif;
+  margin-bottom: 14px;
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+/* Apply Jaro font specifically to Zestora in footer */
+.footer-section h3 {
+  font-family: "Jaro", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.footer-section p {
+  font-size: 1em;
+  line-height: 1.6;
+  color: #cac5bd;
+  margin-bottom: 12px;
+}
+
+/* Quick Links */
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.footer-section ul li {
+  margin-bottom: 8px;
+}
+.footer-section ul a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1em;
+  opacity: 0.92;
+  transition: color 0.2s;
+}
+.footer-section ul a:hover {
+  color: #ff6447;
+}
+
+/* Social Links */
+.social-links {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+}
+.social-links a {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #151410;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2em;
+  color: #fff;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+}
+.social-links a:hover {
+  background: #ff6447;
+  color: #fff;
+}
+
+/* Newsletter */
+.newsletter-form {
+  display: flex;
+  margin-top: 12px;
+  max-width: 360px;
+}
+.newsletter-form input {
+  flex: 1;
+  padding: 12px 14px;
+  border: none;
+  border-radius: 8px 0 0 8px;
+  outline: none;
+  font-size: 1em;
+  background: #f7f5f0;
+  color: #333;
+}
+.newsletter-form button {
+  border: none;
+  background: #ff6447;
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 0 8px 8px 0;
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.newsletter-form button:hover {
+  background: #e0523a;
+}
+
+/* Footer Bottom */
+.footer-bottom {
+  text-align: center;
+  padding-top: 16px;
+  font-size: 0.95em;
+  color: #cac5bd;
+  letter-spacing: 0.5px;
+}
+
+/* Bootstrap Navbar Customization */
+.custom-navbar {
+  background: #edeada !important;
+  border-radius: 32px;
+  margin: 8px auto;
+  width: 98%;
+  box-shadow: 0 1px 8px rgba(0,0,0,0.04);
+  padding: 10px 32px;
+}
+
+.navbar-brand {
+  font-family: "Jaro", sans-serif !important;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 1.7em !important;
+  color: #222 !important;
+  letter-spacing: 2px;
+}
+
+.navbar-nav .nav-link {
+  color: #686760 !important;
+  font-weight: 500 !important;
+  font-size: 1em !important;
+  padding: 8px 13px !important;
+  transition: color 0.17s;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #111 !important;
+}
+
+.navbar-nav .nav-link.active {
+  color: #222 !important;
+  font-weight: bold !important;
+}
+
+/* Admin Dropdown Styling */
+.admin-dropdown-btn {
+  font-size: 1.1em !important;
+  padding: 8px 12px !important;
+  border-radius: 6px;
+}
+
+.admin-dropdown-btn:hover {
+  background: rgba(0,0,0,0.05) !important;
+}
+
+.dropdown-menu {
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  border: 1px solid #ddd;
+  margin-top: 8px !important;
+}
+
+.dropdown-item {
+  padding: 12px 18px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background: #f8f9fa;
+  color: #222;
+}
+
+.dropdown-item i {
+  width: 16px;
+  text-align: center;
+}
+
+/* Search Form */
+.search-form {
+  margin-right: 1rem;
+}
+
+.search-input {
+  border-radius: 20px 0 0 20px !important;
+  border-right: none !important;
+  padding: 8px 16px !important;
+  font-size: 0.95em;
+  min-width: 200px;
+}
+
+.search-btn {
+  border-radius: 0 20px 20px 0 !important;
+  background: #fff !important;
+  border: 1px solid #ced4da !important;
+  border-left: none !important;
+  color: #666 !important;
+  padding: 8px 16px !important;
+}
+
+.search-btn:hover {
+  background: #f8f9fa !important;
+  color: #333 !important;
+}
+
+/* Auth Buttons */
+.auth-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-user-icon {
+  background: #fff !important;
+  color: #666 !important;
+  border: 1px solid #ddd !important;
+  padding: 8px 12px !important;
+  border-radius: 8px !important;
+  font-size: 1.1em !important;
+  transition: all 0.14s;
+}
+
+.btn-user-icon:hover {
+  background: #f0f0f0 !important;
+  color: #333 !important;
+  border-color: #ccc !important;
+}
+
+.btn-outline-secondary {
+  border-radius: 8px !important;
+  font-weight: 500 !important;
+}
+
+.btn-primary {
+  background: #000 !important;
+  border-color: #000 !important;
+  border-radius: 8px !important;
+  font-weight: 500 !important;
+}
+
+.btn-primary:hover {
+  background: #222 !important;
+  border-color: #222 !important;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 991px) {
+  .custom-navbar {
+    border-radius: 16px;
+    padding: 10px 16px;
+  }
+  
+  .search-form {
+    margin: 10px 0;
+  }
+  
+  .search-input {
+    min-width: 150px;
+  }
+  
+  .auth-buttons {
+    margin-top: 10px;
+  }
+}
+
+/* Footer styles remain the same */
