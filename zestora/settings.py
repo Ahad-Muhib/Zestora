@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-2&x=6!tq3@rdgbmk^4!)^u5o=hwbemp_y^nohzial3edgr(iu#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS = ['*']  # For development and testing
 
@@ -37,6 +37,7 @@ CSRF_TRUSTED_ORIGINS = [
     'http://localhost:1848',
     'http://127.0.0.1:23304',
     'http://localhost:23304',
+    'https://zestora-1.onrender.com',  # Add your Render domain
 ]
 
 
@@ -145,13 +146,18 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 STATICFILES_DIRS = [
-    BASE_DIR/'static',
+    BASE_DIR / 'static',
 ]
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 MEDIA_ROOT = BASE_DIR / 'media'
 
+# WhiteNoise configuration for static files serving
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# WhiteNoise settings for better static file handling
+WHITENOISE_USE_FINDERS = True
+WHITENOISE_AUTOREFRESH = True
 
 
 # Message tags for Bootstrap alerts
