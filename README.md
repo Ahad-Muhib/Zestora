@@ -208,7 +208,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👥 Authors
 
-- **Ahad Muhib** - *Initial work* - [@Ahad-Muhib](https://github.com/Ahad-Muhib)
+- **Ahad Muhib** - [@Ahad-Muhib](https://github.com/Ahad-Muhib)
+- **Minazur Rahman** - [@Minazur-Rahman](https://github.com/MinazurRahman)
+
 
 ## 🙏 Acknowledgments
 
@@ -222,7 +224,7 @@ For support, email [your-email@example.com] or open an issue on GitHub.
 
 ## 🔗 Links
 
-- [Live Demo](https://zestora.onrender.com) *(if deployed)*
+- [Live Demo](https://zestora-1.onrender.com/) *(if deployed)*
 - [Documentation](https://github.com/Ahad-Muhib/Zestora/wiki) *(if available)*
 - [Issues](https://github.com/Ahad-Muhib/Zestora/issues)
 
