@@ -49,12 +49,12 @@
             <i class="fas fa-user-shield"></i>
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#" onclick="goToAdminProfile()"><i class="fas fa-user-cog me-2"></i>Admin Profile</a></li>
+            <li><a class="dropdown-item" href="{% url 'userprofile:profile' username=user.username %}"><i class="fas fa-user-cog me-2"></i>Admin Profile</a></li>
             <li><a class="dropdown-item" href="/admin/"><i class="fas fa-cogs me-2"></i>Django Admin</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#" onclick="showStats()"><i class="fas fa-chart-bar me-2"></i>Statistics</a></li>
-            <li><a class="dropdown-item" href="#" onclick="manageUsers()"><i class="fas fa-users me-2"></i>Manage Users</a></li>
-            <li><a class="dropdown-item" href="#" onclick="systemTools()"><i class="fas fa-tools me-2"></i>System Tools</a></li>
+            <li><a class="dropdown-item" href="{% url 'admin_tools:dashboard' %}"><i class="fas fa-chart-bar me-2"></i>Statistics</a></li>
+            <li><a class="dropdown-item" href="{% url 'admin_tools:manage_users' %}"><i class="fas fa-users me-2"></i>Manage Users</a></li>
+            <li><a class="dropdown-item" href="{% url 'admin_tools:system_tools' %}"><i class="fas fa-tools me-2"></i>System Tools</a></li>
           </ul>
         </li>
         {% endif %}

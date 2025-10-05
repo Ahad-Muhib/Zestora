@@ -1,7 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.core.paginator import Paginator
-from .models import CulinaryStory, UserProfile
+from .models import CulinaryStory
+from userprofile.models import UserProfile
 from django.contrib.auth.models import User
 from recipes.models import Recipe
 
@@ -32,10 +33,9 @@ def story_detail(request, slug):
 
 def user_profile(request, user_id):
     user = get_object_or_404(User, id=user_id)
-    try:
-        profile = user.userprofile
-    except UserProfile.DoesNotExist:
-        profile = None
+    
+    # Create profile if it doesn't exist (for users created before signals)
+    profile, created = UserProfile.objects.get_or_create(user=user)
     
     # Get user's recipes
     user_recipes = Recipe.objects.filter(author=user).order_by('-created_at')
@@ -47,7 +47,7 @@ def user_profile(request, user_id):
     
     # Get user's cooking stats
     recipe_count = user_recipes.count()
-    total_likes = sum([getattr(recipe, 'likes', 0) for recipe in user_recipes])
+    total_likes = sum([recipe.total_likes for recipe in user_recipes])
     
     return render(request, 'community/user_profile.html', {
         'profile_user': user, 
@@ -69,10 +69,8 @@ def community_members(request):
         recipe_count = Recipe.objects.filter(author=user).count()
         latest_recipe = Recipe.objects.filter(author=user).order_by('-created_at').first()
         
-        try:
-            profile = user.userprofile
-        except UserProfile.DoesNotExist:
-            profile = None
+        # Create profile if it doesn't exist (for users created before signals)
+        profile, created = UserProfile.objects.get_or_create(user=user)
             
         users_data.append({
             'user': user,

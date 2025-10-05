@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class CommunityConfig(AppConfig):
+class AdminToolsConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'community'
+    name = 'admin_tools'

@@ -39,6 +39,7 @@ urlpatterns = [
     
     path('recipes/', include('recipes.urls')),
     path('profile/', include('userprofile.urls')),
+    path('admin-tools/', include('admin_tools.urls')),
 ]
 
 

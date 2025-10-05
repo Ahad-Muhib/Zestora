@@ -14,7 +14,11 @@ def profile_view(request, username=None):
     else:
         user = request.user
     
-    profile = user.profile
+    # Create profile if it doesn't exist (for admin users created before signals)
+    profile, created = UserProfile.objects.get_or_create(user=user)
+    if created:
+        messages.info(request, 'Profile created successfully!')
+    
     user_recipes = Recipe.objects.filter(author=user).order_by('-created_at')
     
     # Get saved recipes
@@ -35,7 +39,7 @@ def profile_view(request, username=None):
 @login_required
 def edit_profile(request):
     """Edit user profile information"""
-    profile = request.user.profile
+    profile, created = UserProfile.objects.get_or_create(user=request.user)
     
     if request.method == 'POST':
         # Update user fields

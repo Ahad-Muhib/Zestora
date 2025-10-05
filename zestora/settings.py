@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     'tips',
     'community',
     'userprofile',
+    'admin_tools',
 
 ]
 
