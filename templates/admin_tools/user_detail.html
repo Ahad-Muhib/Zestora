@@ -1,526 +1,185 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}{{ profile_user.username }} - User Details{% endblock %}
+{% block title %}User Detail - Zestora{% endblock %}
 
 {% block content %}
-<div class="user-detail">
-    <div class="page-header">
-        <a href="{% url 'admin_tools:manage_users' %}" class="btn btn-outline-secondary mb-3">
-            <i class="fas fa-arrow-left me-2"></i>Back to Users
-        </a>
-        <h1><i class="fas fa-user me-3"></i>User Details</h1>
+<div class="container-fluid mt-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1>
+                    <i class="fas fa-user"></i> User Details: {{ user_detail.username }}
+                </h1>
+                <a href="{% url 'admin_tools:manage_users' %}" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Back to Users
+                </a>
+            </div>
+        </div>
     </div>
 
-    <!-- User Profile Card -->
-    <div class="user-profile-card">
-        <div class="profile-header">
-            <div class="profile-avatar">
-                {% if profile and profile.profile_image %}
-                    <img src="{{ profile.profile_image.url }}" alt="{{ profile_user.username }}">
-                {% else %}
-                    <div class="avatar-placeholder">
-                        {{ profile_user.first_name.0|default:profile_user.username.0|upper }}
-                    </div>
-                {% endif %}
-            </div>
-            <div class="profile-info">
-                <h2>{{ profile_user.get_full_name|default:profile_user.username }}</h2>
-                <p class="username">@{{ profile_user.username }}</p>
-                <div class="user-badges">
-                    {% if profile_user.is_superuser %}
-                        <span class="badge bg-danger">Superuser</span>
-                    {% elif profile_user.is_staff %}
-                        <span class="badge bg-warning">Staff</span>
+    <div class="row">
+        <!-- User Info -->
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5><i class="fas fa-info-circle"></i> User Information</h5>
+                </div>
+                <div class="card-body text-center">
+                    {% if profile and profile.profile_image %}
+                        <img src="{{ profile.profile_image.url }}" alt="Profile" 
+                             class="rounded-circle mb-3" style="width: 100px; height: 100px; object-fit: cover;">
                     {% else %}
-                        <span class="badge bg-primary">User</span>
+                        <div class="bg-secondary rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center"
+                             style="width: 100px; height: 100px;">
+                            <i class="fas fa-user fa-2x text-white"></i>
+                        </div>
                     {% endif %}
                     
-                    {% if profile_user.is_active %}
-                        <span class="badge bg-success">Active</span>
-                    {% else %}
-                        <span class="badge bg-secondary">Inactive</span>
+                    <h4>{{ user_detail.username }}</h4>
+                    {% if user_detail.first_name or user_detail.last_name %}
+                        <p class="text-muted">{{ user_detail.first_name }} {{ user_detail.last_name }}</p>
                     {% endif %}
+                    
+                    <div class="mb-3">
+                        {% if user_detail.is_active %}
+                            <span class="badge bg-success">Active</span>
+                        {% else %}
+                            <span class="badge bg-secondary">Inactive</span>
+                        {% endif %}
+                        {% if user_detail.is_staff %}
+                            <span class="badge bg-warning">Staff</span>
+                        {% endif %}
+                        {% if user_detail.is_superuser %}
+                            <span class="badge bg-danger">Admin</span>
+                        {% endif %}
+                    </div>
+                    
+                    <table class="table table-sm">
+                        <tr>
+                            <td><strong>Email:</strong></td>
+                            <td>{{ user_detail.email|default:"-" }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Joined:</strong></td>
+                            <td>{{ user_detail.date_joined|date:"M d, Y H:i" }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Last Login:</strong></td>
+                            <td>{{ user_detail.last_login|date:"M d, Y H:i"|default:"Never" }}</td>
+                        </tr>
+                        {% if profile %}
+                        <tr>
+                            <td><strong>Bio:</strong></td>
+                            <td>{{ profile.bio|default:"-"|truncatechars:50 }}</td>
+                        </tr>
+                        {% endif %}
+                    </table>
                 </div>
             </div>
         </div>
 
-        <div class="profile-details">
-            <div class="detail-grid">
-                <div class="detail-item">
-                    <span class="label">Email:</span>
-                    <span class="value">{{ profile_user.email|default:"Not provided" }}</span>
-                </div>
-                <div class="detail-item">
-                    <span class="label">First Name:</span>
-                    <span class="value">{{ profile_user.first_name|default:"Not provided" }}</span>
-                </div>
-                <div class="detail-item">
-                    <span class="label">Last Name:</span>
-                    <span class="value">{{ profile_user.last_name|default:"Not provided" }}</span>
-                </div>
-                <div class="detail-item">
-                    <span class="label">Date Joined:</span>
-                    <span class="value">{{ profile_user.date_joined|date:"F d, Y" }}</span>
-                </div>
-                <div class="detail-item">
-                    <span class="label">Last Login:</span>
-                    <span class="value">{{ profile_user.last_login|date:"F d, Y"|default:"Never" }}</span>
-                </div>
-                {% if profile %}
-                    {% if profile.location %}
-                    <div class="detail-item">
-                        <span class="label">Location:</span>
-                        <span class="value">{{ profile.location }}</span>
+        <!-- User Activity -->
+        <div class="col-md-8">
+            <!-- Statistics -->
+            <div class="row mb-4">
+                <div class="col-md-4">
+                    <div class="card bg-primary text-white">
+                        <div class="card-body text-center">
+                            <h3>{{ user_recipes.count }}</h3>
+                            <p class="mb-0">Recipes</p>
+                        </div>
                     </div>
-                    {% endif %}
-                    {% if profile.website %}
-                    <div class="detail-item">
-                        <span class="label">Website:</span>
-                        <span class="value"><a href="{{ profile.website }}" target="_blank">{{ profile.website }}</a></span>
+                </div>
+                <div class="col-md-4">
+                    <div class="card bg-info text-white">
+                        <div class="card-body text-center">
+                            <h3>{{ user_comments.count }}</h3>
+                            <p class="mb-0">Comments</p>
+                        </div>
                     </div>
-                    {% endif %}
-                    {% if profile.bio %}
-                    <div class="detail-item full-width">
-                        <span class="label">Bio:</span>
-                        <span class="value">{{ profile.bio }}</span>
+                </div>
+                <div class="col-md-4">
+                    <div class="card bg-success text-white">
+                        <div class="card-body text-center">
+                            <h3>{{ user_likes.count }}</h3>
+                            <p class="mb-0">Likes Given</p>
+                        </div>
                     </div>
-                    {% endif %}
-                {% endif %}
-            </div>
-        </div>
-    </div>
-
-    <!-- Statistics Overview -->
-    <div class="statistics-section">
-        <h3><i class="fas fa-chart-bar me-2"></i>Statistics Overview</h3>
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-icon recipes">
-                    <i class="fas fa-utensils"></i>
-                </div>
-                <div class="stat-content">
-                    <h4>{{ stats.total_recipes }}</h4>
-                    <p>Total Recipes</p>
                 </div>
             </div>
 
-            <div class="stat-card">
-                <div class="stat-icon comments">
-                    <i class="fas fa-comments"></i>
-                </div>
-                <div class="stat-content">
-                    <h4>{{ stats.total_comments }}</h4>
-                    <p>Comments Made</p>
-                </div>
-            </div>
-
-            <div class="stat-card">
-                <div class="stat-icon likes-given">
-                    <i class="fas fa-thumbs-up"></i>
-                </div>
-                <div class="stat-content">
-                    <h4>{{ stats.total_likes_given }}</h4>
-                    <p>Likes Given</p>
-                </div>
-            </div>
-
-            <div class="stat-card">
-                <div class="stat-icon likes-received">
-                    <i class="fas fa-heart"></i>
-                </div>
-                <div class="stat-content">
-                    <h4>{{ stats.total_likes_received }}</h4>
-                    <p>Likes Received</p>
-                </div>
-            </div>
-
-            <div class="stat-card">
-                <div class="stat-icon dislikes">
-                    <i class="fas fa-thumbs-down"></i>
-                </div>
-                <div class="stat-content">
-                    <h4>{{ stats.total_dislikes_given }}</h4>
-                    <p>Dislikes Given</p>
-                </div>
-            </div>
-
-            <div class="stat-card">
-                <div class="stat-icon comments-received">
-                    <i class="fas fa-comment-dots"></i>
-                </div>
-                <div class="stat-content">
-                    <h4>{{ stats.total_comments_received }}</h4>
-                    <p>Comments Received</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Recent Activity -->
-    <div class="row">
-        <!-- Recent Recipes -->
-        <div class="col-lg-6 mb-4">
-            <div class="activity-card">
+            <!-- Recipes Tab -->
+            <div class="card">
                 <div class="card-header">
-                    <h5><i class="fas fa-utensils me-2"></i>Recent Recipes ({{ stats.total_recipes }} total)</h5>
+                    <ul class="nav nav-tabs card-header-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-bs-toggle="tab" href="#recipes">Recipes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#comments">Comments</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#likes">Likes</a>
+                        </li>
+                    </ul>
                 </div>
                 <div class="card-body">
-                    {% for recipe in recipes %}
-                    <div class="activity-item">
-                        <div class="activity-info">
-                            <strong>{{ recipe.title|truncatechars:40 }}</strong>
-                            <small class="text-muted d-block">{{ recipe.created_at|date:"M d, Y" }}</small>
+                    <div class="tab-content">
+                        <!-- Recipes Tab -->
+                        <div class="tab-pane fade show active" id="recipes">
+                            {% for recipe in user_recipes %}
+                            <div class="d-flex justify-content-between align-items-center border-bottom py-2">
+                                <div>
+                                    <strong>{{ recipe.title }}</strong>
+                                    <br>
+                                    <small class="text-muted">{{ recipe.created_at|date:"M d, Y" }}</small>
+                                </div>
+                                <a href="{% url 'recipes:recipe_detail' recipe.id %}" class="btn btn-sm btn-outline-primary">
+                                    View
+                                </a>
+                            </div>
+                            {% empty %}
+                            <p class="text-muted">No recipes found.</p>
+                            {% endfor %}
                         </div>
-                        <div class="activity-stats">
-                            <span class="badge bg-primary">{{ recipe.likes_count }} <i class="fas fa-heart"></i></span>
-                        </div>
-                    </div>
-                    {% empty %}
-                    <p class="text-muted">No recipes created yet.</p>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
 
-        <!-- Recent Comments -->
-        <div class="col-lg-6 mb-4">
-            <div class="activity-card">
-                <div class="card-header">
-                    <h5><i class="fas fa-comments me-2"></i>Recent Comments</h5>
-                </div>
-                <div class="card-body">
-                    {% for comment in recent_comments %}
-                    <div class="activity-item">
-                        <div class="activity-info">
-                            <strong>{{ comment.content|truncatechars:50 }}</strong>
-                            <small class="text-muted d-block">on {{ comment.recipe.title|truncatechars:30 }}</small>
-                            <small class="text-muted">{{ comment.created_at|date:"M d, Y" }}</small>
+                        <!-- Comments Tab -->
+                        <div class="tab-pane fade" id="comments">
+                            {% for comment in user_comments %}
+                            <div class="border-bottom py-2">
+                                <p>{{ comment.content }}</p>
+                                <small class="text-muted">
+                                    On: <a href="{% url 'recipes:recipe_detail' comment.recipe.id %}">{{ comment.recipe.title }}</a>
+                                    - {{ comment.created_at|date:"M d, Y" }}
+                                </small>
+                            </div>
+                            {% empty %}
+                            <p class="text-muted">No comments found.</p>
+                            {% endfor %}
                         </div>
-                    </div>
-                    {% empty %}
-                    <p class="text-muted">No comments made yet.</p>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="row">
-        <!-- Recent Likes -->
-        <div class="col-lg-6 mb-4">
-            <div class="activity-card">
-                <div class="card-header">
-                    <h5><i class="fas fa-heart me-2"></i>Recent Likes</h5>
-                </div>
-                <div class="card-body">
-                    {% for like in recent_likes %}
-                    <div class="activity-item">
-                        <div class="activity-info">
-                            <strong>{{ like.recipe.title|truncatechars:40 }}</strong>
-                            <small class="text-muted d-block">by {{ like.recipe.author.username }}</small>
-                            <small class="text-muted">{{ like.created_at|date:"M d, Y" }}</small>
+                        <!-- Likes Tab -->
+                        <div class="tab-pane fade" id="likes">
+                            {% for like in user_likes %}
+                            <div class="d-flex justify-content-between align-items-center border-bottom py-2">
+                                <div>
+                                    <strong>{{ like.recipe.title }}</strong>
+                                    <br>
+                                    <small class="text-muted">Liked on {{ like.created_at|date:"M d, Y" }}</small>
+                                </div>
+                                <a href="{% url 'recipes:recipe_detail' like.recipe.id %}" class="btn btn-sm btn-outline-primary">
+                                    View Recipe
+                                </a>
+                            </div>
+                            {% empty %}
+                            <p class="text-muted">No likes found.</p>
+                            {% endfor %}
                         </div>
-                        <span class="badge bg-success"><i class="fas fa-thumbs-up"></i></span>
                     </div>
-                    {% empty %}
-                    <p class="text-muted">No likes given yet.</p>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-
-        <!-- Recent Dislikes -->
-        <div class="col-lg-6 mb-4">
-            <div class="activity-card">
-                <div class="card-header">
-                    <h5><i class="fas fa-thumbs-down me-2"></i>Recent Dislikes</h5>
-                </div>
-                <div class="card-body">
-                    {% for dislike in recent_dislikes %}
-                    <div class="activity-item">
-                        <div class="activity-info">
-                            <strong>{{ dislike.recipe.title|truncatechars:40 }}</strong>
-                            <small class="text-muted d-block">by {{ dislike.recipe.author.username }}</small>
-                            <small class="text-muted">{{ dislike.created_at|date:"M d, Y" }}</small>
-                        </div>
-                        <span class="badge bg-warning"><i class="fas fa-thumbs-down"></i></span>
-                    </div>
-                    {% empty %}
-                    <p class="text-muted">No dislikes given yet.</p>
-                    {% endfor %}
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<style>
-.user-detail {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-.page-header {
-    margin-bottom: 30px;
-}
-
-.page-header h1 {
-    color: #333;
-    font-size: 2rem;
-    margin-bottom: 10px;
-}
-
-.user-profile-card {
-    background: white;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    margin-bottom: 40px;
-    overflow: hidden;
-}
-
-.profile-header {
-    background: linear-gradient(135deg, #ff6b5a, #ff8c42);
-    color: white;
-    padding: 40px;
-    display: flex;
-    align-items: center;
-    gap: 30px;
-}
-
-.profile-avatar {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    overflow: hidden;
-    border: 4px solid rgba(255,255,255,0.3);
-    flex-shrink: 0;
-}
-
-.profile-avatar img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.avatar-placeholder {
-    width: 100%;
-    height: 100%;
-    background: rgba(255,255,255,0.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 3rem;
-    font-weight: bold;
-}
-
-.profile-info h2 {
-    margin-bottom: 10px;
-    font-size: 2rem;
-    font-weight: 700;
-}
-
-.username {
-    font-size: 1.2rem;
-    opacity: 0.9;
-    margin-bottom: 15px;
-}
-
-.user-badges {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-.profile-details {
-    padding: 30px 40px;
-}
-
-.detail-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
-}
-
-.detail-item {
-    display: flex;
-    justify-content: space-between;
-    padding: 15px 0;
-    border-bottom: 1px solid #eee;
-}
-
-.detail-item.full-width {
-    grid-column: 1 / -1;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.detail-item .label {
-    font-weight: 600;
-    color: #333;
-}
-
-.detail-item .value {
-    color: #666;
-    text-align: right;
-}
-
-.detail-item.full-width .value {
-    text-align: left;
-}
-
-.statistics-section {
-    margin-bottom: 40px;
-}
-
-.statistics-section h3 {
-    color: #333;
-    margin-bottom: 25px;
-    font-size: 1.5rem;
-    font-weight: 600;
-}
-
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-    margin-bottom: 30px;
-}
-
-.stat-card {
-    background: white;
-    border-radius: 15px;
-    padding: 25px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-    transition: transform 0.3s ease;
-}
-
-.stat-card:hover {
-    transform: translateY(-5px);
-}
-
-.stat-icon {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 1.2rem;
-}
-
-.stat-icon.recipes { background: linear-gradient(45deg, #28a745, #20c997); }
-.stat-icon.comments { background: linear-gradient(45deg, #007bff, #0056b3); }
-.stat-icon.likes-given { background: linear-gradient(45deg, #ffc107, #e0a800); }
-.stat-icon.likes-received { background: linear-gradient(45deg, #dc3545, #c82333); }
-.stat-icon.dislikes { background: linear-gradient(45deg, #6c757d, #545b62); }
-.stat-icon.comments-received { background: linear-gradient(45deg, #17a2b8, #117a8b); }
-
-.stat-content h4 {
-    margin: 0;
-    color: #333;
-    font-size: 1.8rem;
-    font-weight: 700;
-}
-
-.stat-content p {
-    margin: 0;
-    color: #666;
-    font-size: 0.9rem;
-}
-
-.activity-card {
-    background: white;
-    border-radius: 15px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-    overflow: hidden;
-}
-
-.card-header {
-    background: linear-gradient(135deg, #ff6b5a, #ff8c42);
-    color: white;
-    padding: 20px;
-    border: none;
-}
-
-.card-header h5 {
-    margin: 0;
-    font-weight: 600;
-}
-
-.card-body {
-    padding: 20px;
-    max-height: 400px;
-    overflow-y: auto;
-}
-
-.activity-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 0;
-    border-bottom: 1px solid #eee;
-}
-
-.activity-item:last-child {
-    border-bottom: none;
-}
-
-.activity-info strong {
-    color: #333;
-    display: block;
-    margin-bottom: 5px;
-}
-
-.activity-stats {
-    flex-shrink: 0;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .user-detail {
-        padding: 15px;
-    }
-    
-    .profile-header {
-        flex-direction: column;
-        text-align: center;
-        gap: 20px;
-        padding: 30px 20px;
-    }
-    
-    .profile-details {
-        padding: 25px 20px;
-    }
-    
-    .detail-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .detail-item {
-        flex-direction: column;
-        gap: 5px;
-        text-align: left;
-    }
-    
-    .detail-item .value {
-        text-align: left;
-    }
-    
-    .stats-grid {
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    }
-    
-    .activity-item {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-    }
-}
-</style>
 {% endblock %}

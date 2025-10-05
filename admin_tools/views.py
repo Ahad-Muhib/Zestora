@@ -1,75 +1,56 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.admin.views.decorators import staff_member_required
-from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import User
-from django.contrib import messages
-from django.db.models import Count, Q
-from django.utils import timezone
-from datetime import datetime, timedelta
-from django.core.paginator import Paginator
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
-
-from recipes.models import Recipe, Comment, RecipeLike, Category
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib import messages
+from django.db.models import Q, Count
+from recipes.models import Recipe, RecipeLike, Comment
 from userprofile.models import UserProfile
-from community.models import CulinaryStory
+import json
 
 
 def is_admin(user):
-    """Check if user is admin or staff"""
-    return user.is_authenticated and (user.is_staff or user.is_superuser)
+    return user.is_authenticated and user.is_staff
 
 
 @user_passes_test(is_admin)
 def admin_dashboard(request):
-    """Admin dashboard with statistics overview"""
-    # Basic counts
+    # Get statistics
     total_users = User.objects.count()
     total_recipes = Recipe.objects.count()
     total_comments = Comment.objects.count()
-    total_likes = RecipeLike.objects.filter(is_like=True).count()
-    total_dislikes = RecipeLike.objects.filter(is_like=False).count()
-    total_categories = Category.objects.count()
+    total_likes = RecipeLike.objects.count()
     
-    # Recent activity (last 7 days)
-    week_ago = timezone.now() - timedelta(days=7)
-    new_users_week = User.objects.filter(date_joined__gte=week_ago).count()
-    new_recipes_week = Recipe.objects.filter(created_at__gte=week_ago).count()
-    new_comments_week = Comment.objects.filter(created_at__gte=week_ago).count()
+    # Recent activity
+    recent_users = User.objects.order_by('-date_joined')[:5]
+    recent_recipes = Recipe.objects.order_by('-created_at')[:5]
+    recent_comments = Comment.objects.order_by('-created_at')[:5]
     
-    # Most active users (by recipe count)
-    most_active_users = User.objects.annotate(
-        recipe_count=Count('recipe')
-    ).filter(recipe_count__gt=0).order_by('-recipe_count')[:10]
+    # Top recipes by likes
+    top_recipes = Recipe.objects.all()
+    top_recipes_with_likes = []
+    for recipe in top_recipes:
+        like_count = recipe.likes.filter(is_like=True).count()
+        top_recipes_with_likes.append({
+            'recipe': recipe,
+            'like_count': like_count
+        })
     
-    # Most popular recipes (by total likes)
-    popular_recipes = Recipe.objects.annotate(
-        total_likes=Count('likes', filter=Q(likes__is_like=True))
-    ).order_by('-total_likes')[:10]
-    
-    # Recent users
-    recent_users = User.objects.order_by('-date_joined')[:10]
-    
-    # Categories with recipe counts
-    categories_stats = Category.objects.annotate(
-        recipe_count=Count('recipe')
-    ).order_by('-recipe_count')
+    # Sort by like count and take top 5
+    top_recipes_with_likes.sort(key=lambda x: x['like_count'], reverse=True)
+    top_recipes_data = top_recipes_with_likes[:5]
     
     context = {
         'total_users': total_users,
         'total_recipes': total_recipes,
         'total_comments': total_comments,
         'total_likes': total_likes,
-        'total_dislikes': total_dislikes,
-        'total_categories': total_categories,
-        'new_users_week': new_users_week,
-        'new_recipes_week': new_recipes_week,
-        'new_comments_week': new_comments_week,
-        'most_active_users': most_active_users,
-        'popular_recipes': popular_recipes,
         'recent_users': recent_users,
-        'categories_stats': categories_stats,
-        'active_page': 'admin',
+        'recent_recipes': recent_recipes,
+        'recent_comments': recent_comments,
+        'top_recipes': top_recipes_data,
     }
     
     return render(request, 'admin_tools/dashboard.html', context)
@@ -77,173 +58,115 @@ def admin_dashboard(request):
 
 @user_passes_test(is_admin)
 def manage_users(request):
-    """Manage users page with search and filters"""
-    users_queryset = User.objects.all().order_by('-date_joined')
-    
-    # Search functionality
     search_query = request.GET.get('search', '')
+    status_filter = request.GET.get('status', 'all')
+    
+    users = User.objects.all()
+    
     if search_query:
-        users_queryset = users_queryset.filter(
+        users = users.filter(
             Q(username__icontains=search_query) |
+            Q(email__icontains=search_query) |
             Q(first_name__icontains=search_query) |
-            Q(last_name__icontains=search_query) |
-            Q(email__icontains=search_query)
+            Q(last_name__icontains=search_query)
         )
     
-    # Filter by user type
-    user_type = request.GET.get('type', '')
-    if user_type == 'admin':
-        users_queryset = users_queryset.filter(Q(is_staff=True) | Q(is_superuser=True))
-    elif user_type == 'active':
-        users_queryset = users_queryset.filter(is_active=True)
-    elif user_type == 'inactive':
-        users_queryset = users_queryset.filter(is_active=False)
+    if status_filter == 'active':
+        users = users.filter(is_active=True)
+    elif status_filter == 'inactive':
+        users = users.filter(is_active=False)
+    elif status_filter == 'staff':
+        users = users.filter(is_staff=True)
     
-    # Add user statistics
-    users_with_stats = []
-    for user in users_queryset:
-        recipe_count = Recipe.objects.filter(author=user).count()
-        comment_count = Comment.objects.filter(author=user).count()
-        likes_given = RecipeLike.objects.filter(user=user, is_like=True).count()
+    users = users.order_by('-date_joined')
+    
+    # Prepare user data with statistics
+    users_data = []
+    for user in users:
+        # Safely get user profile using getattr with default None
+        user_profile = getattr(user, 'userprofile', None)
         
-        try:
-            profile = user.userprofile
-        except UserProfile.DoesNotExist:
-            profile = None
-            
-        users_with_stats.append({
+        user_recipes = Recipe.objects.filter(author=user).count()
+        user_comments = Comment.objects.filter(user=user).count()
+        
+        users_data.append({
             'user': user,
-            'profile': profile,
-            'recipe_count': recipe_count,
-            'comment_count': comment_count,
-            'likes_given': likes_given,
+            'profile': user_profile,
+            'recipe_count': user_recipes,
+            'comment_count': user_comments,
         })
     
-    # Pagination
-    paginator = Paginator(users_with_stats, 20)
-    page_number = request.GET.get('page')
-    users_page = paginator.get_page(page_number)
-    
     context = {
-        'users_page': users_page,
+        'users_data': users_data,
         'search_query': search_query,
-        'user_type': user_type,
-        'total_users': User.objects.count(),
-        'active_page': 'admin',
+        'status_filter': status_filter,
     }
     
     return render(request, 'admin_tools/manage_users.html', context)
 
 
 @user_passes_test(is_admin)
-@require_POST
-def toggle_user_status(request, user_id):
-    """Toggle user active status"""
+def user_detail(request, user_id):
     user = get_object_or_404(User, id=user_id)
     
-    if user == request.user:
-        return JsonResponse({'error': 'Cannot deactivate yourself'}, status=400)
+    # Safely get user profile using getattr with default None
+    user_profile = getattr(user, 'userprofile', None)
     
-    if user.is_superuser and not request.user.is_superuser:
-        return JsonResponse({'error': 'Cannot modify superuser'}, status=403)
+    user_recipes = Recipe.objects.filter(author=user)
+    user_comments = Comment.objects.filter(user=user)
+    user_likes = RecipeLike.objects.filter(user=user)
     
-    user.is_active = not user.is_active
-    user.save()
+    context = {
+        'user_detail': user,
+        'profile': user_profile,
+        'user_recipes': user_recipes,
+        'user_comments': user_comments,
+        'user_likes': user_likes,
+    }
     
-    action = 'activated' if user.is_active else 'deactivated'
-    return JsonResponse({
-        'success': True,
-        'message': f'User {user.username} has been {action}',
-        'is_active': user.is_active
-    })
+    return render(request, 'admin_tools/user_detail.html', context)
+
+
+@user_passes_test(is_admin)
+@require_POST
+def toggle_user_status(request):
+    try:
+        data = json.loads(request.body)
+        user_id = data.get('user_id')
+        user = get_object_or_404(User, id=user_id)
+        
+        user.is_active = not user.is_active
+        user.save()
+        
+        return JsonResponse({
+            'success': True,
+            'is_active': user.is_active,
+            'message': f'User {"activated" if user.is_active else "deactivated"} successfully'
+        })
+    except Exception as e:
+        return JsonResponse({
+            'success': False,
+            'message': str(e)
+        })
 
 
 @user_passes_test(is_admin)
 def system_tools(request):
-    """System tools and maintenance"""
-    # System stats
-    total_files = 0
+    import platform
+    import sys
+    import django
+    from django.conf import settings
     
-    # Count uploaded files (recipes, profiles)
-    recipe_images = Recipe.objects.exclude(image='').count()
-    profile_images = UserProfile.objects.exclude(profile_image='').count()
-    
-    # Database stats
-    db_stats = {
-        'users': User.objects.count(),
-        'recipes': Recipe.objects.count(),
-        'comments': Comment.objects.count(),
-        'likes': RecipeLike.objects.count(),
-        'categories': Category.objects.count(),
-        'profiles': UserProfile.objects.count(),
-        'stories': CulinaryStory.objects.count(),
-    }
-    
-    # Recent activity
-    today = timezone.now().date()
-    week_ago = today - timedelta(days=7)
-    month_ago = today - timedelta(days=30)
-    
-    activity_stats = {
-        'users_today': User.objects.filter(date_joined__date=today).count(),
-        'users_week': User.objects.filter(date_joined__date__gte=week_ago).count(),
-        'users_month': User.objects.filter(date_joined__date__gte=month_ago).count(),
-        'recipes_today': Recipe.objects.filter(created_at__date=today).count(),
-        'recipes_week': Recipe.objects.filter(created_at__date__gte=week_ago).count(),
-        'recipes_month': Recipe.objects.filter(created_at__date__gte=month_ago).count(),
+    system_info = {
+        'python_version': sys.version,
+        'django_version': django.get_version(),
+        'platform': platform.platform(),
+        'debug_mode': settings.DEBUG,
+        'database_engine': settings.DATABASES['default']['ENGINE'],
     }
     
     context = {
-        'db_stats': db_stats,
-        'activity_stats': activity_stats,
-        'recipe_images': recipe_images,
-        'profile_images': profile_images,
-        'total_files': recipe_images + profile_images,
-        'active_page': 'admin',
+        'system_info': system_info,
     }
     
     return render(request, 'admin_tools/system_tools.html', context)
-
-
-@user_passes_test(is_admin)
-def user_detail(request, user_id):
-    """Detailed view of a specific user"""
-    user = get_object_or_404(User, id=user_id)
-    
-    try:
-        profile = user.userprofile
-    except UserProfile.DoesNotExist:
-        profile = None
-    
-    # User's recipes
-    recipes = Recipe.objects.filter(author=user).order_by('-created_at')
-    
-    # User's comments
-    comments = Comment.objects.filter(author=user).order_by('-created_at')[:10]
-    
-    # User's likes/dislikes
-    likes = RecipeLike.objects.filter(user=user, is_like=True).order_by('-created_at')[:10]
-    dislikes = RecipeLike.objects.filter(user=user, is_like=False).order_by('-created_at')[:10]
-    
-    # Statistics
-    stats = {
-        'total_recipes': recipes.count(),
-        'total_comments': Comment.objects.filter(author=user).count(),
-        'total_likes_given': RecipeLike.objects.filter(user=user, is_like=True).count(),
-        'total_dislikes_given': RecipeLike.objects.filter(user=user, is_like=False).count(),
-        'total_likes_received': sum(recipe.likes_count for recipe in recipes),
-        'total_comments_received': sum(Comment.objects.filter(recipe=recipe).count() for recipe in recipes),
-    }
-    
-    context = {
-        'profile_user': user,
-        'profile': profile,
-        'recipes': recipes[:10],  # Show only first 10
-        'recent_comments': comments,
-        'recent_likes': likes,
-        'recent_dislikes': dislikes,
-        'stats': stats,
-        'active_page': 'admin',
-    }
-    
-    return render(request, 'admin_tools/user_detail.html', context)
