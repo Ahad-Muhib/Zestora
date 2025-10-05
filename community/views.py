@@ -47,7 +47,12 @@ def user_profile(request, user_id):
     
     # Get user's cooking stats
     recipe_count = user_recipes.count()
-    total_likes = sum([getattr(recipe, 'likes', 0) for recipe in user_recipes])
+    total_likes = 0
+    for recipe in user_recipes:
+        try:
+            total_likes += recipe.likes.filter(is_like=True).count()
+        except:
+            total_likes += 0
     
     return render(request, 'community/user_profile.html', {
         'profile_user': user, 
