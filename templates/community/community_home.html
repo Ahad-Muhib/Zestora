@@ -29,8 +29,8 @@
             {% for user in recent_users %}
             <div class="member-card">
                 <div class="member-avatar">
-                    {% if user.userprofile.profile_image %}
-                        <img src="{{ user.userprofile.profile_image.url }}" alt="{{ user.get_full_name|default:user.username }}">
+                    {% if user.profile.profile_image %}
+                        <img src="{{ user.profile.profile_image.url }}" alt="{{ user.get_full_name|default:user.username }}">
                     {% else %}
                         <div class="avatar-placeholder">
                             {{ user.first_name.0|default:user.username.0|upper }}

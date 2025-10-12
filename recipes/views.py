@@ -14,7 +14,7 @@ def recipe_list(request):
     return render(request, 'recipes/recipe_list.html', {'recipes': recipes, 'active_page': 'recipes'})
 
 def recipe_detail(request, slug):
-    recipe = get_object_or_404(Recipe, slug=slug)
+    recipe = get_object_or_404(Recipe.objects.select_related('author__profile', 'category'), slug=slug)
     is_saved = False
     user_like = None
     
@@ -49,7 +49,7 @@ def recipe_detail(request, slug):
         comment_form = CommentForm() if request.user.is_authenticated else None
     
     # Get comments (only top-level comments, replies are accessed via the replies relationship)
-    comments = Comment.objects.filter(recipe=recipe, parent=None, is_active=True).order_by('-created_at')
+    comments = Comment.objects.filter(recipe=recipe, parent=None, is_active=True).select_related('user__profile').prefetch_related('replies__user__profile').order_by('-created_at')
     
     return render(request, 'recipes/recipe_detail.html', {
         'recipe': recipe,

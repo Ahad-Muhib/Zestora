@@ -26,6 +26,7 @@ urlpatterns = [
     path('community/', include('community.urls')),
     path('tips/', include('tips.urls')),
     path('search/', views.search, name='search'),
+    path('api/search-suggestions/', views.search_suggestions, name='search_suggestions'),
     path('guidebooks/', views.guidebooks, name='guidebooks'),
     path('about/', views.about, name='about'),
     path('logout/', views.logout_view, name='logout'),

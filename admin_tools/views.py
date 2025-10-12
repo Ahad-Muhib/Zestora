@@ -110,7 +110,7 @@ def user_detail(request, user_id):
     user = get_object_or_404(User, id=user_id)
     
     # Safely get user profile using getattr with default None
-    user_profile = getattr(user, 'userprofile', None)
+    user_profile = getattr(user, 'profile', None)
     
     user_recipes = Recipe.objects.filter(author=user)
     user_comments = Comment.objects.filter(user=user)

@@ -27,6 +27,59 @@ def home(request):
 def search(request):
     query = request.GET.get('q', '')
     
+    # Get search suggestions for autocomplete
+    suggestions = []
+    if query and len(query) >= 2:
+        # Get recipe title suggestions
+        recipe_suggestions = Recipe.objects.filter(
+            title__icontains=query
+        ).values_list('title', flat=True)[:5]
+        
+        # Get chef name suggestions
+        chef_suggestions = User.objects.filter(
+            Q(first_name__icontains=query) | 
+            Q(last_name__icontains=query) |
+            Q(username__icontains=query)
+        ).exclude(first_name='', last_name='').values_list('first_name', 'last_name')[:3]
+        
+        # Format chef names
+        chef_names = [f"{first} {last}".strip() for first, last in chef_suggestions if first or last]
+        
+        # Get ingredient suggestions
+        ingredient_suggestions = Recipe.objects.filter(
+            ingredients__icontains=query
+        ).values_list('ingredients', flat=True)[:3]
+        
+        # Extract unique ingredient words
+        ingredient_words = set()
+        for ingredients in ingredient_suggestions:
+            words = [word.strip().lower() for word in ingredients.split(',')]
+            for word in words:
+                if query.lower() in word.lower() and len(word) > 2:
+                    ingredient_words.add(word.title())
+        
+        suggestions = list(recipe_suggestions) + chef_names + list(ingredient_words)[:10]
+    
+    # Handle search history (store in session)
+    if query and query.strip():
+        search_history = request.session.get('search_history', [])
+        query_clean = query.strip()
+        
+        # Remove if already exists to avoid duplicates
+        if query_clean in search_history:
+            search_history.remove(query_clean)
+        
+        # Add to beginning of list
+        search_history.insert(0, query_clean)
+        
+        # Keep only last 10 searches
+        search_history = search_history[:10]
+        
+        request.session['search_history'] = search_history
+    
+    # Get current search history
+    search_history = request.session.get('search_history', [])
+    
     if query:
         # Search across recipes, tips, and stories
         # Enhanced recipe search including chef/author name
@@ -65,7 +118,7 @@ def search(request):
                     Q(author__last_name__icontains=first_word)
                 )
         
-        recipe_results = Recipe.objects.filter(recipe_query).select_related('author', 'category').distinct()
+        recipe_results = Recipe.objects.filter(recipe_query).select_related('author__profile', 'category').distinct()
         
         tip_results = CookingTip.objects.filter(
             Q(title__icontains=query) | 
@@ -94,7 +147,35 @@ def search(request):
     
     context = results.copy()
     context['active_page'] = 'search'
+    context['suggestions'] = suggestions
+    context['search_history'] = search_history
     return render(request, 'search_results.html', context)
+
+def search_suggestions(request):
+    """API endpoint for search suggestions"""
+    query = request.GET.get('q', '')
+    suggestions = []
+    
+    if query and len(query) >= 2:
+        # Get recipe title suggestions
+        recipe_suggestions = Recipe.objects.filter(
+            title__icontains=query
+        ).values_list('title', flat=True)[:5]
+        
+        # Get chef name suggestions
+        chef_suggestions = User.objects.filter(
+            Q(first_name__icontains=query) | 
+            Q(last_name__icontains=query) |
+            Q(username__icontains=query)
+        ).exclude(first_name='', last_name='').values_list('first_name', 'last_name')[:3]
+        
+        # Format chef names
+        chef_names = [f"{first} {last}".strip() for first, last in chef_suggestions if first or last]
+        
+        suggestions = list(recipe_suggestions) + chef_names
+        suggestions = suggestions[:8]  # Limit to 8 suggestions
+    
+    return JsonResponse({'suggestions': suggestions})
 
 def login_view(request):
     if request.method == 'POST':

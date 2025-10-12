@@ -3,6 +3,10 @@
 
 {% block title %}Search Results - Zestora{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/search_results.css' %}">
+{% endblock %}
+
 {% block content %}
 <div class="search-results-container">
     <div class="search-header">
@@ -17,12 +21,25 @@
     <div class="search-form-container">
         <form method="get" action="{% url 'search' %}" class="search-form">
             <div class="search-input-group">
-                <input type="text" name="q" value="{{ query }}" placeholder="Search recipes, chefs, tips, and stories..." class="search-input">
+                <input type="text" name="q" value="{{ query }}" placeholder="Search recipes, chefs, tips, and stories..." class="search-input" id="search-input" autocomplete="off">
                 <button type="submit" class="search-btn">
                     <i class="fas fa-search"></i>
                 </button>
+                <div class="search-suggestions" id="search-suggestions"></div>
             </div>
         </form>
+        
+        <!-- Search History -->
+        {% if search_history %}
+        <div class="search-history">
+            <h4><i class="fas fa-history"></i> Recent Searches</h4>
+            <div class="history-tags">
+                {% for search_term in search_history %}
+                <span class="history-tag" onclick="searchHistory('{{ search_term }}')">{{ search_term }}</span>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
     </div>
     
     {% if query %}
@@ -57,7 +74,13 @@
                                 </div>
                                 <h3><a href="{% url 'recipes:recipe_detail' recipe.slug %}">{{ recipe.title }}</a></h3>
                                 <div class="recipe-author">
-                                    <i class="fas fa-user-chef"></i>
+                                    {% if recipe.author.profile.profile_image %}
+                                        <img src="{{ recipe.author.profile.profile_image.url }}" alt="{{ recipe.author.profile.full_name }}" class="author-avatar">
+                                    {% else %}
+                                        <div class="author-avatar-placeholder">
+                                            {{ recipe.author.first_name.0|default:recipe.author.username.0|upper }}
+                                        </div>
+                                    {% endif %}
                                     <span>by {{ recipe.author.profile.full_name }}</span>
                                 </div>
                                 <p>{{ recipe.description|truncatewords:20 }}</p>
@@ -65,6 +88,12 @@
                                     <span><i class="fas fa-clock"></i> {{ recipe.prep_time }} min prep</span>
                                     <span><i class="fas fa-fire"></i> {{ recipe.cook_time }} min cook</span>
                                     <span><i class="fas fa-users"></i> {{ recipe.servings }} servings</span>
+                                </div>
+                                <div class="recipe-actions">
+                                    <a href="{% url 'recipes:recipe_detail' recipe.slug %}" class="view-recipe-btn">
+                                        <i class="fas fa-eye"></i>
+                                        View Recipe
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -129,11 +158,95 @@
 }
 
 .search-input-group {
+    position: relative;
     display: flex;
     background: white;
     border-radius: 25px;
     box-shadow: 0 5px 20px rgba(0,0,0,0.1);
     overflow: hidden;
+}
+
+.search-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border-radius: 0 0 15px 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    max-height: 300px;
+    overflow-y: auto;
+    z-index: 1000;
+    display: none;
+}
+
+.suggestion-item {
+    padding: 12px 20px;
+    cursor: pointer;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.suggestion-item:hover {
+    background: #f8f9fa;
+}
+
+.suggestion-item:last-child {
+    border-bottom: none;
+}
+
+.suggestion-icon {
+    color: #ff6b5a;
+    font-size: 0.9rem;
+}
+
+.search-history {
+    margin-top: 20px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 15px;
+    border: 1px solid #e9ecef;
+}
+
+.search-history h4 {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 15px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.search-history h4 i {
+    color: #ff6b5a;
+}
+
+.history-tags {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.history-tag {
+    background: white;
+    color: #666;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid #ddd;
+}
+
+.history-tag:hover {
+    background: #ff6b5a;
+    color: white;
+    border-color: #ff6b5a;
+    transform: translateY(-1px);
 }
 
 .search-input {
@@ -286,11 +399,6 @@
     font-style: italic;
 }
 
-.recipe-author i {
-    color: #ff6b5a;
-    font-size: 0.8rem;
-}
-
 .recipe-content p {
     color: #666;
     margin-bottom: 15px;
@@ -387,4 +495,79 @@
     }
 }
 </style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('search-input');
+    const suggestionsContainer = document.getElementById('search-suggestions');
+    let debounceTimer;
+
+    // Search suggestions
+    searchInput.addEventListener('input', function() {
+        clearTimeout(debounceTimer);
+        const query = this.value.trim();
+        
+        if (query.length >= 2) {
+            debounceTimer = setTimeout(() => {
+                fetchSuggestions(query);
+            }, 300);
+        } else {
+            hideSuggestions();
+        }
+    });
+
+    // Hide suggestions when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.search-input-group')) {
+            hideSuggestions();
+        }
+    });
+
+    function fetchSuggestions(query) {
+        fetch(`/api/search-suggestions/?q=${encodeURIComponent(query)}`)
+            .then(response => response.json())
+            .then(data => {
+                showSuggestions(data.suggestions);
+            })
+            .catch(error => {
+                console.error('Error fetching suggestions:', error);
+            });
+    }
+
+    function showSuggestions(suggestions) {
+        if (suggestions.length === 0) {
+            hideSuggestions();
+            return;
+        }
+
+        suggestionsContainer.innerHTML = '';
+        suggestions.forEach(suggestion => {
+            const item = document.createElement('div');
+            item.className = 'suggestion-item';
+            item.innerHTML = `
+                <i class="fas fa-search suggestion-icon"></i>
+                <span>${suggestion}</span>
+            `;
+            item.addEventListener('click', function() {
+                searchInput.value = suggestion;
+                hideSuggestions();
+                document.querySelector('.search-form').submit();
+            });
+            suggestionsContainer.appendChild(item);
+        });
+        
+        suggestionsContainer.style.display = 'block';
+    }
+
+    function hideSuggestions() {
+        suggestionsContainer.style.display = 'none';
+    }
+});
+
+// Function for search history clicks
+function searchHistory(term) {
+    document.getElementById('search-input').value = term;
+    document.querySelector('.search-form').submit();
+}
+</script>
 {% endblock %}

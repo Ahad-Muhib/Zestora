@@ -33,7 +33,7 @@ def story_detail(request, slug):
 def user_profile(request, user_id):
     user = get_object_or_404(User, id=user_id)
     try:
-        profile = user.userprofile
+        profile = user.profile
     except UserProfile.DoesNotExist:
         profile = None
     
@@ -75,7 +75,7 @@ def community_members(request):
         latest_recipe = Recipe.objects.filter(author=user).order_by('-created_at').first()
         
         try:
-            profile = user.userprofile
+            profile = user.profile
         except UserProfile.DoesNotExist:
             profile = None
             

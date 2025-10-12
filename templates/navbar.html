@@ -45,8 +45,15 @@
         <!-- Admin dropdown -->
         {% if user.is_staff or user.is_superuser %}
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle admin-dropdown-btn" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="fas fa-user-shield"></i>
+          <a class="nav-link dropdown-toggle admin-dropdown-btn d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            {% if user.profile.profile_image %}
+              <img src="{{ user.profile.profile_image.url }}" alt="{{ user.username }}" class="admin-profile-img me-1">
+            {% else %}
+              <div class="admin-profile-placeholder me-1">
+                {{ user.first_name.0|default:user.username.0|upper }}
+              </div>
+            {% endif %}
+            <i class="fas fa-user-shield ms-1"></i>
           </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="{% url 'userprofile:profile' username=user.username %}"><i class="fas fa-user-cog me-2"></i>Admin Profile</a></li>
@@ -63,18 +70,40 @@
       <!-- Right side - Search and Auth -->
       <div class="d-flex align-items-center gap-3">
         <!-- Search -->
-        <form method="GET" action="{% url 'search' %}" class="d-flex search-form">
-          <input type="text" name="q" placeholder="Search recipes, chefs..." class="form-control search-input">
-          <button type="submit" class="btn search-btn">
-            <i class="fas fa-search"></i>
-          </button>
-        </form>
+        <div class="navbar-search-container">
+          <form method="GET" action="{% url 'search' %}" class="d-flex search-form">
+            <div class="navbar-search-input-group">
+              <input type="text" name="q" placeholder="Search recipes, chefs..." class="form-control search-input" id="navbar-search-input" autocomplete="off">
+              <button type="submit" class="btn search-btn">
+                <i class="fas fa-search"></i>
+              </button>
+              <div class="navbar-search-suggestions" id="navbar-search-suggestions"></div>
+            </div>
+          </form>
+          
+          <!-- Quick Search History Dropdown -->
+          <div class="navbar-search-history" id="navbar-search-history" style="display: none;">
+            <div class="history-header">
+              <i class="fas fa-history"></i>
+              <span>Recent Searches</span>
+            </div>
+            <div class="history-items" id="navbar-history-items">
+              <!-- History items will be populated by JavaScript -->
+            </div>
+          </div>
+        </div>
 
         <!-- Auth buttons -->
         <div class="auth-buttons">
           {% if user.is_authenticated %}
             <a href="{% url 'userprofile:profile' username=user.username %}" class="btn btn-user-icon" title="My Profile">
-              <i class="fas fa-user"></i>
+              {% if user.profile.profile_image %}
+                <img src="{{ user.profile.profile_image.url }}" alt="{{ user.username }}" class="navbar-profile-img">
+              {% else %}
+                <div class="navbar-profile-placeholder">
+                  {{ user.first_name.0|default:user.username.0|upper }}
+                </div>
+              {% endif %}
             </a>
             <a href="{% url 'logout' %}" class="btn btn-outline-secondary">Logout</a>
           {% else %}

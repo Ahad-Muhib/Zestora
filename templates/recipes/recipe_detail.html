@@ -123,7 +123,15 @@
     
     <div class="recipe-footer">
         <div class="author-info">
-            <div class="author-avatar">👨‍🍳</div>
+            <div class="author-avatar">
+                {% if recipe.author.profile.profile_image %}
+                    <img src="{{ recipe.author.profile.profile_image.url }}" alt="{{ recipe.author.profile.full_name }}" class="author-avatar-img">
+                {% else %}
+                    <div class="author-avatar-placeholder">
+                        {{ recipe.author.first_name.0|default:recipe.author.username.0|upper }}
+                    </div>
+                {% endif %}
+            </div>
             <div class="author-details">
                 <h4>{{ recipe.author.get_full_name|default:recipe.author.username }}</h4>
                 <p>Posted on {{ recipe.created_at|date:"F d, Y" }}</p>
@@ -172,7 +180,15 @@
                 <div class="comment" id="comment-{{ comment.id }}">
                     <div class="comment-header">
                         <div class="comment-author">
-                            <div class="author-avatar-small">👤</div>
+                            <div class="author-avatar-small">
+                                {% if comment.user.profile.profile_image %}
+                                    <img src="{{ comment.user.profile.profile_image.url }}" alt="{{ comment.user.profile.full_name }}" class="comment-avatar-img">
+                                {% else %}
+                                    <div class="comment-avatar-placeholder">
+                                        {{ comment.user.first_name.0|default:comment.user.username.0|upper }}
+                                    </div>
+                                {% endif %}
+                            </div>
                             <div class="author-info-small">
                                 <strong>{{ comment.user.get_full_name|default:comment.user.username }}</strong>
                                 <span class="comment-date">{{ comment.created_at|date:"M d, Y g:i A" }}</span>
@@ -219,7 +235,15 @@
                         <div class="comment reply" id="comment-{{ reply.id }}">
                             <div class="comment-header">
                                 <div class="comment-author">
-                                    <div class="author-avatar-small">👤</div>
+                                    <div class="author-avatar-small">
+                                        {% if reply.user.profile.profile_image %}
+                                            <img src="{{ reply.user.profile.profile_image.url }}" alt="{{ reply.user.profile.full_name }}" class="comment-avatar-img">
+                                        {% else %}
+                                            <div class="comment-avatar-placeholder">
+                                                {{ reply.user.first_name.0|default:reply.user.username.0|upper }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
                                     <div class="author-info-small">
                                         <strong>{{ reply.user.get_full_name|default:reply.user.username }}</strong>
                                         <span class="comment-date">{{ reply.created_at|date:"M d, Y g:i A" }}</span>
@@ -592,13 +616,29 @@
 .author-avatar {
     width: 50px;
     height: 50px;
-    background: #ff6b5a;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5rem;
+    overflow: hidden;
+}
+
+.author-avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.author-avatar-placeholder {
+    width: 100%;
+    height: 100%;
+    background: #ff6b5a;
     color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: bold;
 }
 
 .author-details h4 {
@@ -755,13 +795,29 @@
 .author-avatar-small {
     width: 40px;
     height: 40px;
-    background: #ff6b5a;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
+}
+
+.comment-avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.comment-avatar-placeholder {
+    width: 100%;
+    height: 100%;
+    background: #ff6b5a;
     color: white;
-    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: bold;
 }
 
 .author-info-small strong {
