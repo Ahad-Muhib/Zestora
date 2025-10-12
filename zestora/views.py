@@ -29,11 +29,43 @@ def search(request):
     
     if query:
         # Search across recipes, tips, and stories
-        recipe_results = Recipe.objects.filter(
-            Q(title__icontains=query) | 
-            Q(description__icontains=query) | 
-            Q(ingredients__icontains=query)
-        )
+        # Enhanced recipe search including chef/author name
+        # Split query into words for better full name matching
+        query_words = query.strip().split()
+        
+        # Build recipe search query
+        recipe_query = Q()
+        
+        # Search in recipe fields
+        recipe_query |= Q(title__icontains=query)
+        recipe_query |= Q(description__icontains=query)
+        recipe_query |= Q(ingredients__icontains=query)
+        
+        # Search in author fields
+        recipe_query |= Q(author__username__icontains=query)
+        recipe_query |= Q(author__first_name__icontains=query)
+        recipe_query |= Q(author__last_name__icontains=query)
+        
+        # For multiple words, also search for combinations
+        if len(query_words) >= 2:
+            # Try to match "first last" name combinations
+            for i in range(len(query_words) - 1):
+                first_word = query_words[i]
+                second_word = query_words[i + 1]
+                
+                # Match first name + last name
+                recipe_query |= (
+                    Q(author__first_name__icontains=first_word) & 
+                    Q(author__last_name__icontains=second_word)
+                )
+                
+                # Also try reverse order (last name + first name)
+                recipe_query |= (
+                    Q(author__first_name__icontains=second_word) & 
+                    Q(author__last_name__icontains=first_word)
+                )
+        
+        recipe_results = Recipe.objects.filter(recipe_query).select_related('author', 'category').distinct()
         
         tip_results = CookingTip.objects.filter(
             Q(title__icontains=query) | 

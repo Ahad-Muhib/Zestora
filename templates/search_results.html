@@ -17,7 +17,7 @@
     <div class="search-form-container">
         <form method="get" action="{% url 'search' %}" class="search-form">
             <div class="search-input-group">
-                <input type="text" name="q" value="{{ query }}" placeholder="Search recipes, tips, and stories..." class="search-input">
+                <input type="text" name="q" value="{{ query }}" placeholder="Search recipes, chefs, tips, and stories..." class="search-input">
                 <button type="submit" class="search-btn">
                     <i class="fas fa-search"></i>
                 </button>
@@ -56,6 +56,10 @@
                                     <span class="difficulty-badge difficulty-{{ recipe.difficulty }}">{{ recipe.get_difficulty_display }}</span>
                                 </div>
                                 <h3><a href="{% url 'recipes:recipe_detail' recipe.slug %}">{{ recipe.title }}</a></h3>
+                                <div class="recipe-author">
+                                    <i class="fas fa-user-chef"></i>
+                                    <span>by {{ recipe.author.profile.full_name }}</span>
+                                </div>
                                 <p>{{ recipe.description|truncatewords:20 }}</p>
                                 <div class="recipe-stats">
                                     <span><i class="fas fa-clock"></i> {{ recipe.prep_time }} min prep</span>
@@ -78,7 +82,7 @@
             <div class="search-prompt-content">
                 <i class="fas fa-search"></i>
                 <h3>Start Your Search</h3>
-                <p>Search for recipes, cooking tips, and community stories</p>
+                <p>Search for recipes, chefs, cooking tips, and community stories</p>
                 <div class="search-suggestions">
                     <span class="suggestion-tag">chicken</span>
                     <span class="suggestion-tag">dessert</span>
@@ -270,6 +274,21 @@
 
 .recipe-content h3 a:hover {
     color: #ff6b5a;
+}
+
+.recipe-author {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+    color: #777;
+    font-style: italic;
+}
+
+.recipe-author i {
+    color: #ff6b5a;
+    font-size: 0.8rem;
 }
 
 .recipe-content p {
