@@ -36,8 +36,13 @@
             
             <div class="form-group">
                 <label class="form-label">Enter your Password</label>
-                <input type="password" name="password" class="form-input" placeholder="Password" required>
-                <a href="#" class="forgot-password">Forgot Password?</a>
+                <div class="password-input-container">
+                    <input type="password" name="password" id="password" class="form-input" placeholder="Password" required>
+                    <button type="button" class="password-toggle" onclick="togglePassword()">
+                        <span id="password-toggle-text">Show</span>
+                    </button>
+                </div>
+                <a href="{% url 'password_reset' %}" class="forgot-password">Forgot Password?</a>
                 <div style="clear: both;"></div>
             </div>
             
@@ -52,5 +57,58 @@
             Sign in with Google
         </a>
     </div>
+
+    <script>
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleText = document.getElementById('password-toggle-text');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleText.textContent = 'Hide';
+            } else {
+                passwordInput.type = 'password';
+                toggleText.textContent = 'Show';
+            }
+        }
+    </script>
+
+    <style>
+        .password-input-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        
+        .password-input-container .form-input {
+            padding-right: 55px;
+        }
+        
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            color: #007bff;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 24px;
+            z-index: 2;
+            text-decoration: none;
+        }
+        
+        .password-toggle:hover {
+            opacity: 0.7;
+        }
+        
+        .password-toggle:focus {
+            outline: none;
+        }
+    </style>
 </body>
 </html>

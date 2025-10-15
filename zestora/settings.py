@@ -207,6 +207,20 @@ ACCOUNT_SIGNUP_FIELDS = ['email*', 'username*', 'password1*']
 # Email verification settings
 ACCOUNT_EMAIL_VERIFICATION = 'none'  # Change to 'mandatory' for production
 
+# Email Settings for Password Reset
+# For production with Gmail SMTP:
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', 'muhibalahad@gmail.com')  # Your Gmail
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', 'mvnt kbhs qpau sjmq')  # Gmail App Password
+
+# For development - emails appear in console/terminal (uncomment for testing):
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+DEFAULT_FROM_EMAIL = 'Zestora <noreply@zestora.com>'
+
 # Social account settings
 SOCIALACCOUNT_LOGIN_ON_GET = True
 SOCIALACCOUNT_AUTO_SIGNUP = True

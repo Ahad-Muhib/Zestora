@@ -189,10 +189,20 @@ def login_view(request):
             # If that fails, try to find user by email
             if user is None:
                 try:
-                    user_obj = User.objects.get(email=username)
-                    user = authenticate(request, username=user_obj.username, password=password)
+                    # Get the first user with this email (in case of duplicates)
+                    user_obj = User.objects.filter(email=username).first()
+                    if user_obj:
+                        user = authenticate(request, username=user_obj.username, password=password)
                 except User.DoesNotExist:
                     pass
+                
+                # If still no user found, try authenticating other users with same email
+                if user is None:
+                    users_with_email = User.objects.filter(email=username)
+                    for user_obj in users_with_email:
+                        user = authenticate(request, username=user_obj.username, password=password)
+                        if user:
+                            break
             
             if user is not None:
                 login(request, user)
